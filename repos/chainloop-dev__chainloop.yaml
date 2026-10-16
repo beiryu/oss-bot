@@ -1,0 +1,27 @@
+full_name: chainloop-dev/chainloop           # Go monorepo; CONTRIBUTING.md (DCO, Conventional Commits)
+fork: beiryu/chainloop
+default_branch: main
+branch_prefix: "fix/"
+branch_name: "{{number}}-{{slug}}"
+labels: []
+skip_labels: ["question", "wontfix", "duplicate", "invalid"]
+max_issue_age_days: 60
+focused_test: "SKIP_INTEGRATION=true LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'"
+gate:                                        # shared Go gate; upstream CI runs the full suite
+  - "out=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -s -l); [ -z \"$out\" ] || { echo \"not gofmt-clean: $out\"; exit 1; }"
+  - "git diff HEAD --check"
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - "go vet ./..."
+  - "pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z \"$pkgs\" ] || SKIP_INTEGRATION=true LC_ALL=C go test -count=1 $pkgs"
+forbidden_paths: [".github/", "go.mod", "go.sum", "extras/", "labs/", "deployment/", "devel/"]
+agent_disclosure: "GitHub Copilot CLI"
+signoff: true                                # DCO: every commit needs Signed-off-by
+notes: |
+  - Commit messages and the PR title follow Conventional Commits, e.g. fix(cli): ...
+  - Do not edit generated code (*.pb.go, *.pb.validate.go, ent-generated code under
+    app/controlplane/pkg/data/ent, generated API clients) or database migrations; skip
+    issues that need protobuf/ent codegen or a schema migration.
+  - Tests must not need a database, a registry or a cloud account; prefer the unit-test
+    style of the package you change.
+  - Run gofmt on changed files; keep the change small and add a regression test.
+  CI checks 'Chainloop AI Policies' (needs a Chainloop Trace session) and 'Chainloop PR Validation' (pr-min-approvals) fail on every outside PR until a maintainer acts; nothing in the PR can fix them.

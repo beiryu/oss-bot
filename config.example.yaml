@@ -1,0 +1,33 @@
+# Personal account the bot acts as (claims, pushes, PRs); its gh keyring token is used even when another gh account is active.
+# The Copilot token (COPILOT_GITHUB_TOKEN) comes from the company account instead.
+github_user: YOUR_PERSONAL_USER
+# Repos are not listed here: each one is a file in repos/<owner>__<name>.yaml,
+# written by `oss-bot repo add <url>` and deleted by `oss-bot repo remove <owner/name>`.
+# SSH key registered on github_user as a *signing* key; every bot commit is signed (Verified).
+commit_signing_key: ~/.ssh/YOUR_signing_key
+repos: []
+
+limits:
+  max_open_prs_per_repo: 2
+  max_triage_per_run: 5
+  max_attempts: 3
+  max_go_build_cache_gb: 6      # least recently used build output is dropped past this; Go modules are kept
+
+budget:                 # USD; Copilot AI credits are converted at 1 credit = $0.01
+  max_cost_per_call_usd: 3      # -> --max-ai-credits 300 per agent call (minimum 30)
+
+sandbox:
+  image: oss-bot-sandbox
+  memory: 5g          # the Docker VM currently has ~6 GB
+  cpus: "4"
+  runtime: copilot      # or: claude
+  auth_env: COPILOT_GITHUB_TOKEN   # fine-grained PAT, "Copilot Requests" permission only
+  # model: claude-sonnet-4.6        # optional; omit to let Copilot use its default
+
+  cache_volume: oss-bot-cache    # Go module/build caches and uv's Python + package cache
+  agent_timeout_min: 30
+  gate_timeout_min: 60
+
+notify:
+  # telegram_chat_id: "123456"            # plus TELEGRAM_BOT_TOKEN in the environment
+  # slack_webhook_env: SLACK_WEBHOOK_URL

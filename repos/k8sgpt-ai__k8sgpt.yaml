@@ -1,0 +1,49 @@
+full_name: k8sgpt-ai/k8sgpt
+fork: beiryu/k8sgpt
+default_branch: main
+branch_prefix: ""
+branch_name: fix-{{number}}-{{slug}}
+claim_comment: Hi, I'd like to work on this issue.
+require_assignment: false
+labels: []
+skip_labels:
+  - question
+  - suggestion
+  - vulnerability
+  - dependencies
+  - github_actions
+  - GitHub Actions
+max_issue_age_days: 365
+focused_test: LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'
+gate:
+  - files=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go'); [ -z "$files" ] || [ -z "$(gofmt -l $files)" ]
+  - git diff HEAD --check
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - go vet ./...
+  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z "$pkgs" ] || LC_ALL=C go test -count=1 $pkgs
+forbidden_paths:
+  - .github/
+  - go.mod
+  - go.sum
+  - vendor/
+  - charts/
+  - container/
+  - docs/
+  - .goreleaser.yaml
+  - CHANGELOG.md
+  - LICENSE
+  - Makefile
+allowed_paths: []
+agent_disclosure: GitHub Copilot CLI
+notes: |-
+  Commit messages and PR titles must follow conventional commits: type(scope optional): subject. Allowed types: feat, fix, build, chore, ci, docs, perf, refactor, revert, style, test, deps. The subject must not start with an uppercase letter.
+  Every commit needs a DCO Signed-off-by trailer (git commit --signoff).
+  Use the PR template (.github/pull_request_template.md): put 'Closes #<id>' in it, fill in the description and tick the checks.
+  Keep PRs small and focused, one change per PR. Open the PR as a draft while work is in progress.
+  golangci-lint runs in CI with only-new-issues, so new code must not add lint findings. Run gofmt on changed files.
+  Do not edit CI workflows, go.mod/go.sum, release config or the changelog (Release Please generates it).
+  The Codecov upload and the DCO check may fail on fork PRs because of missing secrets or sign-off. A missing CODECOV_TOKEN is not the PR's fault.
+draft_replies: true
+review_bots: []
+after_commit: []
+signoff: true

@@ -1,0 +1,31 @@
+full_name: vshulcz/deja-vu                   # Go; coding-agent memory. CONTRIBUTING.md, no CLA
+fork: beiryu/deja-vu
+default_branch: main
+branch_prefix: "fix/"
+branch_name: "{{number}}-{{slug}}"
+labels: []
+skip_labels: ["question", "wontfix", "duplicate", "invalid"]
+max_issue_age_days: 45
+focused_test: "LC_ALL=C go test -race -count=1 ./{{pkg}} -run '^{{test}}$'"
+gate:                                        # shared Go gate; upstream CI runs the full suite
+  - "out=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -s -l); [ -z \"$out\" ] || { echo \"not gofmt-clean: $out\"; exit 1; }"
+  - "git diff HEAD --check"
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - "go vet ./..."
+  - "pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z \"$pkgs\" ] || LC_ALL=C go test -race -count=1 $pkgs"
+  - "go run ./scripts/gennav"                 # last: it rewrites docs/; fails when a guide page is not in its groups
+# scripts/ stays open: a new docs/guide page must be listed in scripts/gennav/main.go (notes say so).
+forbidden_paths: [".github/", "go.mod", "go.sum"]   # fixtures/ stays open: issues ask for new fixtures
+# docs/feed.xml and docs/sitemap.xml take page dates from git history; CI regenerates and compares.
+after_commit: ["go run ./scripts/gennav && go run ./scripts/genmatrix && go run ./scripts/genregistry && go run ./scripts/genfeed"]
+agent_disclosure: "GitHub Copilot CLI"
+notes: |
+  - Run gofmt -s on changed Go files; every touched package must keep its test coverage.
+  - Tests are table-driven with the standard library only (no testify) and hermetic:
+    they never read or modify a real agent configuration or session database; use the
+    synthetic fixtures and temp dirs the neighbouring tests use.
+  - Add or update tests and docs with the change. Keep the change small.
+  - A new page under docs/guide/ must be added to the sidebar groups in
+    scripts/gennav/main.go (CI runs gennav and fails otherwise). Leave the rest of
+    scripts/ alone unless the issue is about a script.
+  - PR body follows .github/PULL_REQUEST_TEMPLATE.md and says "Fixes #N".

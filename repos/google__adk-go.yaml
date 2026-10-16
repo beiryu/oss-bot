@@ -1,0 +1,48 @@
+full_name: google/adk-go
+fork: beiryu/adk-go
+default_branch: main
+branch_prefix: ""
+branch_name: fix-{{number}}-{{slug}}
+require_assignment: false
+labels: []
+skip_labels:
+  - question
+  - breaking-change
+  - api
+  - needs review
+  - v2
+max_issue_age_days: 365
+focused_test: LC_ALL=C go test -race -count=1 ./{{pkg}} -run '^{{test}}$'
+gate:
+  - gofmt -l $(git diff HEAD --name-only --diff-filter=ACMR -- '*.go') | (! grep .)
+  - git diff HEAD --check
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - go vet ./...
+  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z "$pkgs" ] || LC_ALL=C go test -race -count=1 $pkgs
+forbidden_paths:
+  - .github/
+  - go.mod
+  - go.sum
+  - internal/httprr/
+  - examples/
+  - scripts/
+  - .agents/
+  - AGENTS.md
+  - CLAUDE.md
+  - CONTRIBUTING.md
+  - "**/testdata/*.httprr"
+allowed_paths: []
+agent_disclosure: GitHub Copilot CLI
+notes: |-
+  Target main (2.x line); only v1 for fixes that must ship to 1.x, so do not target v1.
+  Open a PR only for an issue that exists; the PR must link it (Fixes #N) or the require-linked-issue check fails.
+  Use the PR template (.github/pull_request_template.md) in full, including the Testing Plan and a statement of what changes for existing users.
+  Title the PR as a Conventional Commit, e.g. fix(runner): ... or feat: ...
+  Tests must fail with the source change reverted; name the failing test in the testing plan. No live network or LLM calls in tests.
+  Every new Go file needs the Apache 2.0 header; no fmt.Print*/log/os.Stdout in library code; no user data in errors or logs; wrap errors with %w.
+  Keep the public API backward compatible (apidiff check); do not add dependencies; do not edit internal/httprr.
+  Multi-module repo: plugin/agentanalytics is a separate module and needs its own build and test run. The gate runs only the root module.
+draft_replies: true
+review_bots: []
+after_commit: []
+signoff: false

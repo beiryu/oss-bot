@@ -1,0 +1,47 @@
+full_name: alibaba/open-code-review
+fork: beiryu/open-code-review
+default_branch: main
+branch_prefix: fix/
+branch_name: "{{number}}-{{slug}}"
+require_assignment: false
+labels: []
+skip_labels: []
+max_issue_age_days: 180
+focused_test: LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'
+gate:
+  - bash scripts/verify-license.sh
+  - go run scripts/verify-english-only.go
+  - unformatted=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -s -l); [ -z "$unformatted" ] || { echo "$unformatted"; exit 1; }
+  - git diff HEAD --check
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - go vet ./...
+  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z "$pkgs" ] || LC_ALL=C go test -count=1 $pkgs
+forbidden_paths:
+  - .github/
+  - .agents/
+  - go.mod
+  - go.sum
+  - package.json
+  - package-lock.json
+  - extensions/frontend/src/shared/providers.generated.ts
+  - extensions/idea/src/main/kotlin/com/alibaba/opencodereview/idea/services/ProviderNames.generated.kt
+  - pages/
+  - scripts/
+  - Makefile
+  - LICENSE
+allowed_paths: []
+agent_disclosure: GitHub Copilot CLI
+notes: |-
+  Commit messages are Conventional Commits in English, e.g. fix(llm): handle timeout errors.
+  The PR description must disclose AI/LLM use and name the tools and models. Do not add Co-developed-by or Assisted-by trailers to commits.
+  Every new source file needs an SPDX license header. Run make license-add.
+  Source files must be English only, including comments. Comment sparingly and only to explain why.
+  Add unit tests for changed code. The project enforces 90% coverage, and tests run with LC_ALL=C.
+  LF line endings only.
+  Do not hand-edit *.generated.* files. If internal/llm/providers.go changes, run go generate ./internal/llm.
+  If README.md changes, sync docs/i18n/README.{zh-CN,ja-JP,ko-KR,ru-RU}.md.
+  The OpenCodeReview bot (github-actions[bot]) posts inline findings on every PR; apply the small, correct ones.
+draft_replies: false
+review_bots:
+  - github-actions[bot]   # runs OpenCodeReview and posts inline findings
+signoff: false

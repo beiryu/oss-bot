@@ -1,0 +1,51 @@
+full_name: modelcontextprotocol/go-sdk
+fork: beiryu/go-sdk
+default_branch: main
+branch_prefix: ""
+branch_name: fix-{{number}}-{{slug}}
+claim_comment: I'd like to work on this issue.
+require_assignment: false
+labels: []
+skip_labels:
+  - needs investigation
+  - needs community feedback
+  - blocked
+  - breaking change
+  - v2
+  - external
+  - proposal
+max_issue_age_days: 365
+focused_test: LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'
+gate:
+  - unformatted=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -l); [ -z "$unformatted" ] || { echo "$unformatted"; exit 1; }
+  - git diff HEAD --check
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - go vet ./...
+  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z "$pkgs" ] || LC_ALL=C go test -count=1 $pkgs
+forbidden_paths:
+  - .github/
+  - go.mod
+  - go.sum
+  - examples/
+  - docs/
+  - README.md
+  - internal/docs/
+  - scripts/
+  - .agents/
+  - AGENTS.md
+  - CONTRIBUTING.md
+allowed_paths: []
+agent_disclosure: GitHub Copilot CLI
+notes: |-
+  Commit and PR title follow Go style: 'pkg: lowercase verb phrase', no trailing period, as short as possible.
+  PR body must give context (why) and end with 'Fixes #N'; PRs should be a single commit.
+  Any change to the exported API, breaking or not, needs an accepted proposal; do not pick issues that need new or changed API.
+  New dependencies need a proposal; never touch go.mod or go.sum.
+  New Go files need the 'Copyright 2025 The Go MCP SDK Authors' header; follow the Google Go style guide.
+  README.md and docs/ are generated; edit only the sources in internal/readme and internal/docs, and avoid doing so here.
+  CI also runs staticcheck, the race detector, Go 1.25 and 1.26, and conformance tests; these are not part of the local gate.
+  Inactive PRs may be closed after two weeks without a response.
+draft_replies: true
+review_bots: []
+after_commit: []
+signoff: false

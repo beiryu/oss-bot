@@ -1,0 +1,26 @@
+full_name: kubernetes-sigs/agent-sandbox     # Go; Kubernetes project: CLA, Prow (/assign), CodeRabbit
+fork: beiryu/agent-sandbox
+default_branch: main
+branch_prefix: "fix/"
+branch_name: "{{number}}-{{slug}}"
+claim_comment: "/assign"                     # Prow assigns the commenter
+labels: []
+skip_labels: ["kind/feature", "kind/design", "triage/needs-information", "lifecycle/frozen"]
+max_issue_age_days: 60
+focused_test: "LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'"
+gate:                                        # shared Go gate; upstream CI runs the full suite
+  - "out=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -s -l); [ -z \"$out\" ] || { echo \"not gofmt-clean: $out\"; exit 1; }"
+  - "git diff HEAD --check"
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - "go vet ./..."
+  - "pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z \"$pkgs\" ] || LC_ALL=C go test -count=1 $pkgs"
+forbidden_paths: [".github/", "go.mod", "go.sum", "examples/", "dev/", "olm/", "site/", "clients/", "k8s/crds/"]
+agent_disclosure: "GitHub Copilot CLI"
+review_bots: ["coderabbitai[bot]"]
+notes: |
+  - Read .agents/skills/ for project conventions before changing code.
+  - Do not edit generated code (zz_generated.*, CRD manifests, generated clients or docs);
+    skip issues that need `make generate` or API (CRD) changes.
+  - Tests must not need a cluster; use the fake client / envtest patterns already in the package.
+  - PR body follows .github/pull_request_template.md with "Fixes #N" and a ```release-note
+    block (write NONE when no user-visible change).

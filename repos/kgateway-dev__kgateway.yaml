@@ -1,0 +1,53 @@
+full_name: kgateway-dev/kgateway
+fork: beiryu/kgateway
+default_branch: main
+branch_prefix: ""
+branch_name: fix-{{number}}-{{slug}}
+require_assignment: false
+labels: []
+skip_labels:
+  - kind/feature
+  - "Type: Enhancement"
+  - stale
+  - no stalebot
+  - policy-parity
+  - kind/ingress-nginx
+  - zendesk
+max_issue_age_days: 365
+focused_test: USE_ENVTEST=false LC_ALL=C go test -count=1 -tags e2e ./{{pkg}} -run '^{{test}}$'
+gate:
+  - files=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go'); [ -z "$files" ] || [ -z "$(gofmt -l $files)" ]
+  - git diff HEAD --check
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - go vet ./...
+  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}' | grep -Ev '/pkg/kgateway/(setup|controller)$'); [ -z "$pkgs" ] || USE_ENVTEST=false LC_ALL=C go test -count=1 -skip '/strict' $pkgs
+forbidden_paths:
+  - .github/
+  - go.mod
+  - go.sum
+  - Makefile
+  - api/applyconfiguration/
+  - pkg/generated/
+  - install/helm/
+  - docs/
+  - vendor/
+  - AGENTS.md
+  - CLAUDE.md
+  - .agents/
+allowed_paths: []
+agent_disclosure: GitHub Copilot CLI
+notes: |
+  Every commit needs a Signed-off-by trailer (git commit -s); DCO is a required check.
+  Do not hand-edit generated code; API changes need make go-generate-apis / make generate-all, which the bot cannot run, so skip issues needing API or CRD changes.
+  Never use reflect.DeepEqual; IR types in KRT collections must implement Equals comparing all fields.
+  Unit tests: avoid Ginkgo in new tests; Gomega matchers are fine. Use explicit error checks like MatchError.
+  Use -tags e2e for go commands that should include all source.
+  The PR body must follow .github/PULL_REQUEST_TEMPLATE.md, including change type and changelog block, or the labeler check fails.
+  E2E, conformance and Docker-based CI checks cannot run locally; failures there are not necessarily the PR's fault.
+  Packages pkg/kgateway/setup and pkg/kgateway/controller use envtest (KUBEBUILDER_ASSETS / make envtest-path downloads kube-apiserver+etcd), which is unavailable offline, so the gate excludes them; project CI runs them.
+  Strict-mode translator subtests (names containing "strict") run `envoy validate` through docker, which the sandbox lacks, so the gate skips them with -skip '/strict'; CI runs them.
+  USE_ENVTEST=false makes test/deployer use the fake client instead of an envtest API server (unavailable offline); pkg/kgateway/setup and controller have no switch and are excluded.
+draft_replies: true
+review_bots: []
+after_commit: []
+signoff: true
