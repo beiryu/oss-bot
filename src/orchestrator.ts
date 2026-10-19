@@ -48,7 +48,7 @@ export function withLock<T>(fn: () => Promise<T>): Promise<T> {
 
 // ---------------------------------------------------------------- main loop
 
-export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; issue?: number; triageOnly?: boolean }) {
+export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; issue?: number; triageOnly?: boolean; followupOnly?: boolean }) {
   const { cfg, db } = ctx;
   if (db.get('paused')) return log('paused; `oss-bot resume` to continue');
   // Without the model credential every agent call would fail and skip its issue.
@@ -84,7 +84,7 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
 
   // 1. Follow-up on open PRs first.
   for (const pr of opts.triageOnly ? [] : db.openPrs()) {
-    if (!allowed(pr.repo)) continue;
+    if (!allowed(pr.repo) || (opts.followupOnly && opts.repo && pr.repo !== opts.repo)) continue;
     try {
       const e = await followUp(ctx, pr.issue_id);
       if (e) events.push(e);
@@ -94,7 +94,9 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
   }
 
   // 2. Find work: a specific issue, or discover and triage.
-  if (opts.issue && opts.repo) {
+  if (opts.followupOnly) {
+    // nothing new: open PRs only
+  } else if (opts.issue && opts.repo) {
     if (!allowed(opts.repo)) throw new Error(`${opts.repo} is not allowed yet (oss-bot repo allow ${opts.repo})`);
     const e = await targetIssue(ctx, repoConfig(cfg, opts.repo), opts.issue, opts.dry);
     if (e) events.push(e);
@@ -114,7 +116,7 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
   }
 
   // 3. Advance in-progress issues.
-  const candidates = opts.triageOnly ? [] : opts.issue && opts.repo
+  const candidates = opts.triageOnly || opts.followupOnly ? [] : opts.issue && opts.repo
     ? [db.issueByNumber(opts.repo, opts.issue)].filter((i): i is Issue => !!i)
     : db.nextIssues(opts.repo);
   for (const issue of candidates) {

@@ -28,10 +28,14 @@ program.command('run')
   .option('--repo <owner/name>')
   .option('--issue <number>', 'work on this issue only (needs --repo)', Number)
   .option('--triage-only', 'discover and score every waiting issue; no follow-ups, no claims, no code')
+  .option('--followup-only', 'only follow up open PRs (reviews, CI, conflicts, merges); no triage, no new work')
   .action(async (o) => {
     if (o.issue && !o.repo) throw new Error('--issue needs --repo');
     if (o.issue && o.triageOnly) throw new Error('--triage-only scores new issues; it does not take --issue');
-    await withLock(() => runOnce(ctx(randomUUID()), { dry: !!o.dry, repo: o.repo, issue: o.issue, triageOnly: !!o.triageOnly }));
+    if (o.followupOnly && (o.triageOnly || o.issue)) throw new Error('--followup-only takes neither --triage-only nor --issue');
+    await withLock(() => runOnce(ctx(randomUUID()), {
+      dry: !!o.dry, repo: o.repo, issue: o.issue, triageOnly: !!o.triageOnly, followupOnly: !!o.followupOnly,
+    }));
   });
 
 program.command('inbox').description('what needs you, how open PRs are doing, what the bot is working on')
