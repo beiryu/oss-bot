@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { fillTemplate, runAgent } from './agent.js';
 import { type RepoConfig, repoFile, writeRepoConfig } from './config.js';
-import { ensureMirror, freshClone, git, mirrorDir, slug, worktreeFrom } from './git.js';
+import { ensureMirror, freshClone, git, mirrorDir, slug } from './git.js';
 import type { Ctx } from './orchestrator.js';
 import { runInSandbox, tail } from './sandbox.js';
 
@@ -28,13 +28,13 @@ export async function probeRepo(ctx: Ctx, rc: RepoConfig, log: (m: string) => vo
   const dir = doctorDir(rc.full_name);
   await freshClone(rc.full_name, sha, dir);
   // Gate steps take their scope from `git diff HEAD`, which is empty on a clean checkout. Use
-  // the last upstream commit touching code as the sample change: HEAD stays on it, the files
-  // get their previous content, so the steps run on a real scope of unchanged code.
-  // Scope = everything the last few commits touched, content = the tree before them.
+  // the last few upstream commits as the sample change: HEAD moves back before them while the
+  // files keep today's content, so the steps run on a real scope of the code a patch builds on.
+  // (Giving the files their old content instead tested code from before a break on main.)
   let sampleLine = 'no sample change (history too shallow); diff-scoped steps run on nothing';
   for (let k = 8; k >= 1; k--) {
     if (!(await git(dir, ['rev-parse', '-q', '--verify', `HEAD~${k}^{commit}`]).catch(() => ''))) continue;
-    await worktreeFrom(dir, `HEAD~${k}`);
+    await git(dir, ['reset', '-q', '--soft', `HEAD~${k}`]);
     const n = (await git(dir, ['diff', 'HEAD', '--name-only'])).split('\n').filter(Boolean).length;
     sampleLine = `the last ${k} commits (${n} files)`;
     break;
