@@ -15,6 +15,7 @@ gate:                                        # shared Go gate; upstream CI runs 
   - "pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z \"$pkgs\" ] || SKIP_INTEGRATION=true LC_ALL=C go test -count=1 $pkgs"
 forbidden_paths: [".github/", "go.mod", "go.sum", "extras/", "labs/", "deployment/", "devel/"]
 agent_disclosure: "GitHub Copilot CLI"
+disclosure_required: true                    # AI_POLICY.md: disclose AI help in the PR
 signoff: true                                # DCO: every commit needs Signed-off-by
 notes: |
   - Commit messages and the PR title follow Conventional Commits, e.g. fix(cli): ...

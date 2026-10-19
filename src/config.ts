@@ -25,6 +25,9 @@ const RepoConfig = z.object({
   // When set, the patch may only touch files under these paths (e.g. one package of a monorepo).
   allowed_paths: z.array(z.string()).default([]),
   agent_disclosure: z.string(),
+  // The repo's rules require AI use to be disclosed in the PR: the disclosure line is then added
+  // when the PR opens instead of sitting in the editable text, where it could be deleted.
+  disclosure_required: z.boolean().default(false),
   // Project conventions the agents must follow beyond what they read in the repo
   // (test tags, markers, generated files...). Also used by the reviewer as a checklist.
   notes: z.string().default(''),

@@ -31,6 +31,7 @@ forbidden_paths:
   - LICENSE
 allowed_paths: []
 agent_disclosure: GitHub Copilot CLI
+disclosure_required: true
 notes: |-
   Commit messages are Conventional Commits in English, e.g. fix(llm): handle timeout errors.
   The PR description must disclose AI/LLM use and name the tools and models. Do not add Co-developed-by or Assisted-by trailers to commits.

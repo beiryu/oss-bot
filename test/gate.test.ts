@@ -103,3 +103,12 @@ describe('repairPathVars', () => {
     expect(repairPathVars({ test: 'action' }, files)).toEqual({ test: 'action' });
   });
 });
+
+describe('disclosure_required', () => {
+  it('defaults to false and is read from a repo file', async () => {
+    const { RepoConfigSchema: RepoConfig } = await import('../src/config.js');
+    const base = { full_name: 'o/r', fork: 'me/r', default_branch: 'main', focused_test: 'go test', gate: ['true'], agent_disclosure: 'X' };
+    expect(RepoConfig.parse(base).disclosure_required).toBe(false);
+    expect(RepoConfig.parse({ ...base, disclosure_required: true }).disclosure_required).toBe(true);
+  });
+});

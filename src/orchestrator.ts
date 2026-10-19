@@ -25,6 +25,7 @@ const log = (msg: string) => console.log(`${new Date().toISOString()} ${msg}`);
 const daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000).toISOString();
 const NOT_FEASIBLE = 'triage: not feasible';
 const OWN_REPLY = '<!-- oss-bot: your reply goes above this line -->';
+const REQUIRED_DISCLOSURE = '<!-- oss-bot: this repo requires AI disclosure; the line is added at the end when the PR opens. -->';
 const OWN_WORDS = '<!-- oss-bot: replace this line with why you are making this change, in your own words -->';
 const PICK_WHY = '<!-- oss-bot: keep ONE reason below and delete the other, or write your own. Comment lines like this one are removed before posting. -->';
 type Why = { en: string; vi: string };
@@ -781,12 +782,13 @@ export async function approvePr(ctx: Ctx, id: number) {
   if (!fixed.ok) throw new Error(fixed.reason);
 
   const bodyFile = join(dir, 'PR_BODY.md');
+  // The disclosure comes from what the runtime reported, never from an agent's own claim.
+  const models = db.modelsForIssue(issue.id);
+  const tool = models ? `${rc.agent_disclosure} (model${models.length > 1 ? 's' : ''}: ${models.join(', ')})` : rc.agent_disclosure;
+  const disclosure = `AI disclosure: this change was drafted with ${tool}. I reviewed and tested it myself.`;
   if (!existsSync(bodyFile)) {
-    // The disclosure comes from what the runtime reported, never from an agent's own claim.
-    const models = db.modelsForIssue(issue.id);
-    const tool = models ? `${rc.agent_disclosure} (model${models.length > 1 ? 's' : ''}: ${models.join(', ')})` : rc.agent_disclosure;
     writeFileSync(bodyFile, `${issue.pr_title}\n\n${issue.pr_body}\n\n${whyBlock(readWhy(dir))}\n\n`
-      + `AI disclosure: this change was drafted with ${tool}. I reviewed and tested it myself.\n`);
+      + (rc.disclosure_required ? `${REQUIRED_DISCLOSURE}\n` : `${disclosure}\n`));
   }
   console.log(`Opening ${bodyFile}. The first line is the PR title. Pick one reason (or write your own).`);
   editInEditor(bodyFile);
@@ -796,8 +798,9 @@ export async function approvePr(ctx: Ctx, id: number) {
     throw new Error('both suggested reasons are still there; keep one. PR not opened');
   }
   const [title, ...rest] = stripComments(edited).split('\n');
-  const body = rest.join('\n').trim();
+  let body = rest.join('\n').trim();
   if (!title.trim() || !body) throw new Error('empty title or body');
+  if (rc.disclosure_required && !/^AI disclosure:/m.test(body)) body = `${body}\n\n${disclosure}`;
 
   // Push from a host-made clone; the agent never had access to this directory.
   const slug = issue.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40).replace(/-$/, '');
