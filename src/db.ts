@@ -272,10 +272,10 @@ export class Db {
   }
 
   // --- prs ---
-  insertPr(issueId: number, url: string, number: number) {
+  insertPr(issueId: number, url: string, number: number, o: { openedAt?: string; lastSeenAt?: string } = {}) {
     const t = now();
     this.sql.prepare('INSERT INTO prs (issue_id, url, number, state, last_seen_at, opened_at) VALUES (?, ?, ?, ?, ?, ?)')
-      .run(issueId, url, number, 'open', t, t);
+      .run(issueId, url, number, 'open', o.lastSeenAt ?? t, o.openedAt ?? t);
   }
   openPrs(): (Pr & { repo: string })[] {
     return this.sql.prepare(

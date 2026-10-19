@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { randomUUID } from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { adoptPrs } from './adopt.js';
 import { loadConfig, repoConfig } from './config.js';
 import { doctor } from './doctor.js';
 import { addRepo, listRepos, removeRepo } from './onboard.js';
@@ -120,6 +121,10 @@ approve.command('pr <id>').action((id) => approvePr(ctx(), Number(id)));
 approve.command('followup <actionId>').action((id) => approveFollowup(ctx(), Number(id)));
 program.command('show-action <id>', { hidden: true }).action((id) => showAction(ctx().db, Number(id)));
 program.command('reject-action <id>', { hidden: true }).action((id) => ctx().db.setActionStatus(Number(id), 'rejected'));
+
+program.command('pr').command('adopt [urls...]')
+  .description('track PRs you opened earlier (by hand or before this state.db): all untracked ones in the configured repos, or the given URLs')
+  .action(async (urls) => withLock(async () => { for (const l of await adoptPrs(ctx(), urls ?? [])) console.log(l); }));
 
 program.command('pause').description('stop runs until resume').action(() => ctx().db.set('paused', '1'));
 program.command('resume').action(() => ctx().db.set('paused', null));

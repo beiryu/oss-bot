@@ -118,6 +118,44 @@ export async function openPrForHead(repo: string, head: string): Promise<{ url: 
   return pr ? { url: pr.url, number: pr.number } : null;
 }
 
+export interface GhPr {
+  number: number;
+  url: string;
+  title: string;
+  body: string;
+  createdAt: string;
+  headRefName: string;
+  headRefOid: string;
+  headRepositoryOwner: { login: string };
+  author: { login: string };
+  closingIssuesReferences: { number: number }[];
+}
+
+/** Your open PRs against `repo`, with what `pr adopt` needs. */
+export function myOpenPrs(repo: string, author: string): Promise<GhPr[]> {
+  return ghJson(['pr', 'list', '-R', repo, '--author', author, '--state', 'open', '--limit', '100', '--json',
+    'number,url,title,body,createdAt,headRefName,headRefOid,headRepositoryOwner,author,closingIssuesReferences']);
+}
+
+/** When you last acted on the PR (comment, review reply, commit); feedback after it is unanswered. */
+export async function myLastActivity(repo: string, number: number, login: string): Promise<string> {
+  const pr = await ghJson<any>(['pr', 'view', String(number), '-R', repo, '--json', 'createdAt,comments,reviews,commits']);
+  const mine = (a: any) => a?.login?.toLowerCase() === login.toLowerCase();
+  const times = [
+    pr.createdAt,
+    ...pr.comments.filter((c: any) => mine(c.author)).map((c: any) => c.createdAt),
+    ...pr.reviews.filter((r: any) => mine(r.author)).map((r: any) => r.submittedAt),
+    ...pr.commits.map((c: any) => c.committedDate),
+  ].filter(Boolean) as string[];
+  return times.map((t) => new Date(t).toISOString()).sort().pop()!;
+}
+
+/** The commit `head` (owner:branch) branched from `base`, as GitHub computes it for the PR diff. */
+export async function compareMergeBase(repo: string, base: string, head: string): Promise<string> {
+  return (await gh(['api', `repos/${repo}/compare/${encodeURIComponent(base)}...${encodeURIComponent(head)}`,
+    '--jq', '.merge_base_commit.sha'])).trim();
+}
+
 export async function createPr(o: { repo: string; base: string; head: string; title: string; body: string }) {
   const url = (await gh(['pr', 'create', '-R', o.repo, '--base', o.base, '--head', o.head,
     '--title', o.title, '--body-file', '-'], o.body, false)).trim().split('\n').pop()!;
