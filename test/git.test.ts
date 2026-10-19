@@ -58,3 +58,14 @@ describe('readAgentFile', () => {
     expect(() => readAgentFile(join(root, 'dir'), '../dir/../../' + outside.split('/').pop() + '/secret')).toThrow();
   });
 });
+
+describe('dropUnrelatedRegeneration', () => {
+  it('drops generated files that change the same way on the base, keeps what the patch caused', async () => {
+    const { dropUnrelatedRegeneration } = await import('../src/orchestrator.js');
+    const stale = block('docs/feed.xml');
+    const onBase = stale + block('docs/zh/guide/a.html');
+    const after = stale + block('docs/zh/guide/a.html', '@@ -1 +1 @@\n-a\n+c\n') + block('docs/guide/new.html');
+    expect(dropUnrelatedRegeneration(after, onBase)).toBe(block('docs/zh/guide/a.html', '@@ -1 +1 @@\n-a\n+c\n') + block('docs/guide/new.html'));
+    expect(dropUnrelatedRegeneration(after, '')).toBe(after);
+  });
+});

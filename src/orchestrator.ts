@@ -840,10 +840,16 @@ export async function afterCommit(cfg: Config, rc: RepoConfig, push: string, bas
     await execa('git', ['-c', 'core.hooksPath=/dev/null', 'clone', '-q', '--no-hardlinks', `file://${resolve(push)}`, gen]);
     mkdirSync(join(gen, AGENT_META), { recursive: true });
     appendFileSync(join(gen, '.git', 'info', 'exclude'), `\n/${AGENT_META}/\n`);
-    const r = await runInSandbox(cfg, gen, `git config --global --add safe.directory /work; ${rc.after_commit.join(' && ')} `
-      + `&& git -c core.hooksPath=/dev/null add -A && git -c core.hooksPath=/dev/null diff --cached --binary HEAD > ${AGENT_META}/AFTER.diff`);
+    // The generators also run on the unpatched base: output they change there too (generated
+    // files already stale on main) is not this PR's to carry, and maintainers reject it.
+    const head = await git(gen, ['rev-parse', 'HEAD']);
+    const g = 'git -c core.hooksPath=/dev/null';
+    const generate = (out: string) => `${rc.after_commit.join(' && ')} && ${g} add -A && ${g} diff --cached --binary HEAD > ${AGENT_META}/${out}`;
+    const r = await runInSandbox(cfg, gen, `git config --global --add safe.directory /work; `
+      + `${g} checkout -q ${base} && ${generate('BASE.diff')} && ${g} reset -q --hard && ${g} clean -fdq -e ${AGENT_META} `
+      + `&& ${g} checkout -q ${head} && ${generate('AFTER.diff')}`);
     if (r.exitCode !== 0) throw new Error(`after_commit failed; nothing pushed:\n${r.output}`);
-    const extra = readAgentFile(gen, `${AGENT_META}/AFTER.diff`);
+    const extra = dropUnrelatedRegeneration(readAgentFile(gen, `${AGENT_META}/AFTER.diff`), readAgentFile(gen, `${AGENT_META}/BASE.diff`));
     if (extra.trim()) {
       const fixed = staticChecks(extra, { ...rc, allowed_paths: [] });
       if (!fixed.ok) throw new Error(`after_commit produced a change the gate rejects (${fixed.reason}); nothing pushed`);
@@ -853,6 +859,12 @@ export async function afterCommit(cfg: Config, rc: RepoConfig, push: string, bas
     }
   }
   return `${await git(push, ['diff', '--binary', base, 'HEAD'])}\n`;
+}
+
+/** Keeps the generated changes the patch caused: a file block the generators produce identically on the base is dropped. */
+export function dropUnrelatedRegeneration(after: string, onBase: string): string {
+  const stale = new Map(parsePatch(onBase).map((f) => [f.path, f.block]));
+  return parsePatch(after).filter((f) => stale.get(f.path) !== f.block).map((f) => f.block).join('');
 }
 
 /** Replaces the PR branch with one commit of the rebased patch; refuses if the branch moved since the bot last pushed it. */
