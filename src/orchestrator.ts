@@ -551,7 +551,7 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
     if (snap.state === 'merged') {
       await notify(cfg, `🎉 oss-bot: ${pr.url} was merged.`);
     } else {
-      const last = (await gh.prCommentsSince(issue.repo, pr.number, '1970-01-01T00:00:00Z', rc.review_bots)).slice(-3);
+      const last = (await gh.prCommentsSince(issue.repo, pr.number, '1970-01-01T00:00:00Z')).slice(-3);
       await notify(cfg, `oss-bot: ${pr.url} was CLOSED without being merged.\n\n`
         + (last.map((c) => `@${c.author}: ${c.body.slice(0, 300)}`).join('\n\n') || '(no comments)'));
     }
@@ -584,7 +584,7 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
   }
 
   // 2. New review comments, and CI that failed on a commit not looked at yet.
-  const comments = await gh.prCommentsSince(issue.repo, pr.number, pr.last_seen_at, rc.review_bots);
+  const comments = await gh.prCommentsSince(issue.repo, pr.number, pr.last_seen_at);
   const ciFailed = snap.ci === 'failure' && pr.ci_seen_sha !== snap.headSha;
   if (comments.length === 0 && !ciFailed) return null;
   if (pending) return `PR ${pr.url}: new activity, previous draft still pending`;

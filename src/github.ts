@@ -290,18 +290,16 @@ const USER_BOTS = new Set(['CLAassistant', 'claassistantio', 'codecov-commenter'
 export const isBot = (login: string) => login.endsWith('[bot]') || USER_BOTS.has(login);
 
 /**
- * Whether a PR comment is feedback worth acting on. Humans always count. Bots are noise
- * (CLA, CI summaries) except the repo's own AI reviewers listed in `reviewBots`, and only
- * their inline review comments, which carry the actual suggestions.
+ * Whether a PR comment goes to the follow-up agent: everything new that is not yours, bots
+ * included (AI reviewers, CLA, CI summaries). The agent decides what needs a fix, an answer
+ * or nothing; a reply is only drafted when a human wrote something.
  */
-export function isFeedback(c: PrComment, me: string, since: string, reviewBots: string[]) {
-  if (c.createdAt <= since || c.author === me) return false;
-  if (!isBot(c.author)) return true;
-  return c.kind === 'review-comment' && reviewBots.includes(c.author);
+export function isFeedback(c: PrComment, me: string, since: string) {
+  return c.createdAt > since && c.author !== me;
 }
 
 /** All feedback on a PR since `since`: conversation comments, reviews and inline review comments. */
-export async function prCommentsSince(repo: string, number: number, since: string, reviewBots: string[] = []): Promise<PrComment[]> {
+export async function prCommentsSince(repo: string, number: number, since: string): Promise<PrComment[]> {
   const login = await currentUser();
   const issueComments = await ghJson<any[]>(['api', '--paginate', '--slurp', `repos/${repo}/issues/${number}/comments?since=${since}`]);
   const reviews = await ghJson<any[]>(['api', '--paginate', '--slurp', `repos/${repo}/pulls/${number}/reviews`]);
@@ -316,7 +314,7 @@ export async function prCommentsSince(repo: string, number: number, since: strin
     ...inline.flat().map((c) => ({ kind: 'review-comment' as const, author: c.user.login, body: c.body, createdAt: c.created_at, path: c.path, line: c.line })),
   ];
   return out
-    .filter((c) => isFeedback(c, login, since, reviewBots))
+    .filter((c) => isFeedback(c, login, since))
     .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 }
 

@@ -31,7 +31,7 @@ const RepoConfig = z.object({
   // false when the project requires review answers in the contributor's own words: the
   // follow-up agent then only explains the feedback to you, and you write the reply.
   draft_replies: z.boolean().default(true),
-  // Bot accounts whose inline review comments count as feedback, e.g. "github-actions[bot]".
+  // The repo's AI review bots, e.g. "github-actions[bot]". Informational: every bot's comments are read.
   review_bots: z.array(z.string()).default([]),
   // Commands run after the commit, in a clone with full history, before pushing; what they
   // change is folded into the same commit. For files generated from git dates (feeds,

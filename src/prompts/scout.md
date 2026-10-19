@@ -34,7 +34,7 @@ template, Makefile / go.mod / package.json / pyproject.toml, and the test/lint j
 - forbidden_paths: directories/files the bot must never change: CI config, dependency
   manifests, generated code, vendored code, docs sites, release tooling, examples.
 - signoff: true if commits need a DCO Signed-off-by trailer.
-- review_bots: bot logins whose inline review comments should be treated as feedback
+- review_bots: bot logins that review PRs here (AI reviewers); informational, all comments are read
   (e.g. "coderabbitai[bot]"), from the facts.
 - draft_replies: false only if the project forbids AI-written review replies.
 - notes: 3-8 short lines of conventions the agents must follow that are not obvious from the

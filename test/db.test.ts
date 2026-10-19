@@ -60,15 +60,14 @@ describe('isFeedback', () => {
   const c = (author: string, kind: PrComment['kind'] = 'review-comment', createdAt = '2026-10-13T05:00:00Z'): PrComment =>
     ({ kind, author, body: 'x', createdAt });
   const since = '2026-10-13T04:00:00Z';
-  it('keeps humans, drops me, old comments and unlisted bots', () => {
-    expect(isFeedback(c('alice', 'comment'), 'beiryu', since, [])).toBe(true);
-    expect(isFeedback(c('beiryu'), 'beiryu', since, [])).toBe(false);
-    expect(isFeedback(c('alice', 'comment', '2026-10-13T03:00:00Z'), 'beiryu', since, [])).toBe(false);
-    expect(isFeedback(c('github-actions[bot]'), 'beiryu', since, [])).toBe(false);
+  it('keeps everything new that is not mine, bots included', () => {
+    expect(isFeedback(c('alice', 'comment'), 'beiryu', since)).toBe(true);
+    expect(isFeedback(c('gemini-code-assist[bot]'), 'beiryu', since)).toBe(true);
+    expect(isFeedback(c('gemini-code-assist[bot]', 'review'), 'beiryu', since)).toBe(true);
+    expect(isFeedback(c('CLAassistant', 'comment'), 'beiryu', since)).toBe(true);
   });
-  it('keeps only inline comments from listed review bots', () => {
-    expect(isFeedback(c('github-actions[bot]'), 'beiryu', since, ['github-actions[bot]'])).toBe(true);
-    expect(isFeedback(c('github-actions[bot]', 'comment'), 'beiryu', since, ['github-actions[bot]'])).toBe(false);
-    expect(isFeedback(c('CLAassistant', 'comment'), 'beiryu', since, ['github-actions[bot]'])).toBe(false);
+  it('drops my own and old comments', () => {
+    expect(isFeedback(c('beiryu'), 'beiryu', since)).toBe(false);
+    expect(isFeedback(c('alice', 'comment', '2026-10-13T03:00:00Z'), 'beiryu', since)).toBe(false);
   });
 });
