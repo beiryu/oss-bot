@@ -497,7 +497,8 @@ async function writePr(ctx: Ctx, rc: RepoConfig, issue: Issue) {
 
 /**
  * A gate step that fails on the unpatched base says nothing about the change: the issue
- * keeps its state and attempts, is left out of `nextIssues` until `repo doctor` clears it,
+ * keeps its state and attempts, is left out of `nextIssues` until a run re-probes the gate on a
+ * newer main (or `repo doctor`) and it passes,
  * and the human hears about it once.
  */
 async function blockOnEnvironment(ctx: Ctx, issue: Issue, step: string, reason: string) {
@@ -505,7 +506,8 @@ async function blockOnEnvironment(ctx: Ctx, issue: Issue, step: string, reason: 
   ctx.db.update(issue.id, { blocked: why });
   log(`#${issue.number}: blocked (${why})`);
   await notify(ctx.cfg, `oss-bot: ${issue.repo} — ${why}\n${tail(reason, 20)}\n`
-    + `Nothing wrong with the change; the step fails on the base too. Check the gate: \`oss-bot repo doctor ${issue.repo} --fix\``);
+    + `Nothing wrong with the change; the step fails on the base too. Each run re-checks once main moves. `
+    + `If main builds upstream (the gate is wrong here): \`oss-bot repo doctor ${issue.repo} --fix\``);
   return `#${issue.number} blocked: ${why}`;
 }
 

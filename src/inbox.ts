@@ -40,7 +40,8 @@ export function needsYou(db: Db, cfg: Config): string[] {
   }
   const blockedRepos = new Map<string, string>();
   for (const i of db.blockedIssues()) if (!blockedRepos.has(i.repo)) blockedRepos.set(i.repo, i.blocked!);
-  for (const [repo, why] of blockedRepos) out.push(`  ⚠ ${short(repo)}: ${why.slice(0, 70)}  → ${cmd.doctor(repo)}`);
+  for (const [repo, why] of blockedRepos) out.push(`  ⚠ ${short(repo)}: ${why.slice(0, 70)}\n`
+    + `      bot tự thử lại khi main có commit mới; nếu main vẫn build được (lỗi ở gate) thì: ${cmd.doctor(repo)}`);
   return out;
 }
 
