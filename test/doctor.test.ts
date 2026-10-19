@@ -51,6 +51,20 @@ describe('blocked issues', () => {
     expect(db.clearBlocked('o/r')).toBe(1);
     expect(db.nextIssues().map((i) => i.id)).toEqual([id]);
   });
+  it('go back to claimed when released onto a new head, unless already in a PR or on that head', () => {
+    const db = new Db(':memory:');
+    db.upsertRepo('o/r', 'me/r');
+    const add = (n: number, state: 'coded' | 'pr_open', base: string) => {
+      db.insertDiscovered({ repo: 'o/r', number: n, title: 't', body: '', url: 'u' });
+      const id = db.issueByNumber('o/r', n)!.id;
+      db.transition(id, state, { base_sha: base, blocked: 'gate broken on base: go list ./...' });
+      return id;
+    };
+    const stale = add(1, 'coded', 'old'), current = add(2, 'coded', 'new'), inPr = add(3, 'pr_open', 'old');
+    expect(db.clearBlocked('o/r', 'new')).toBe(3);
+    expect([stale, current, inPr].map((id) => db.issue(id).state)).toEqual(['claimed', 'coded', 'pr_open']);
+    expect(db.blockedIssues('o/r')).toEqual([]);
+  });
 });
 
 describe('repos/*.yaml', () => {

@@ -6,6 +6,7 @@ import { join, resolve } from 'node:path';
 import { AgentError, fillTemplate, runAgent, safeTestVars } from './agent.js';
 import { type Config, repoConfig, type RepoConfig } from './config.js';
 import type { Db, Issue, PendingAction, Pr } from './db.js';
+import { probeRepo } from './doctor.js';
 import { housekeeping } from './housekeeping.js';
 import { cmd, needsYou } from './inbox.js';
 import { runGate, hashTestFiles, focusedTestCommand, repairPathVars, staticChecks } from './gate.js';
@@ -81,6 +82,22 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
     }
   }
   const allowed = (r: string) => db.repo(r)?.status === 'active' && db.repo(r)?.policy_status === 'allowed' && heads.has(r);
+
+  // 0. A repo whose gate broke on the base: once its main moves, probe the gate there again
+  // (once per upstream commit) and release the blocked issues when it passes.
+  for (const [repo, head] of opts.triageOnly ? [] : heads) {
+    if (!allowed(repo) || !db.blockedIssues(repo).length || db.get(`blocked-probed:${repo}`) === head) continue;
+    db.set(`blocked-probed:${repo}`, head);
+    try {
+      const p = await probeRepo(ctx, repoConfig(cfg, repo), () => {});
+      const failed = [...p.steps, ...(p.focused ? [p.focused] : [])].filter((s) => !s.ok);
+      if (failed.length) { log(`${repo}: gate still fails on ${head.slice(0, 10)} (${failed[0].cmd.slice(0, 80)})`); continue; }
+      const n = db.clearBlocked(repo, p.sha);
+      events.push(`${repo}: gate works again on ${p.sha.slice(0, 10)}; ${n} blocked issue(s) released`);
+    } catch (e) {
+      log(`${repo}: gate re-check failed: ${(e as Error).message.split('\n')[0]}`);
+    }
+  }
 
   // 1. Follow-up on open PRs first.
   for (const pr of opts.triageOnly ? [] : db.openPrs()) {

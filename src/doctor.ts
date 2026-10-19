@@ -67,7 +67,7 @@ export async function doctor(ctx: Ctx, rc: RepoConfig, opts: { fix: boolean; yes
   const failed = [...steps, ...(focused ? [focused] : [])].filter((s) => !s.ok);
   const report = `${rc.full_name} @ ${sha.slice(0, 10)}, scope = files of ${sampleLine}\n${formatSteps(steps, focused, !focused)}`;
   if (!failed.length) {
-    const n = ctx.db.clearBlocked(rc.full_name);
+    const n = ctx.db.clearBlocked(rc.full_name, sha);
     return `${report}\n\ngate works on the base${n ? `; ${n} blocked issue(s) released` : ''}`;
   }
   if (!opts.fix) return `${report}\n\n${failed.length} step(s) fail on the base. Ask for a proposal: oss-bot repo doctor ${rc.full_name} --fix`;

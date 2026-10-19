@@ -244,8 +244,18 @@ export class Db {
     return this.sql.prepare('SELECT * FROM issues WHERE blocked IS NOT NULL AND (? IS NULL OR repo = ?) ORDER BY updated_at')
       .all(repo ?? null, repo ?? null) as Issue[];
   }
-  clearBlocked(repo: string): number {
-    return this.sql.prepare('UPDATE issues SET blocked = NULL WHERE repo = ? AND blocked IS NOT NULL').run(repo).changes;
+  /**
+   * Releases a repo's blocked issues. With `head`, work not yet in a PR that was built on another
+   * base goes back to `claimed`: its gate would run on that old (broken) base again otherwise.
+   */
+  clearBlocked(repo: string, head?: string): number {
+    return this.sql.transaction(() => {
+      if (head) {
+        this.sql.prepare(`UPDATE issues SET state = 'claimed', updated_at = ? WHERE repo = ? AND blocked IS NOT NULL
+          AND state IN ('reproduced', 'coded', 'gated', 'reviewed') AND base_sha IS NOT ?`).run(now(), repo, head);
+      }
+      return this.sql.prepare('UPDATE issues SET blocked = NULL WHERE repo = ? AND blocked IS NOT NULL').run(repo).changes;
+    })();
   }
   // Issues that hold a repo's pipeline slot (in progress or waiting on the human).
   inFlightCount(repo: string): number {
