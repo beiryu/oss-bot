@@ -53,6 +53,9 @@ const Config = z.object({
   limits: z.object({
     max_open_prs_per_repo: z.number().default(1),
     max_triage_per_run: z.number().default(5),
+    // Triaged issues below this score stay in the queue but are never picked on their own;
+    // `run --issue N` still works on them. Low scores mean "needs a maintainer decision".
+    min_score: z.number().min(0).max(1).default(0.5),
     // A run stops before cloning or building when the disk holding work/ has less free space.
     min_free_disk_gb: z.number().default(15),
     // After each run the least recently used Go build output is dropped while the cache is past this (modules stay).

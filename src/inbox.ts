@@ -81,7 +81,8 @@ export function renderInbox(db: Db, cfg: Config): string {
   // Scored and waiting for their repo's slot; the best per repo is taken first.
   const queued = db.allIssues().filter((i) => i.state === 'triaged').sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
   const queueLines = queued.slice(0, 12).map((i) => {
-    const full = db.openPrCount(i.repo) >= cfg.limits.max_open_prs_per_repo ? `  (chờ: repo đã đủ ${cfg.limits.max_open_prs_per_repo} PR mở)` : '';
+    const full = (i.score ?? 0) < cfg.limits.min_score ? `  (dưới min_score ${cfg.limits.min_score}: chỉ chạy bằng --issue)`
+      : db.openPrCount(i.repo) >= cfg.limits.max_open_prs_per_repo ? `  (chờ: repo đã đủ ${cfg.limits.max_open_prs_per_repo} PR mở)` : '';
     return `  ${pad(`${short(i.repo)}#${i.number}`, 22)} ${(i.score ?? 0).toFixed(2)}  ${i.title.slice(0, 50)}${full}`;
   });
   if (queued.length > queueLines.length) queueLines.push(`  … và ${queued.length - queueLines.length} issue khác (status --all)`);

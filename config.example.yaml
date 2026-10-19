@@ -10,6 +10,7 @@ repos: []
 limits:
   max_open_prs_per_repo: 2
   max_triage_per_run: 5
+  min_score: 0.5                # triaged issues below this are only worked on with `run --issue N`
   max_attempts: 3
   max_go_build_cache_gb: 6      # least recently used build output is dropped past this; Go modules are kept
 

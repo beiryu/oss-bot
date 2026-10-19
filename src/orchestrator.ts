@@ -152,8 +152,9 @@ export function triagePriority(issue: { title: string }): number {
 async function discoverAndTriage(ctx: Ctx, rc: RepoConfig, triageOnly = false): Promise<string | null> {
   const { cfg, db } = ctx;
 
+  const worthIt = (i: Issue) => (i.score ?? 0) >= cfg.limits.min_score;
   // Already-triaged issues waiting for a free slot come first; re-check that they are still free.
-  for (const t of triageOnly ? [] : db.issuesInState('triaged', rc.full_name).sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
+  for (const t of triageOnly ? [] : db.issuesInState('triaged', rc.full_name).filter(worthIt).sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
     const gi = await gh.getIssue(rc.full_name, t.number);
     const why = await unavailable(rc, gi);
     if (why) { db.skip(t.id, why); continue; }
@@ -187,7 +188,7 @@ async function discoverAndTriage(ctx: Ctx, rc: RepoConfig, triageOnly = false): 
     }
     const t = await triage(ctx, rc, issue);
     scored.push(t);
-    if (t.state === 'triaged' && (!best || (t.score ?? 0) > (best.score ?? 0))) best = t;
+    if (t.state === 'triaged' && worthIt(t) && (!best || (t.score ?? 0) > (best.score ?? 0))) best = t;
   }
   if (triageOnly) {
     if (!scored.length) return `${rc.full_name}: nothing new to triage`;
