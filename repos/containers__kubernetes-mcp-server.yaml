@@ -1,35 +1,21 @@
-full_name: containers/kubernetes-mcp-server
+full_name: containers/kubernetes-mcp-server  # Go; CONTRIBUTING.md (DCO, Conventional Commits, envtest)
 fork: beiryu/kubernetes-mcp-server
 default_branch: main
-branch_prefix: fix/
+branch_prefix: "fix/"
 branch_name: "{{number}}-{{slug}}"
-require_assignment: true
 labels: []
-skip_labels:
-  - question
-  - wontfix
-  - duplicate
-  - invalid
-  - enhancement
+skip_labels: ["question", "wontfix", "duplicate", "invalid", "enhancement"]
 max_issue_age_days: 60
-focused_test: LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'
-gate:
+focused_test: "LC_ALL=C go test -count=1 ./{{pkg}} -run '^{{test}}$'"
+gate:                                        # shared Go gate; upstream CI runs the full suite
   - "out=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r gofmt -s -l); [ -z \"$out\" ] || { echo \"not gofmt-clean: $out\"; exit 1; }"
-  - git diff HEAD --check -- . ':!docs/KIALI.md'
-  - go list -export ./... >/dev/null
-  - go vet $(go list ./... | grep -v '/pkg/toolsets/netobserv/tools$')
-  - pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}' | grep -v '/pkg/toolsets/netobserv/tools$'); [ -z "$pkgs" ] || LC_ALL=C go test -count=1 $pkgs
-forbidden_paths:
-  - .github/
-  - go.mod
-  - go.sum
-  - charts/
-  - npm/
-  - python/
-  - README.md
-  - docs/configuration.md
-allowed_paths: []
-agent_disclosure: GitHub Copilot CLI
+  - "git diff HEAD --check"
+  - "go list -export ./... >/dev/null"   # compiles every package without linking main binaries (linking is never cached)
+  - "go vet ./..."
+  - "pkgs=$(git diff HEAD --name-only --diff-filter=ACMR -- '*.go' | xargs -r -n1 dirname | sort -u | sed 's|^|./|' | xargs -r go list -e -f '{{if not .Error}}{{.ImportPath}}{{end}}'); [ -z \"$pkgs\" ] || LC_ALL=C go test -count=1 $pkgs"
+forbidden_paths: [".github/", "go.mod", "go.sum", "charts/", "npm/", "python/", "README.md", "docs/configuration.md"]
+agent_disclosure: "GitHub Copilot CLI"
+signoff: true                                # DCO: every commit needs Signed-off-by
 notes: |
   - Commit messages and the PR title follow Conventional Commits (under 72 chars),
     e.g. fix(toolsets): ...; reference the issue with "Fixes: #N".
@@ -38,8 +24,3 @@ notes: |
   - Skip issues that change the tool list (README.md / docs/configuration.md are generated
     by `make update-readme-tools`) or need a real cluster, KubeVirt or OpenShift.
   - Run gofmt on changed files; keep the change small.
-  Base has a broken test in pkg/toolsets/netobserv/tools (stubInspector lacks BearerToken) and a trailing blank line in docs/KIALI.md, so the gate excludes them from go vet, go test and diff --check; no project switch exists for skipping external-service tests.
-draft_replies: true
-review_bots: []
-after_commit: []
-signoff: true
