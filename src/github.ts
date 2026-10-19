@@ -106,6 +106,43 @@ export async function linkedOpenPrCount(repo: string, number: number): Promise<n
   return closing + refs;
 }
 
+// First-person "I'm on this": a claim, a fix someone has ready, or a PR they are about to open.
+const PR = String.raw`(?:a |the |my )?(?:\w+ )?(?:pr|pull request|fix|patch)\b`;
+const CLAIM_INTENT = new RegExp([
+  String.raw`\bI(?:'ve| have)(?: got)? (?:a|the|my) (?:fix|patch|branch|pr|pull request|draft)\b`,
+  String.raw`\bI(?:'d| would) (?:like|love|be happy) to (?:work on|take|fix|tackle|pick up)\b`,
+  String.raw`\bI(?:'m| am) (?:working on (?:this|it|a fix)|on it|already on)\b`,
+  String.raw`\bI(?:'ll| will) (?:work on (?:this|it)|take (?:this|it)(?! *(?:a )?look)|fix (?:this|it))\b`,
+  String.raw`\b(?:I(?:'ll| will| can)|(?:happy|glad) to|(?:can|may|shall) I) (?:open|submit|send|raise|put up) ${PR}`,
+  String.raw`\b(?:can|may|shall) I (?:work on|take|pick up) (?:this|it)\b`,
+  String.raw`\bbefore (?:opening|submitting|sending) ${PR}`,
+  String.raw`(?:^|\s)/assign\b`, String.raw`\bassign (?:this|it) to me\b`,
+].join('|'), 'i');
+
+export interface IssueText { author: string; at: string; body: string }
+
+/** The latest recent statement by someone else (not you, not a bot) that they fix the issue themselves. */
+export function findOtherClaim(texts: IssueText[], me: string, since: string): string | null {
+  const hit = texts.filter((t) => t.at >= since && t.author.toLowerCase() !== me.toLowerCase() && !isBot(t.author))
+    .map((t) => ({ t, m: CLAIM_INTENT.exec(t.body.replace(/```[\s\S]*?```|^>.*$/gm, '')) }))
+    .filter((x) => x.m).pop();
+  if (!hit) return null;
+  const at = hit.m!.index;
+  const quote = hit.t.body.replace(/```[\s\S]*?```|^>.*$/gm, '').slice(Math.max(0, at - 40), at + 100).replace(/\s+/g, ' ').trim();
+  return `@${hit.t.author} on ${hit.t.at.slice(0, 10)}: "…${quote}…"`;
+}
+
+/** Someone else said on the issue (body or comments, last `days` days) that they are fixing it. */
+export async function otherClaim(repo: string, number: number, days = 45): Promise<string | null> {
+  const me = await currentUser();
+  const i = await ghJson<any>(['issue', 'view', String(number), '-R', repo, '--json', 'author,body,createdAt,comments']);
+  const texts: IssueText[] = [
+    { author: i.author?.login ?? '', at: i.createdAt, body: i.body ?? '' },
+    ...(i.comments ?? []).map((c: any) => ({ author: c.author?.login ?? '', at: c.createdAt, body: c.body ?? '' })),
+  ];
+  return findOtherClaim(texts, me, new Date(Date.now() - days * 86_400_000).toISOString());
+}
+
 export async function commentOnIssue(repo: string, number: number, body: string) {
   await gh(['issue', 'comment', String(number), '-R', repo, '--body-file', '-'], body, false);
 }

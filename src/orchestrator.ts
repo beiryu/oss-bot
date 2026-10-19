@@ -175,7 +175,7 @@ async function discoverAndTriage(ctx: Ctx, rc: RepoConfig, triageOnly = false): 
   // Already-triaged issues waiting for a free slot come first; re-check that they are still free.
   for (const t of triageOnly ? [] : db.issuesInState('triaged', rc.full_name).filter(worthIt).sort((a, b) => (b.score ?? 0) - (a.score ?? 0))) {
     const gi = await gh.getIssue(rc.full_name, t.number);
-    const why = await unavailable(rc, gi);
+    const why = await unavailable(rc, gi) ?? await othersOnIt(rc, t.number);
     if (why) { db.skip(t.id, why); continue; }
     return promote(ctx, rc, t);
   }
@@ -233,9 +233,17 @@ async function unavailable(rc: RepoConfig, gi: gh.GhIssue & { state?: string }):
   return null;
 }
 
+/** Someone else said on the issue that they are fixing it; one API call, so only for issues about to cost something. */
+async function othersOnIt(rc: RepoConfig, number: number): Promise<string | null> {
+  const who = await gh.otherClaim(rc.full_name, number);
+  return who ? `someone else is on it: ${who}` : null;
+}
+
 async function triage(ctx: Ctx, rc: RepoConfig, issue: Issue): Promise<Issue> {
   const { db } = ctx;
   log(`#${issue.number}: triage`);
+  const taken = await othersOnIt(rc, issue.number);
+  if (taken) return db.skip(issue.id, taken);
   try {
     const r = await runAgent(ctx, {
       agent: 'triage', issueId: issue.id, workdir: mirrorDir(rc.full_name), readOnly: true,
@@ -296,6 +304,8 @@ async function targetIssue(ctx: Ctx, rc: RepoConfig, number: number, dry: boolea
     issue = db.update(issue.id, { blocked: null });
   }
   if (issue.state === 'triaged' || issue.state === 'awaiting_claim') {
+    const taken = await othersOnIt(rc, number);
+    if (taken) log(`#${number}: warning: ${taken}; \`approve\` will refuse to claim or open a PR while that stands`);
     // A dry issue is worked on without claiming; `approve pr` still requires the claim.
     if (dry) issue = db.transition(issue.id, 'claimed', { dry: 1 });
     else return promote(ctx, rc, issue);
@@ -713,6 +723,8 @@ export async function approveClaim(ctx: Ctx, id: number) {
   if (!['awaiting_claim', ...(issue.dry ? ['claimed', 'reproduced', 'coded', 'gated', 'reviewed', 'awaiting_pr_approval'] : [])].includes(issue.state)) {
     throw new Error(`issue is ${issue.state}`);
   }
+  const taken = await othersOnIt(rc, issue.number);
+  if (taken) throw new Error(`${taken}\nNot claimed. If they are not on it any more, claim by hand or ask on ${issue.url}; otherwise: oss-bot reject ${id}`);
   // Repos without a claim convention: approving just lets the bot start working.
   if (rc.claim_comment) await gh.commentOnIssue(issue.repo, issue.number, rc.claim_comment);
   ctx.db.update(id, { claimed_at: new Date().toISOString(), dry: 0, ...(issue.state === 'awaiting_claim' ? { state: 'claimed' as const } : {}) });
@@ -757,6 +769,8 @@ export async function approvePr(ctx: Ctx, id: number) {
   const gi = await gh.getIssue(issue.repo, issue.number);
   const me = await gh.currentUser();
   if (gi.state !== 'OPEN') throw new Error('the issue has been closed meanwhile');
+  const taken = await othersOnIt(rc, issue.number);
+  if (taken) throw new Error(`${taken}\nPR not opened; if they are not on it any more, ask on ${issue.url} first, otherwise: oss-bot reject ${id}`);
   if (rc.claim_comment && rc.require_assignment && !gi.assignees.some((a) => a.login === me)) {
     throw new Error(`you are not assigned to ${issue.url} yet; wait for the maintainers' bot after the claim`);
   }

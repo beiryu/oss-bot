@@ -69,3 +69,34 @@ describe('dropUnrelatedRegeneration', () => {
     expect(dropUnrelatedRegeneration(after, '')).toBe(after);
   });
 });
+
+describe('findOtherClaim', () => {
+  const since = '2026-01-01T00:00:00Z';
+  const at = '2026-10-02T09:57:00Z';
+  it.each([
+    ['I have a fix ready for the first half: chaholl/go-sdk@elicit-defaults. Can I open the PR?'],
+    ["I see two ways to fix it, and I'd like a maintainer's view before opening a PR since this is in the live flow"],
+    ["I'd like to work on this issue."],
+    ["I'm working on this, PR soon"],
+    ['Happy to send a PR if that sounds right.'],
+    ['/assign'],
+  ])('sees a claim in %j', async (body) => {
+    const { findOtherClaim } = await import('../src/github.js');
+    expect(findOtherClaim([{ author: 'someone', at, body }], 'me', since)).toMatch(/^@someone on 2026-10-02: /);
+  });
+  it.each([
+    ["Thanks, I'll take a look this week."],
+    ["I'll open an issue for the docs part."],
+    ['Can you share a reproducer?'],
+    ['> I have a fix ready\nThat was merged in #12, please re-test.'],
+  ])('sees no claim in %j', async (body) => {
+    const { findOtherClaim } = await import('../src/github.js');
+    expect(findOtherClaim([{ author: 'maintainer', at, body }], 'me', since)).toBeNull();
+  });
+  it('ignores you, bots and statements older than the window', async () => {
+    const { findOtherClaim } = await import('../src/github.js');
+    const body = "I'd like to work on this issue.";
+    expect(findOtherClaim([{ author: 'Me', at, body }, { author: 'coderabbitai[bot]', at, body },
+      { author: 'old', at: '2025-12-01T00:00:00Z', body }], 'me', since)).toBeNull();
+  });
+});
