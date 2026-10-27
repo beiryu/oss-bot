@@ -1,0 +1,43 @@
+# .github/workflows/relay.yml in the private desk repo (beiryu/maintainer-desk): the
+# maintainer-bot job as it was, plus the oss-bot job. A comment of yours on the oss-bot
+# dashboard starts a `commands_only` run of oss-bot, which carries the commands out and answers.
+# Secrets: MAINTAINER_TOKEN (as before) and OSS_BOT_DISPATCH_TOKEN, a fine-grained PAT with
+# only Actions: read and write on beiryu/oss-bot.
+name: relay
+
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]                          # the Approve / Reject links open an issue titled with the command
+
+permissions: {}
+
+jobs:
+  relay:
+    # Comments on a dashboard, or an issue opened from a card link ("/approve p4 (owner/repo)"); never what a run posts itself.
+    if: >-
+      github.actor == github.repository_owner && (
+        (github.event_name == 'issue_comment' && contains(github.event.issue.body, 'maintainer-bot:repo ') && !contains(github.event.comment.body, '<!-- maintainer-bot:'))
+        || (github.event_name == 'issues' && startsWith(github.event.issue.title, '/')))
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.MAINTAINER_TOKEN || secrets.DISPATCH_TOKEN }}
+          BODY: ${{ github.event.issue.body }}
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          repo=$(printf '%s' "$TITLE" | sed -n 's/.*(\([A-Za-z0-9_.-]*\/[A-Za-z0-9_.-]*\))[[:space:]]*$/\1/p')
+          [ -n "$repo" ] || repo=$(printf '%s' "$BODY" | sed -n 's/.*maintainer-bot:repo \([A-Za-z0-9_.-]*\/[A-Za-z0-9_.-]*\) -->.*/\1/p' | head -1)
+          gh workflow run maintainer.yml -R "$repo"
+
+  oss-bot:
+    # Your comments on the oss-bot dashboard; never the bot's own replies (they carry an oss-bot mark).
+    if: >-
+      github.actor == github.repository_owner && github.event_name == 'issue_comment'
+      && contains(github.event.issue.body, '<!-- oss-bot:dashboard -->') && !contains(github.event.comment.body, '<!-- oss-bot:')
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.OSS_BOT_DISPATCH_TOKEN }}
+        run: gh workflow run oss-bot.yml -R beiryu/oss-bot -f commands_only=true

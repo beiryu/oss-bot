@@ -45,6 +45,12 @@ export interface Issue {
   dry: number;
   claimed_at: string | null;
   blocked: string | null;      // set when the repo's gate fails on the base too; cleared by `repo doctor`
+  // Kept here so a run on a fresh machine (an Actions runner) has them; work/ only mirrors these.
+  patch: string | null;        // the gated diff against base_sha (PATCH.diff)
+  repro_patch: string | null;  // the reproducer's test alone (REPRO.diff)
+  repro_notes: string | null;
+  why: string | null;          // JSON {en, vi}[]: the PR writer's suggested reasons (WHY.json)
+  pr_text: string | null;      // title line + body as the PR was opened (PR_BODY.md)
   updated_at: string;
 }
 
@@ -147,6 +153,11 @@ CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT);
 
 const now = () => new Date().toISOString();
 
+const TABLES = ['repos', 'issues', 'prs', 'pending_actions', 'agent_calls', 'kv'] as const;
+
+/** The whole state as JSON: what an Actions run carries between jobs and keeps on the state branch. */
+export interface StateJson { version: 1; exported_at: string; tables: Record<string, Record<string, unknown>[]> }
+
 export class Db {
   readonly sql: Database.Database;
 
@@ -154,17 +165,54 @@ export class Db {
     if (path !== ':memory:') mkdirSync(dirname(path), { recursive: true });
     this.sql = new Database(path);
     this.sql.pragma('journal_mode = WAL');
+    // `run` and an `approve` in another terminal are separate processes writing the same file.
+    this.sql.pragma('busy_timeout = 10000');
     this.sql.exec(SCHEMA);
     const cols = (this.sql.prepare('PRAGMA table_info(agent_calls)').all() as { name: string }[]).map((c) => c.name);
     if (!cols.includes('models')) this.sql.exec('ALTER TABLE agent_calls ADD COLUMN models TEXT');
     const issueCols = (this.sql.prepare('PRAGMA table_info(issues)').all() as { name: string }[]).map((c) => c.name);
-    if (!issueCols.includes('blocked')) this.sql.exec('ALTER TABLE issues ADD COLUMN blocked TEXT');
+    for (const c of ['blocked', 'patch', 'repro_patch', 'repro_notes', 'why', 'pr_text']) {
+      if (!issueCols.includes(c)) this.sql.exec(`ALTER TABLE issues ADD COLUMN ${c} TEXT`);
+    }
     const prCols = (this.sql.prepare('PRAGMA table_info(prs)').all() as { name: string }[]).map((c) => c.name);
     for (const c of ['head_sha', 'mergeable', 'ci_state', 'review_decision', 'snapshot_at', 'ci_seen_sha', 'merge_state']) {
       if (!prCols.includes(c)) this.sql.exec(`ALTER TABLE prs ADD COLUMN ${c} TEXT`);
     }
     const actionCols = (this.sql.prepare('PRAGMA table_info(pending_actions)').all() as { name: string }[]).map((c) => c.name);
     if (!actionCols.includes('base_sha')) this.sql.exec('ALTER TABLE pending_actions ADD COLUMN base_sha TEXT');
+  }
+
+  // --- export / import ---
+  exportJson(opts: { keepCallsDays?: number; resultChars?: number } = {}): StateJson {
+    const since = new Date(Date.now() - (opts.keepCallsDays ?? 90) * 86_400_000).toISOString();
+    const tables: StateJson['tables'] = {};
+    for (const t of TABLES) {
+      tables[t] = t === 'agent_calls'
+        ? this.sql.prepare('SELECT * FROM agent_calls WHERE started_at >= ? ORDER BY id').all(since) as Record<string, unknown>[]
+        : this.sql.prepare(`SELECT * FROM ${t}`).all() as Record<string, unknown>[];
+    }
+    // Agent output is kept for `show`; where the logs live elsewhere (Actions) a head is enough.
+    if (opts.resultChars) {
+      for (const row of tables.agent_calls) {
+        if (typeof row.result_json === 'string' && row.result_json.length > opts.resultChars) row.result_json = row.result_json.slice(0, opts.resultChars);
+      }
+    }
+    return { version: 1, exported_at: now(), tables };
+  }
+  /** Replaces everything with the export; columns the export has and this schema lacks are ignored. */
+  importJson(state: StateJson) {
+    if (state.version !== 1) throw new Error(`unsupported state version ${state.version}`);
+    this.sql.transaction(() => {
+      for (const t of [...TABLES].reverse()) this.sql.prepare(`DELETE FROM ${t}`).run();
+      for (const t of TABLES) {
+        const cols = (this.sql.prepare(`PRAGMA table_info(${t})`).all() as { name: string }[]).map((c) => c.name);
+        for (const row of state.tables[t] ?? []) {
+          const keys = cols.filter((c) => c in row);
+          this.sql.prepare(`INSERT INTO ${t} (${keys.join(', ')}) VALUES (${keys.map((k) => `@${k}`).join(', ')})`)
+            .run(Object.fromEntries(keys.map((k) => [k, row[k]])));
+        }
+      }
+    })();
   }
 
   // --- repos ---

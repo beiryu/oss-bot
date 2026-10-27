@@ -19,12 +19,19 @@ import { notify } from './notify.js';
 import { aiPolicyExcerpts, formatExcerpts } from './policy.js';
 import { runInSandbox, tail } from './sandbox.js';
 
-export interface Ctx { cfg: Config; db: Db; runId: string | null }
+export interface Ctx {
+  cfg: Config; db: Db; runId: string | null;
+  // Epoch ms after which no new step starts (an Actions job is killed at its timeout, state and all).
+  deadline?: number;
+}
+const pastDeadline = (ctx: Ctx) => !!ctx.deadline && Date.now() > ctx.deadline;
 
 const log = (msg: string) => console.log(`${new Date().toISOString()} ${msg}`);
 const daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000).toISOString();
 const NOT_FEASIBLE = 'triage: not feasible';
 const OWN_REPLY = '<!-- oss-bot: your reply goes above this line -->';
+// In a drafted reply: the repo wants the answer in the contributor's own words, so it cannot go out as drafted.
+const OWN_REPLY_NEEDED = 'requires review answers in your own words';
 const REQUIRED_DISCLOSURE = '<!-- oss-bot: this repo requires AI disclosure; the line is added at the end when the PR opens. -->';
 const OWN_WORDS = '<!-- oss-bot: replace this line with why you are making this change, in your own words -->';
 const PICK_WHY = '<!-- oss-bot: keep ONE reason below and delete the other, or write your own. Comment lines like this one are removed before posting. -->';
@@ -102,6 +109,7 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
 
   // 1. Follow-up on open PRs first.
   for (const pr of opts.triageOnly ? [] : db.openPrs()) {
+    if (pastDeadline(ctx)) break;
     if (!allowed(pr.repo) || (opts.followupOnly && opts.repo && pr.repo !== opts.repo)) continue;
     try {
       const e = await followUp(ctx, pr.issue_id);
@@ -120,6 +128,7 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
     if (e) events.push(e);
   } else {
     for (const rc of cfg.repos) {
+      if (pastDeadline(ctx)) break;
       if (!allowed(rc.full_name) || (opts.repo && rc.full_name !== opts.repo)) continue;
       // Scoring alone takes no slot, so --triage-only ignores the open-PR and in-flight limits.
       if (!opts.triageOnly && db.openPrCount(rc.full_name) >= cfg.limits.max_open_prs_per_repo) continue;
@@ -138,6 +147,7 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
     ? [db.issueByNumber(opts.repo, opts.issue)].filter((i): i is Issue => !!i)
     : db.nextIssues(opts.repo);
   for (const issue of candidates) {
+    if (pastDeadline(ctx)) { events.push('time is up for this run; the rest waits for the next one'); break; }
     if (!allowed(issue.repo)) continue;
     try {
       const e = await advance(ctx, issue.id);
@@ -152,7 +162,10 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
   const cost = ctx.runId ? db.costForRun(ctx.runId) : 0;
   const summary = [`oss-bot run finished ($${cost.toFixed(2)})`, ...events].join('\n• ');
   const todo = needsYou(db, cfg);
-  if (events.length || todo.length) await notify(cfg, todo.length ? `${summary}\n\nCần bạn:\n${todo.join('\n')}` : summary);
+  // The same open decisions every 2 hours are noise: notify on events, or when the list changed.
+  const todoChanged = todo.join('\n') !== (db.get('notified-todo') ?? '');
+  db.set('notified-todo', todo.join('\n') || null);
+  if (events.length || (todo.length && todoChanged)) await notify(cfg, todo.length ? `${summary}\n\nCần bạn:\n${todo.join('\n')}` : summary);
   else log(summary);
 }
 
@@ -333,6 +346,8 @@ async function advance(ctx: Ctx, id: number): Promise<string | null> {
     if (issue.blocked) return `#${issue.number} blocked: ${issue.blocked}`;
     const rc = repoConfig(cfg, issue.repo);
     log(`#${issue.number}: ${issue.state} (attempt ${issue.attempts})`);
+    if (pastDeadline(ctx)) return `#${issue.number}: stopped at ${issue.state}; the next run goes on from there`;
+    if (await restoreAgentWorkdir(ctx, issue)) continue;
     switch (issue.state) {
       case 'claimed': {
         if (rc.claim_comment && !issue.dry) {
@@ -360,6 +375,26 @@ async function advance(ctx: Ctx, id: number): Promise<string | null> {
   }
 }
 
+/**
+ * A pass that stopped mid-issue on another machine (a runner that timed out) leaves no agent
+ * clone here. Rebuilds it from the record: the base plus the reproducer's test. The coder's
+ * unfinished work is gone, so a `coded` issue is coded again. Returns true when the state changed.
+ */
+async function restoreAgentWorkdir(ctx: Ctx, issue: Issue): Promise<boolean> {
+  if (!['reproduced', 'coded'].includes(issue.state) || existsSync(join(agentDir(issue.repo, issue.number), '.git'))) return false;
+  const hasTest = JSON.parse(issue.test_files ?? '[]').length > 0;
+  if (!issue.base_sha || (hasTest && !issue.repro_patch)) {
+    log(`#${issue.number}: agent clone missing and not rebuildable; reproducing again`);
+    ctx.db.transition(issue.id, 'claimed');
+    return true;
+  }
+  log(`#${issue.number}: agent clone missing; rebuilding it at ${issue.base_sha.slice(0, 10)}`);
+  const dir = await prepareAgentWorkdir(issue.repo, issue.number, issue.base_sha);
+  if (issue.repro_patch) await applyPatch(dir, issue.repro_patch);
+  if (issue.state === 'coded') { ctx.db.transition(issue.id, 'reproduced'); return true; }
+  return false;
+}
+
 async function exportPatch(cfg: Config, issue: Issue): Promise<string> {
   if (!/^[0-9a-f]{40}$/.test(issue.base_sha ?? '')) throw new Error('missing base sha');
   const dir = agentDir(issue.repo, issue.number);
@@ -385,12 +420,13 @@ async function reproduce(ctx: Ctx, rc: RepoConfig, issue: Issue) {
   });
   // The coder and reviewer read this: it often says why a test is impossible (e.g. nothing agreed to build yet).
   writeFileSync(join(issueDir(issue.repo, issue.number), 'REPRO_NOTES.txt'), r.notes);
+  db.update(issue.id, { repro_notes: r.notes });
   if (!r.reproduced || r.testFiles.length === 0 || !safeTestVars(r.testVars)) {
     // Not every issue is a bug a test can show; carry on without a regression test.
     log(`#${issue.number}: no regression test (${r.notes.slice(0, 160)})`);
     await prepareAgentWorkdir(issue.repo, issue.number, base); // drop anything the reproducer left
     rmSync(join(issueDir(issue.repo, issue.number), 'REPRO.diff'), { force: true });
-    return db.transition(issue.id, 'reproduced', { base_sha: base, test_files: '[]', test_vars: '{}', test_hashes: '{}' });
+    return db.transition(issue.id, 'reproduced', { base_sha: base, test_files: '[]', test_vars: '{}', test_hashes: '{}', repro_patch: null });
   }
 
   const withBase = db.update(issue.id, {
@@ -403,12 +439,24 @@ async function reproduce(ctx: Ctx, rc: RepoConfig, issue: Issue) {
   if (!r.testFiles.every((f) => files.includes(f))) return db.skip(issue.id, 'reported test files are not in the diff');
   focusedTestCommand(rc, withBase); // throws on unfilled variables
   writeFileSync(join(issueDir(issue.repo, issue.number), 'REPRO.diff'), reproPatch);
-  db.transition(issue.id, 'reproduced', { test_hashes: JSON.stringify(hashTestFiles(withBase)) });
+  db.transition(issue.id, 'reproduced', { test_hashes: JSON.stringify(hashTestFiles(withBase)), repro_patch: reproPatch });
+}
+
+/** The gated diff of an issue: from the record, or PATCH.diff for issues from before it was stored there. */
+export function loadPatch(issue: Issue): string {
+  if (issue.patch) return issue.patch;
+  return readFileSync(join(issueDir(issue.repo, issue.number), 'PATCH.diff'), 'utf8');
+}
+/** Stores the gated diff; PATCH.diff stays as a copy for the eye. */
+function savePatch(db: Db, issue: Issue, patch: string) {
+  mkdirSync(issueDir(issue.repo, issue.number), { recursive: true });
+  writeFileSync(join(issueDir(issue.repo, issue.number), 'PATCH.diff'), patch);
+  db.update(issue.id, { patch });
 }
 
 function reproNotes(issue: Issue): string {
   const file = join(issueDir(issue.repo, issue.number), 'REPRO_NOTES.txt');
-  const notes = existsSync(file) ? readFileSync(file, 'utf8').trim() : '';
+  const notes = (issue.repro_notes ?? (existsSync(file) ? readFileSync(file, 'utf8') : '')).trim();
   return notes ? `\nNotes from the agent that tried to reproduce it:\n<untrusted_notes>\n${untrusted(notes)}\n</untrusted_notes>` : '';
 }
 
@@ -450,12 +498,12 @@ async function gate(ctx: Ctx, rc: RepoConfig, issue: Issue) {
   if (!g.ok && g.kind === 'environment') return blockOnEnvironment(ctx, issue, g.step ?? '', g.reason);
   if (!g.ok) return retry(ctx, issue, `CI gate failed: ${g.reason}`);
   // From here on the canonical patch is a host-owned copy outside the agent's tree.
-  writeFileSync(join(issueDir(issue.repo, issue.number), 'PATCH.diff'), patch);
+  savePatch(ctx.db, issue, patch);
   ctx.db.transition(issue.id, 'gated');
 }
 
 async function reviewDir(issue: Issue): Promise<string> {
-  const patch = readFileSync(join(issueDir(issue.repo, issue.number), 'PATCH.diff'), 'utf8');
+  const patch = loadPatch(issue);
   const dir = join(issueDir(issue.repo, issue.number), 'review');
   await freshClone(issue.repo, issue.base_sha!, dir);
   await applyPatch(dir, patch);
@@ -503,7 +551,7 @@ async function writePr(ctx: Ctx, rc: RepoConfig, issue: Issue) {
     vars: { ...issueVars(rc, issue), summary: issue.summary ?? '' },
   });
   writeFileSync(join(issueDir(issue.repo, issue.number), 'WHY.json'), JSON.stringify(r.why, null, 1));
-  ctx.db.transition(issue.id, 'awaiting_pr_approval', { pr_title: r.title, pr_body: r.body });
+  ctx.db.transition(issue.id, 'awaiting_pr_approval', { pr_title: r.title, pr_body: r.body, why: JSON.stringify(r.why), pr_text: null });
 }
 
 /**
@@ -600,7 +648,7 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
     for (const f of failed) parts.push(`[ci] check "${f.name}" failed on the PR's latest commit:\n${f.summary}`);
   }
   const text = parts.join('\n\n');
-  const patch = readFileSync(join(issueDir(issue.repo, issue.number), 'PATCH.diff'), 'utf8');
+  const patch = loadPatch(issue);
   const dir = await prepareAgentWorkdir(issue.repo, issue.number, issue.base_sha!);
   await applyPatch(dir, patch); // host applies before the agent touches the dir
 
@@ -647,7 +695,7 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
     ? `\n\n${OWN_REPLY}\nOnly bot comments or CI here, so no reply is needed: leave the space above empty to push the\n`
       + `commit without commenting. What the agent changed (for you only, never posted):\n\n${r.message}\n`
     : rc.draft_replies ? r.message
-    : `\n\n${OWN_REPLY}\n${issue.repo} requires review answers in your own words. Write your reply above the marker line;\n`
+    : `\n\n${OWN_REPLY}\n${issue.repo} ${OWN_REPLY_NEEDED}. Write your reply above the marker line;\n`
       + `the marker and everything below it are removed. What the agent understood (for you only, never posted):\n\n${r.message}\n`;
   const actionId = db.addAction(issueId, newPatch ? 'fix' : 'reply', message, newPatch);
   const what = [comments.length ? 'review comments' : '', ciFailed ? 'failed CI' : ''].filter(Boolean).join(' and ');
@@ -668,7 +716,7 @@ async function prepareRebase(ctx: Ctx, rc: RepoConfig, issue: Issue, pr: Pr, why
   if (why === 'conflict' && db.get(key) === newBase) return `PR ${pr.url}: conflicts with ${rc.default_branch}; the rebase attempt on this base needs your help`;
   if (why === 'conflict') db.set(key, newBase);
   const dir = issueDir(issue.repo, issue.number);
-  const patch = readFileSync(join(dir, 'PATCH.diff'), 'utf8');
+  const patch = loadPatch(issue);
   const onNew = { ...issue, base_sha: newBase };
   const work = join(dir, 'rebase');
   await freshClone(issue.repo, newBase, work);
@@ -717,7 +765,7 @@ async function prepareRebase(ctx: Ctx, rc: RepoConfig, issue: Issue, pr: Pr, why
 
 // ---------------------------------------------------------------- human-approved actions
 
-export async function approveClaim(ctx: Ctx, id: number) {
+export async function approveClaim(ctx: Ctx, id: number): Promise<string> {
   const issue = ctx.db.issue(id);
   const rc = repoConfig(ctx.cfg, issue.repo);
   if (issue.claimed_at) throw new Error('already claimed');
@@ -729,7 +777,7 @@ export async function approveClaim(ctx: Ctx, id: number) {
   // Repos without a claim convention: approving just lets the bot start working.
   if (rc.claim_comment) await gh.commentOnIssue(issue.repo, issue.number, rc.claim_comment);
   ctx.db.update(id, { claimed_at: new Date().toISOString(), dry: 0, ...(issue.state === 'awaiting_claim' ? { state: 'claimed' as const } : {}) });
-  console.log(rc.claim_comment ? `Posted "${rc.claim_comment}" on ${issue.url}` : `Claimed ${issue.url} (nothing posted)`);
+  return rc.claim_comment ? `Posted "${rc.claim_comment}" on ${issue.url}` : `Claimed ${issue.url} (nothing posted)`;
 }
 
 export function editInEditor(path: string) {
@@ -760,7 +808,12 @@ function readTtyLine(): string {
   }
 }
 
-export async function approvePr(ctx: Ctx, id: number) {
+/**
+ * With neither option the PR text opens in $EDITOR. `text` (your own words, from a dashboard
+ * comment) takes the place of the suggested reasons; `why` (1-based) keeps that one suggested
+ * reason. Either way the draft's title and body go out as written.
+ */
+export async function approvePr(ctx: Ctx, id: number, o: { why?: number; text?: string } = {}): Promise<string> {
   const { cfg, db } = ctx;
   const issue = db.issue(id);
   const rc = repoConfig(cfg, issue.repo);
@@ -777,7 +830,8 @@ export async function approvePr(ctx: Ctx, id: number) {
   }
 
   const dir = issueDir(issue.repo, issue.number);
-  const patch = readFileSync(join(dir, 'PATCH.diff'), 'utf8');
+  mkdirSync(dir, { recursive: true });
+  const patch = loadPatch(issue);
   const fixed = staticChecks(patch, rc);
   if (!fixed.ok) throw new Error(fixed.reason);
 
@@ -786,15 +840,24 @@ export async function approvePr(ctx: Ctx, id: number) {
   const models = db.modelsForIssue(issue.id);
   const tool = models ? `${rc.agent_disclosure} (model${models.length > 1 ? 's' : ''}: ${models.join(', ')})` : rc.agent_disclosure;
   const disclosure = `AI disclosure: this change was drafted with ${tool}. I reviewed and tested it myself.`;
-  if (!existsSync(bodyFile)) {
-    writeFileSync(bodyFile, `${issue.pr_title}\n\n${issue.pr_body}\n\n${whyBlock(readWhy(dir))}\n\n`
-      + (rc.disclosure_required ? `${REQUIRED_DISCLOSURE}\n` : `${disclosure}\n`));
+  const draft = (why: string) => `${issue.pr_title}\n\n${issue.pr_body}\n\n${why}\n\n`
+    + (rc.disclosure_required ? `${REQUIRED_DISCLOSURE}\n` : `${disclosure}\n`);
+  let edited: string;
+  if (o.text?.trim()) {
+    edited = draft(o.text.trim());
+  } else if (o.why !== undefined) {
+    const picked = whyOf(issue)[o.why - 1];
+    if (!picked) throw new Error(`no suggested reason ${o.why}; the PR needs your own words: oss-bot ${cmd.pr(id)}`);
+    if (existsSync(bodyFile)) throw new Error(`you started editing ${bodyFile}; finish with: oss-bot ${cmd.pr(id)}`);
+    edited = draft(picked.en); // nothing written before the PR opens, so a failed attempt can be retried
+  } else {
+    if (!existsSync(bodyFile)) writeFileSync(bodyFile, draft(whyBlock(whyOf(issue))));
+    console.log(`Opening ${bodyFile}. The first line is the PR title. Pick one reason (or write your own).`);
+    editInEditor(bodyFile);
+    edited = readFileSync(bodyFile, 'utf8');
   }
-  console.log(`Opening ${bodyFile}. The first line is the PR title. Pick one reason (or write your own).`);
-  editInEditor(bodyFile);
-  const edited = readFileSync(bodyFile, 'utf8');
   if (edited.includes(OWN_WORDS)) throw new Error('the "own words" placeholder is still there; PR not opened');
-  if (readWhy(dir).length > 1 && readWhy(dir).every((w) => edited.includes(w.en))) {
+  if (whyOf(issue).length > 1 && whyOf(issue).every((w) => edited.includes(w.en))) {
     throw new Error('both suggested reasons are still there; keep one. PR not opened');
   }
   const [title, ...rest] = stripComments(edited).split('\n');
@@ -813,7 +876,7 @@ export async function approvePr(ctx: Ctx, id: number) {
   // Same keyword as the PR body: "Refs" keeps the issue open when the change only partly covers it.
   const closes = new RegExp(`\\b(close[sd]?|fix(e[sd])?|resolve[sd]?)\\s+#${issue.number}\\b`, 'i').test(body);
   await git(push, [...who, 'commit', ...(rc.signoff ? ['--signoff'] : []), '-m', title.trim(), '-m', `${closes ? 'Fixes' : 'Refs'} #${issue.number}`]);
-  if (rc.after_commit.length) writeFileSync(join(dir, 'PATCH.diff'), await afterCommit(cfg, rc, push, issue.base_sha!, who));
+  if (rc.after_commit.length) savePatch(db, issue, await afterCommit(cfg, rc, push, issue.base_sha!, who));
   await git(push, ['remote', 'add', 'fork', `https://github.com/${rc.fork}.git`]);
 
   // A previous approve may have pushed and then failed before or while opening the PR.
@@ -838,12 +901,14 @@ export async function approvePr(ctx: Ctx, id: number) {
   const pr = existing ?? await gh.createPr({ repo: issue.repo, base: rc.default_branch, head, title: title.trim(), body });
   db.insertPr(id, pr.url, pr.number);
   db.transition(id, 'pr_open', { branch });
-  console.log(`Opened ${pr.url}`);
+  db.update(id, { pr_text: stripComments(edited) }); // follow-up commits take their title from it
+  return `Opened ${pr.url}`;
 }
 
 /** Follows the PR title's Conventional Commits prefix, e.g. "fix(tool): address review feedback". */
-function readWhy(dir: string): Why[] {
-  const f = join(dir, 'WHY.json');
+export function whyOf(issue: Issue): Why[] {
+  if (issue.why) return JSON.parse(issue.why);
+  const f = join(issueDir(issue.repo, issue.number), 'WHY.json'); // issues drafted before it was stored
   return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : [];
 }
 
@@ -906,7 +971,7 @@ export function dropUnrelatedRegeneration(after: string, onBase: string): string
 }
 
 /** Replaces the PR branch with one commit of the rebased patch; refuses if the branch moved since the bot last pushed it. */
-async function approveRebase(ctx: Ctx, action: PendingAction, issue: Issue, pr: Pr) {
+async function approveRebase(ctx: Ctx, action: PendingAction, issue: Issue, pr: Pr): Promise<string> {
   const { cfg, db } = ctx;
   const rc = repoConfig(cfg, issue.repo);
   const fixed = staticChecks(action.patch!, rc);
@@ -921,7 +986,7 @@ async function approveRebase(ctx: Ctx, action: PendingAction, issue: Issue, pr: 
   const remoteSha = await git(push, ['rev-parse', 'FETCH_HEAD']);
   // The branch must still be exactly old base + PATCH.diff: never overwrite someone else's commit.
   await git(push, ['read-tree', '--reset', '-u', issue.base_sha!]);
-  await applyPatch(push, readFileSync(join(dir, 'PATCH.diff'), 'utf8'));
+  await applyPatch(push, loadPatch(issue));
   const unknown = await git(push, ['diff', '--cached', '--name-only', 'FETCH_HEAD']);
   if (unknown) {
     throw new Error(`the PR branch has changes the bot did not make (${unknown.split('\n').join(', ')}); `
@@ -932,21 +997,26 @@ async function approveRebase(ctx: Ctx, action: PendingAction, issue: Issue, pr: 
   await git(push, [...who, 'commit', ...(rc.signoff ? ['--signoff'] : []), '-m', issue.pr_title ?? `Fix #${issue.number}`, '-m', `Fixes #${issue.number}`]);
   const full = await afterCommit(cfg, rc, push, action.base_sha!, who);
   await git(push, [...who, 'push', `--force-with-lease=${issue.branch}:${remoteSha}`, 'fork', `HEAD:refs/heads/${issue.branch}`]);
-  writeFileSync(join(dir, 'PATCH.diff'), full);
+  savePatch(db, issue, full);
   db.update(issue.id, { base_sha: action.base_sha });
   db.updatePr(issue.id, { head_sha: await git(push, ['rev-parse', 'HEAD']), mergeable: 'UNKNOWN', ci_state: 'pending' });
   db.setActionStatus(action.id, 'done');
-  console.log(`Rebased ${pr.url} onto ${action.base_sha!.slice(0, 10)} and force-pushed ${issue.branch}`);
+  return `Rebased ${pr.url} onto ${action.base_sha!.slice(0, 10)} and force-pushed ${issue.branch}`;
 }
 
-export function followupCommitMessage(dir: string, draftTitle: string | null): string {
-  const body = join(dir, 'PR_BODY.md');
-  const title = existsSync(body) ? readFileSync(body, 'utf8').split('\n')[0] : draftTitle ?? '';
+export function followupCommitMessage(issue: Pick<Issue, 'repo' | 'number' | 'pr_text' | 'pr_title'>): string {
+  const body = join(issueDir(issue.repo, issue.number), 'PR_BODY.md'); // PRs opened before pr_text was stored
+  const text = issue.pr_text ?? (existsSync(body) ? readFileSync(body, 'utf8') : null);
+  const title = text !== null ? text.split('\n')[0] : issue.pr_title ?? '';
   const m = /^(\w+(?:\([^)]*\))?)!?:/.exec(title.trim());
   return m ? `${m[1]}: address review feedback` : 'Address review feedback';
 }
 
-export async function approveFollowup(ctx: Ctx, actionId: number) {
+/** Whether a drafted reply/fix may go out as is, without your own words. */
+export const sendableAsDrafted = (a: PendingAction) => a.kind === 'rebase' || !a.message.includes(OWN_REPLY_NEEDED);
+
+/** `text` is the reply to post instead of the draft; `asDrafted` sends the draft. Neither: $EDITOR. */
+export async function approveFollowup(ctx: Ctx, actionId: number, o: { asDrafted?: boolean; text?: string } = {}): Promise<string> {
   const { cfg, db } = ctx;
   const action = db.action(actionId);
   if (action.status !== 'pending') throw new Error(`action is ${action.status}`);
@@ -956,9 +1026,17 @@ export async function approveFollowup(ctx: Ctx, actionId: number) {
   if (action.kind === 'rebase') return approveRebase(ctx, action, issue, pr);
 
   const msgFile = join(dir, `REPLY_${actionId}.md`);
-  writeFileSync(msgFile, action.message);
-  editInEditor(msgFile);
-  let message = readFileSync(msgFile, 'utf8');
+  let message: string;
+  if (o.text?.trim()) {
+    message = o.text;
+  } else if (o.asDrafted) {
+    if (!sendableAsDrafted(action)) throw new Error(`${issue.repo} wants the reply in your own words: oss-bot ${cmd.followup(actionId)}`);
+    message = action.message;
+  } else {
+    writeFileSync(msgFile, action.message);
+    editInEditor(msgFile);
+    message = readFileSync(msgFile, 'utf8');
+  }
   const cut = message.indexOf(OWN_REPLY);
   if (cut >= 0) message = message.slice(0, cut);
   message = message.trim();
@@ -970,12 +1048,17 @@ export async function approveFollowup(ctx: Ctx, actionId: number) {
     if (!fixed.ok) throw new Error(fixed.reason);
     const push = join(dir, 'push');
     const who = await gh.gitIdentity(signingKey(cfg));
+    // The clone the PR was pushed from, or a new one on a machine that never had it.
+    if (!existsSync(join(push, '.git'))) {
+      await freshClone(issue.repo, issue.base_sha!, push);
+      await git(push, ['remote', 'add', 'fork', `https://github.com/${rc.fork}.git`]);
+    }
     // Build on what is on the fork now, and only if it is exactly the patch we last pushed:
     // a commit made elsewhere (e.g. "Commit suggestion" on GitHub) must not be overwritten.
     await git(push, [...who, 'fetch', '--quiet', 'fork', issue.branch!]);
     await git(push, ['reset', '--quiet', '--hard', 'FETCH_HEAD']);
     await git(push, ['read-tree', '--reset', '-u', issue.base_sha!]);
-    await applyPatch(push, readFileSync(join(dir, 'PATCH.diff'), 'utf8'));
+    await applyPatch(push, loadPatch(issue));
     const unknown = await git(push, ['diff', '--cached', '--name-only', 'FETCH_HEAD']);
     await git(push, ['reset', '--quiet', '--hard', 'FETCH_HEAD']);
     if (unknown) {
@@ -985,12 +1068,12 @@ export async function approveFollowup(ctx: Ctx, actionId: number) {
     // Reset the tree to base, apply the full new patch: the commit holds exactly the delta.
     await git(push, ['read-tree', '--reset', '-u', issue.base_sha!]);
     await applyPatch(push, action.patch);
-    await git(push, [...who, 'commit', ...(rc.signoff ? ['--signoff'] : []), '-m', followupCommitMessage(dir, issue.pr_title)]);
+    await git(push, [...who, 'commit', ...(rc.signoff ? ['--signoff'] : []), '-m', followupCommitMessage(issue)]);
     const full = await afterCommit(cfg, rc, push, issue.base_sha!, who);
     await git(push, [...who, 'push', 'fork', `HEAD:refs/heads/${issue.branch}`]);
-    writeFileSync(join(dir, 'PATCH.diff'), full);
+    savePatch(db, issue, full);
   }
   if (message) await gh.commentOnIssue(issue.repo, pr.number, message);
   db.setActionStatus(actionId, 'done');
-  console.log(`Follow-up sent on ${pr.url}:${action.patch ? ' commit pushed' : ''}${message ? ' reply posted' : ''}`);
+  return `Follow-up sent on ${pr.url}:${action.patch ? ' commit pushed' : ''}${message ? ' reply posted' : ''}`;
 }

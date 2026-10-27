@@ -176,10 +176,11 @@ async function checkRegressionTest(cfg: Config, repo: RepoConfig, issue: Issue, 
   // A rebase merges the test with whatever upstream did to the same file (a shared license
   // header, imports), so its lines legitimately differ; steps 2 and 3 still hold it to account.
   const reproFile = join(issueDir(issue.repo, issue.number), 'REPRO.diff');
+  const repro = issue.repro_patch ?? (existsSync(reproFile) ? readFileSync(reproFile, 'utf8') : null);
   if (rebase) {
     // nothing to compare
-  } else if (existsSync(reproFile)) {
-    const missing = missingAddedLines(readFileSync(reproFile, 'utf8'), filterPatch(patch, (p) => testFiles.has(p)));
+  } else if (repro !== null) {
+    const missing = missingAddedLines(repro, filterPatch(patch, (p) => testFiles.has(p)));
     if (missing.length) {
       return { ok: false, reason: `the coder changed or removed lines of the reproducer test, e.g.:\n${missing.slice(0, 5).join('\n')}` };
     }

@@ -48,6 +48,16 @@ export function expectUser(login: string) {
   }
 }
 
+/**
+ * Takes `login` as the account without asking GitHub: for a job whose token cannot answer
+ * `/user` (the Actions token). Only reads happen with such a token, so nothing is posted as
+ * the wrong identity; the publish job uses expectUser() and a token that is checked.
+ */
+export function assumeUser(login: string) {
+  expected = login;
+  me = login;
+}
+
 /** The account `gh` is logged in as; refuses to continue if it is not `github_user`. */
 export async function currentUser(): Promise<string> {
   me ??= (await gh(['api', 'user', '--jq', '.login'])).trim();
@@ -145,6 +155,77 @@ export async function otherClaim(repo: string, number: number, days = 45): Promi
 
 export async function commentOnIssue(repo: string, number: number, body: string) {
   await gh(['issue', 'comment', String(number), '-R', repo, '--body-file', '-'], body, false);
+}
+
+// ---- the desk (dashboard issue) and the state branch, used by the Actions jobs
+
+export async function ghPost<T>(endpoint: string, body: Record<string, unknown>): Promise<T> {
+  return JSON.parse(await gh(['api', '-X', 'POST', endpoint, '--input', '-'], JSON.stringify(body), false)) as T;
+}
+
+/** One GraphQL call with variables; never retried (it may be a mutation). */
+export async function graphql<T>(query: string, variables: Record<string, unknown>): Promise<T> {
+  const out = JSON.parse(await gh(['api', 'graphql', '--input', '-'], JSON.stringify({ query, variables }), false));
+  if (out.errors?.length) throw new Error(`GraphQL: ${out.errors.map((e: { message: string }) => e.message).join('; ')}`);
+  return out.data as T;
+}
+
+export async function refSha(repo: string, branch: string): Promise<string | null> {
+  try {
+    return (await gh(['api', `repos/${repo}/git/ref/heads/${branch}`, '--jq', '.object.sha'])).trim() || null;
+  } catch { return null; }
+}
+export async function createRef(repo: string, branch: string, sha: string) {
+  await gh(['api', `repos/${repo}/git/refs`, '-f', `ref=refs/heads/${branch}`, '-f', `sha=${sha}`], undefined, false);
+}
+export async function fileAtRef(repo: string, path: string, ref: string): Promise<string> {
+  return gh(['api', `repos/${repo}/contents/${path}?ref=${ref}`, '-H', 'Accept: application/vnd.github.raw']);
+}
+
+export interface FileChanges { additions: { path: string; contents: string }[]; deletions: { path: string }[] }
+/** One commit on `branch` with the given file contents; fails if the branch moved past `expectedHeadOid`. Returns the new oid. */
+export async function createCommitOnBranch(repo: string, branch: string, expectedHeadOid: string,
+  message: { headline: string; body: string }, fileChanges: FileChanges): Promise<string> {
+  const data = await graphql<{ createCommitOnBranch: { commit: { oid: string } } }>(
+    'mutation($input:CreateCommitOnBranchInput!){createCommitOnBranch(input:$input){commit{oid}}}',
+    { input: { branch: { repositoryNameWithOwner: repo, branchName: branch }, expectedHeadOid, message, fileChanges } },
+  );
+  return data.createCommitOnBranch.commit.oid;
+}
+
+export interface IssueComment { id: number; url: string; author: string; body: string; createdAt: string }
+export async function issueComments(repo: string, number: number): Promise<IssueComment[]> {
+  const pages = await ghJson<any[]>(['api', '--paginate', '--slurp', `repos/${repo}/issues/${number}/comments`]);
+  return pages.flat().map((c) => ({ id: c.id, url: c.html_url, author: c.user.login, body: c.body ?? '', createdAt: c.created_at }));
+}
+
+export async function createIssue(repo: string, o: { title: string; body: string }): Promise<{ url: string; number: number }> {
+  const url = (await gh(['issue', 'create', '-R', repo, '--title', o.title, '--body-file', '-'], o.body, false)).trim().split('\n').pop()!;
+  return { url, number: Number(url.split('/').pop()) };
+}
+
+export async function editIssueBody(repo: string, number: number, body: string) {
+  await gh(['issue', 'edit', String(number), '-R', repo, '--body-file', '-'], body, false);
+}
+
+/** Open issues whose body contains `text` (GitHub's search, so recent edits may lag a little). */
+export async function findIssuesByBody(repo: string, text: string): Promise<{ number: number; body: string }[]> {
+  return ghJson(['issue', 'list', '-R', repo, '--state', 'open', '--search', `"${text}" in:body`, '--json', 'number,body']);
+}
+
+/** Pins an issue to the top of the repo's issue list (at most three can be pinned; failures are ignored by callers). */
+export async function pinIssue(repo: string, number: number) {
+  const [owner, name] = repo.split('/');
+  const q = await graphql<{ repository: { issue: { id: string } } }>(
+    'query($o:String!,$n:String!,$i:Int!){repository(owner:$o,name:$n){issue(number:$i){id}}}', { o: owner, n: name, i: number });
+  await graphql('mutation($id:ID!){pinIssue(input:{issueId:$id}){issue{number}}}', { id: q.repository.issue.id });
+}
+
+/** When the token has an expiry date (a PAT), that day (ISO date), else null. */
+export async function tokenExpiry(): Promise<string | null> {
+  const head = await gh(['api', '-i', 'user', '--jq', '.login']).catch(() => '');
+  const m = /github-authentication-token-expiration:\s*(\d{4}-\d{2}-\d{2})/i.exec(head);
+  return m ? m[1] : null;
 }
 
 export async function openPrForHead(repo: string, head: string): Promise<{ url: string; number: number } | null> {
