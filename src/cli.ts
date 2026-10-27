@@ -232,13 +232,18 @@ ci.command('publish').description('carry out your dashboard commands, render the
     stateFile();
     const c = ctx(randomUUID());
     const previous = await pullState(o.repo);
+    let failed: unknown;
     try {
       await ciPublish(c, { desk: o.desk, runUrl: o.runUrl, deskToken: process.env.DESK_TOKEN || undefined });
-    } finally {
-      // Agent output is kept for `show`; the Actions log has the rest, so a head is enough.
-      const head = await pushState(o.repo, c.db.exportJson({ resultChars: 4000 }), previous);
-      console.log(head ? `state saved: ${head.slice(0, 10)}` : 'state unchanged');
+    } catch (e) {
+      failed = e;
+      console.error(`publish failed: ${e instanceof Error ? e.message : e}`);
     }
+    // Saved even after a failure: commands already carried out must not run twice.
+    // Agent output is kept for `show`; the Actions log has the rest, so a head is enough.
+    const head = await pushState(o.repo, c.db.exportJson({ resultChars: 4000 }), previous);
+    console.log(head ? `state saved: ${head.slice(0, 10)}` : 'state unchanged');
+    if (failed) throw failed;
   });
 
 program.command('cost').description('spend by agent over the last 7 and 30 days').action(() => {

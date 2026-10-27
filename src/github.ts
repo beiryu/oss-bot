@@ -181,10 +181,14 @@ export async function graphql<T>(query: string, variables: Record<string, unknow
   return out.data as T;
 }
 
+/** The branch's tip, or null when it does not exist. Any other failure (a bad token) is an error, not "no branch". */
 export async function refSha(repo: string, branch: string): Promise<string | null> {
   try {
     return (await gh(['api', `repos/${repo}/git/ref/heads/${branch}`, '--jq', '.object.sha'])).trim() || null;
-  } catch { return null; }
+  } catch (e) {
+    if (/HTTP 404/.test(`${(e as { stderr?: string }).stderr ?? ''} ${(e as Error).message}`)) return null;
+    throw e;
+  }
 }
 export async function createRef(repo: string, branch: string, sha: string) {
   await gh(['api', `repos/${repo}/git/refs`, '-f', `ref=refs/heads/${branch}`, '-f', `sha=${sha}`], undefined, false);
