@@ -109,6 +109,20 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
     }
   }
 
+  // 0b. Decisions waiting on you go stale while you are away: drop those whose issue was closed,
+  // assigned or taken by someone else since, so the dashboard lists only what is still worth doing.
+  for (const issue of opts.triageOnly ? [] : [...db.issuesInState('awaiting_claim'), ...db.issuesInState('awaiting_pr_approval')]) {
+    if (!allowed(issue.repo) || (opts.repo && issue.repo !== opts.repo)) continue;
+    try {
+      const why = await goneStale(repoConfig(cfg, issue.repo), issue.number);
+      if (!why) continue;
+      db.skip(issue.id, `no longer needed: ${why}`);
+      events.push(`${issue.repo}#${issue.number}: dropped the waiting ${issue.state === 'awaiting_claim' ? 'claim' : 'PR'}: ${why}`);
+    } catch (e) {
+      log(`${issue.repo}#${issue.number}: stale check failed: ${(e as Error).message.split('\n')[0]}`);
+    }
+  }
+
   // 1. Follow-up on open PRs first.
   for (const pr of opts.triageOnly ? [] : db.openPrs()) {
     if (pastDeadline(ctx)) break;
@@ -253,6 +267,18 @@ async function unavailable(rc: RepoConfig, gi: gh.GhIssue & { state?: string }):
 async function othersOnIt(rc: RepoConfig, number: number): Promise<string | null> {
   const who = await gh.otherClaim(rc.full_name, number);
   return who ? `someone else is on it: ${who}` : null;
+}
+
+/** Why a claim or PR waiting for your approval is moot now, or null. */
+async function goneStale(rc: RepoConfig, number: number): Promise<string | null> {
+  const gi = await gh.getIssue(rc.full_name, number);
+  if (gi.state !== 'OPEN') return 'issue closed';
+  const me = await gh.currentUser();
+  const others = gi.assignees.filter((a) => a.login !== me).map((a) => `@${a.login}`);
+  if (others.length) return `assigned to ${others.join(', ')}`;
+  const prs = await gh.otherOpenPrs(rc.full_name, number, me);
+  if (prs.length) return `already has a PR: ${prs.join(', ')}`;
+  return othersOnIt(rc, number);
 }
 
 async function triage(ctx: Ctx, rc: RepoConfig, issue: Issue): Promise<Issue> {
@@ -825,7 +851,7 @@ export async function approveClaim(ctx: Ctx, id: number): Promise<string> {
   if (!['awaiting_claim', ...(issue.dry ? ['claimed', 'reproduced', 'coded', 'gated', 'reviewed', 'awaiting_pr_approval'] : [])].includes(issue.state)) {
     throw new Error(`issue is ${issue.state}`);
   }
-  const taken = await othersOnIt(rc, issue.number);
+  const taken = await goneStale(rc, issue.number);
   if (taken) throw new Error(`${taken}\nNot claimed. If they are not on it any more, claim by hand or ask on ${issue.url}; otherwise: oss-bot reject ${id}`);
   // Repos without a claim convention: approving just lets the bot start working.
   if (rc.claim_comment) await gh.commentOnIssue(issue.repo, issue.number, rc.claim_comment);
@@ -875,8 +901,7 @@ export async function approvePr(ctx: Ctx, id: number, o: { why?: number; text?: 
   if (db.openPrCount(issue.repo) >= cfg.limits.max_open_prs_per_repo) throw new Error('open PR limit for this repo reached');
   const gi = await gh.getIssue(issue.repo, issue.number);
   const me = await gh.currentUser();
-  if (gi.state !== 'OPEN') throw new Error('the issue has been closed meanwhile');
-  const taken = await othersOnIt(rc, issue.number);
+  const taken = await goneStale(rc, issue.number);
   if (taken) throw new Error(`${taken}\nPR not opened; if they are not on it any more, ask on ${issue.url} first, otherwise: oss-bot reject ${id}`);
   if (rc.claim_comment && rc.require_assignment && !gi.assignees.some((a) => a.login === me)) {
     throw new Error(`you are not assigned to ${issue.url} yet; wait for the maintainers' bot after the claim`);

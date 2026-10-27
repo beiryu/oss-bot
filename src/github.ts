@@ -116,6 +116,23 @@ export async function linkedOpenPrCount(repo: string, number: number): Promise<n
   return closing + refs;
 }
 
+/** Open PRs by someone other than `me` that close or mention the issue, as "#12 by @x". */
+export async function otherOpenPrs(repo: string, number: number, me: string): Promise<string[]> {
+  const [owner, name] = repo.split('/');
+  const pr = '... on PullRequest{state number url author{login}}';
+  const query = `query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){
+    closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{${pr}}}
+    timelineItems(first:50,itemTypes:[CROSS_REFERENCED_EVENT]){nodes{... on CrossReferencedEvent{source{${pr}}}}}
+  }}}`;
+  const data = await ghJson<any>(['api', 'graphql', '-f', `query=${query}`,
+    '-F', `owner=${owner}`, '-F', `name=${name}`, '-F', `number=${number}`]);
+  const issue = data.data.repository.issue;
+  const prs = [...issue.closedByPullRequestsReferences.nodes, ...issue.timelineItems.nodes.map((n: any) => n.source)]
+    .filter((p: any) => p?.state === 'OPEN' && p.author?.login && p.author.login.toLowerCase() !== me.toLowerCase());
+  const own = `https://github.com/${repo}/pull/`;
+  return [...new Set(prs.map((p: any) => `${p.url.startsWith(own) ? `#${p.number}` : p.url.replace('https://github.com/', '')} by @${p.author.login}`))];
+}
+
 // First-person "I'm on this": a claim, a fix someone has ready, or a PR they are about to open.
 const PR = String.raw`(?:a |the |my )?(?:\w+ )?(?:pr|pull request|fix|patch)\b`;
 const CLAIM_INTENT = new RegExp([
