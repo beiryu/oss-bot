@@ -617,6 +617,8 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
       await notify(cfg, `oss-bot: ${issue.url} was closed while ${pr.url} is still open. Check whether the PR is still wanted.`);
     }
   }
+  const synced = await syncBranch(ctx, issue, snap.headSha);
+  if (synced) return synced;
   if (issue.blocked) return `PR ${pr.url}: waiting for repo doctor (${issue.blocked})`;
   const pending = db.pendingActionFor(issueId);
 
@@ -705,6 +707,54 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
   await notify(cfg, `oss-bot: ${pr.url} has new ${what}. Drafted ${newPatch ? 'a fix and ' : ''}${botsOnly ? 'no reply (bots/CI only)' : 'a reply'}.\n`
     + `Inspect: \`oss-bot show a${actionId}\`  Send: \`oss-bot ${cmd.followup(actionId)}\``);
   return `PR ${pr.url}: follow-up drafted`;
+}
+
+/**
+ * Keeps the record in step with a PR branch someone changed on GitHub: "Update branch" merges
+ * the base into it, or it was rebased by hand onto a newer base. Then the change is the same but
+ * base_sha + patch no longer give the branch, and every push would be refused as overwriting
+ * someone else's work. The record follows the branch when its new base is a commit of the
+ * upstream default branch and the branch changes no file outside the patch; otherwise it is
+ * left alone (pushes stay refused). Drafts made on the old base are dropped. Checked once per
+ * branch head; returns a line for the run summary when the record changed.
+ */
+export async function syncBranch(ctx: Ctx, issue: Issue, headSha: string): Promise<string | null> {
+  const { cfg, db } = ctx;
+  const key = `synced-head:${issue.id}`;
+  if (!issue.branch || !issue.base_sha || db.get(key) === headSha) return null;
+  const rc = repoConfig(cfg, issue.repo);
+  const pr = db.prForIssue(issue.id)!;
+  const dir = join(issueDir(issue.repo, issue.number), 'sync');
+  await freshClone(issue.repo, issue.base_sha, dir);
+  await git(dir, ['remote', 'add', 'fork', `https://github.com/${rc.fork}.git`]);
+  await git(dir, ['fetch', '--quiet', '--depth', '50', 'fork', issue.branch]);
+  const head = await git(dir, ['rev-parse', 'FETCH_HEAD']);
+  const patch = loadPatch(issue);
+  await git(dir, ['read-tree', '--reset', '-u', issue.base_sha]);
+  await applyPatch(dir, patch);
+  const differs = await git(dir, ['diff', '--cached', '--name-only', head]);
+  if (!differs) { db.set(key, headSha); return null; }
+
+  // A merge commit's second parent is what was merged in; a rebased commit's only parent is the new base.
+  const parents = (await git(dir, ['rev-list', '--parents', '-n', '1', head])).split(' ').slice(1);
+  const base = parents.length === 2 ? parents[1] : parents[0];
+  const onUpstream = base && await gh.compareMergeBase(issue.repo, rc.default_branch, base).then((m) => m === base, () => false);
+  const newPatch = onUpstream ? `${await git(dir, ['diff', '--binary', base, head])}\n` : '';
+  const ours = new Set(parsePatch(patch).map((f) => f.path));
+  const foreign = onUpstream ? parsePatch(newPatch).map((f) => f.path).filter((f) => !ours.has(f)) : [];
+  db.set(key, headSha);
+  if (!onUpstream || foreign.length) {
+    const why = !onUpstream ? `its base ${base?.slice(0, 10) ?? '?'} is not on ${rc.default_branch}` : `it also changes ${foreign.slice(0, 5).join(', ')}`;
+    log(`#${issue.number}: ${pr.url} branch changed outside the bot and ${why}; pushes stay refused`);
+    await notify(cfg, `oss-bot: ${pr.url} — the branch was changed outside the bot (${why}). The bot will not push to it; handle it by hand.`);
+    return `PR ${pr.url}: branch changed outside the bot`;
+  }
+  db.update(issue.id, { base_sha: base, patch: newPatch });
+  db.updatePr(issue.id, { head_sha: head });
+  const stale = db.pendingActions().filter((a) => a.issue_id === issue.id);
+  for (const a of stale) db.setActionStatus(a.id, 'rejected');
+  return `PR ${pr.url}: branch was updated on GitHub (now on ${base.slice(0, 10)}); record follows it`
+    + (stale.length ? `, ${stale.length} older draft(s) dropped` : '');
 }
 
 /**
