@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-27T16:27:29.299Z",
+ "exported_at": "2026-10-27T16:32:08.040Z",
  "tables": {
   "repos": [
    {
@@ -11607,11 +11607,11 @@
    },
    {
     "key": "dashboard-last-comment:beiryu/maintainer-desk",
-    "value": "6447123952"
+    "value": "6447138364"
    },
    {
     "key": "notified-dashboard",
-    "value": "- **180 · mở PR** [vshulcz/deja-vu#5401](https://github.com/vshulcz/deja-vu/issues/5401) fix(sources): name the real cause of an excluded harness\n- **173 · mở PR** [alibaba/open-code-review#1789](https://github.com/alibaba/open-code-review/issues/1789) fix(llm): re-send completion once on net error after 200 headers\n- **177 · mở PR** [kgateway-dev/kgateway#14861](https://github.com/kgateway-dev/kgateway/issues/14861) fix(reports): report Merged when a policy is only partly overridden\n- **66 · mở PR** [containers/kubernetes-mcp-server#1435](https://github.com/containers/kubernetes-mcp-server/issues/1435) test(mcp): fail when a tool has no RBAC metadata\n- **83 · mở PR** [google/adk-go#848](https://github.com/google/adk-go/issues/848) feat(adkgo): add repeatable --env flag to deploy agentEngine\n- **208 · claim** [kubernetes-sigs/agent-sandbox#2015](https://github.com/kubernetes-sigs/agent-sandbox/issues/2015) Sandbox reports Ready=True while its Pod is terminating (computeReadyCondition ignores DeletionTimestamp) · score 0.82\n- **206 · claim** [k8sgpt-ai/k8sgpt#1860](https://github.com/k8sgpt-ai/k8sgpt/issues/1860) bug: HPA analyzer rejects lowercase scaleTargetRef.kind (e.g. \"statefulset\") as \"not an option\" · score 0.93\n- **203 · claim** [modelcontextprotocol/go-sdk#1422](https://github.com/modelcontextprotocol/go-sdk/issues/1422) oauthex: RegisterClient fails when the registration response carries \"jwks\" as a JSON object · score 0.72\n- **a6 · fix cho review** [vshulcz/deja-vu#5381](https://github.com/vshulcz/deja-vu/pull/5381)\n- **a7 · rebase (force-push lên fork)** [containers/kubernetes-mcp-server#1512](https://github.com/containers/kubernetes-mcp-server/pull/1512)"
+    "value": "- **180 · mở PR** [vshulcz/deja-vu#5401](https://github.com/vshulcz/deja-vu/issues/5401) fix(sources): name the real cause of an excluded harness\n- **173 · mở PR** [alibaba/open-code-review#1789](https://github.com/alibaba/open-code-review/issues/1789) fix(llm): re-send completion once on net error after 200 headers\n- **177 · mở PR** [kgateway-dev/kgateway#14861](https://github.com/kgateway-dev/kgateway/issues/14861) fix(reports): report Merged when a policy is only partly overridden\n- **66 · mở PR** [containers/kubernetes-mcp-server#1435](https://github.com/containers/kubernetes-mcp-server/issues/1435) test(mcp): fail when a tool has no RBAC metadata\n- **83 · mở PR** [google/adk-go#848](https://github.com/google/adk-go/issues/848) feat(adkgo): add repeatable --env flag to deploy agentEngine\n- **208 · claim** [kubernetes-sigs/agent-sandbox#2015](https://github.com/kubernetes-sigs/agent-sandbox/issues/2015) Sandbox reports Ready=True while its Pod is terminating (computeReadyCondition ignores DeletionTimestamp) · score 0.82\n- **206 · claim** [k8sgpt-ai/k8sgpt#1860](https://github.com/k8sgpt-ai/k8sgpt/issues/1860) bug: HPA analyzer rejects lowercase scaleTargetRef.kind (e.g. \"statefulset\") as \"not an option\" · score 0.93\n- **203 · claim** [modelcontextprotocol/go-sdk#1422](https://github.com/modelcontextprotocol/go-sdk/issues/1422) oauthex: RegisterClient fails when the registration response carries \"jwks\" as a JSON object · score 0.72\n- **a6 · fix cho review** [vshulcz/deja-vu#5381](https://github.com/vshulcz/deja-vu/pull/5381)"
    }
   ]
  }
