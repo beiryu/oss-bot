@@ -138,7 +138,8 @@ Setup, once:
 1. Secrets. Repo secret `COPILOT_TOKEN` (the Copilot-only PAT). Environment `bot`, limited to the
    `main` branch: `OSS_BOT_TOKEN` (a **classic** PAT with `public_repo`: fine-grained tokens cannot
    comment or open PRs on repos you are not a member of), `OSS_BOT_SIGNING_KEY` (the private SSH
-   signing key), `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
+   signing key), `DESK_TOKEN` (fine-grained, Issues read/write on the private desk only:
+   `public_repo` does not reach a private repo), `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
 2. State, from the laptop (it uses your gh login): `npm run -s oss-bot -- state export state/state.json`,
    then `npm run -s oss-bot -- --state state/state.json ci state-push --repo beiryu/oss-bot`.
 3. Desk: copy `templates/desk-relay.yml` to the desk as `.github/workflows/relay.yml` and add the

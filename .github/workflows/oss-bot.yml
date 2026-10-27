@@ -3,8 +3,9 @@
 #   agent    the job's read-only token and the model credential (COPILOT_TOKEN). Agents and gate
 #            commands run in the oss-bot-sandbox container, as on a laptop. Posts nothing; hands
 #            over the state file.
-#   publish  environment "bot": your classic PAT (OSS_BOT_TOKEN), the commit signing key and the
-#            Telegram token, no model credential. Carries out the commands you commented on the
+#   publish  environment "bot": your classic PAT (OSS_BOT_TOKEN, public repos), a token for the
+#            private desk (DESK_TOKEN), the commit signing key and the Telegram token, no model
+#            credential. Carries out the commands you commented on the
 #            dashboard issue in the desk repo (the only way anything reaches an upstream repo),
 #            renders the dashboard, notifies, and saves the state on the branch oss-bot/state.
 #
@@ -161,8 +162,10 @@ jobs:
         run: npx tsx src/cli.ts -c config.ci.yaml --state "$STATE" ci state-pull --repo "$GITHUB_REPOSITORY"
       - name: Publish
         env:
+          DESK_TOKEN: ${{ secrets.DESK_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          if [ -z "$DESK_TOKEN" ]; then echo "::error::add DESK_TOKEN (fine-grained, Issues read/write on $DESK only) to the environment \"bot\""; exit 1; fi
           npx tsx src/cli.ts -c config.ci.yaml --state "$STATE" ci publish --repo "$GITHUB_REPOSITORY" --desk "$DESK" \
             --run-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

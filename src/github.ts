@@ -159,6 +159,17 @@ export async function commentOnIssue(repo: string, number: number, body: string)
 
 // ---- the desk (dashboard issue) and the state branch, used by the Actions jobs
 
+/**
+ * Runs `fn` with GH_TOKEN set to `token` (when given): the private desk repo takes its own
+ * narrow token. The publish job runs its GitHub calls one after another, so the swap is safe.
+ */
+export async function withToken<T>(token: string | undefined, fn: () => Promise<T>): Promise<T> {
+  if (!token) return fn();
+  const before = process.env.GH_TOKEN;
+  process.env.GH_TOKEN = token;
+  try { return await fn(); } finally { process.env.GH_TOKEN = before; }
+}
+
 export async function ghPost<T>(endpoint: string, body: Record<string, unknown>): Promise<T> {
   return JSON.parse(await gh(['api', '-X', 'POST', endpoint, '--input', '-'], JSON.stringify(body), false)) as T;
 }

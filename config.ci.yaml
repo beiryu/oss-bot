@@ -1,7 +1,7 @@
 # Config for the GitHub Actions runs (.github/workflows/oss-bot.yml); the local config.yaml is
 # not checked in. Repos come from repos/*.yaml as usual. This file is public: no secrets here.
 # Secrets live in the repo (COPILOT_TOKEN) and in the environment "bot" (OSS_BOT_TOKEN,
-# OSS_BOT_SIGNING_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID).
+# DESK_TOKEN, OSS_BOT_SIGNING_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID).
 github_user: beiryu
 # Written from the OSS_BOT_SIGNING_KEY secret by the publish job, the only one that commits.
 commit_signing_key: ~/.ssh/oss-bot-signing

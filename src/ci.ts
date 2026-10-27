@@ -118,7 +118,7 @@ export async function applyCommand(ctx: Ctx, c: Command): Promise<string> {
   throw new Error(`issue ${n} is ${issue.state}${issue.blocked ? ` (blocked: ${issue.blocked})` : ''}; nothing waits for your approval`);
 }
 
-export interface PublishOpts { desk: string; runUrl?: string }
+export interface PublishOpts { desk: string; runUrl?: string; deskToken?: string }
 
 /** The dashboard issue in the desk, by the number on record or by its mark; null when there is none yet. */
 async function findDashboard(ctx: Ctx, desk: string): Promise<{ number: number; body: string } | null> {
@@ -138,14 +138,16 @@ export async function ciPublish(ctx: Ctx, opts: PublishOpts): Promise<void> {
   const { desk } = opts;
   const me = (await gh.currentUser()).toLowerCase(); // the PAT's owner, checked against github_user
   const notes: string[] = [];
-  const dash = await findDashboard(ctx, desk);
+  // Every call on the desk goes with the desk's own token; upstream calls keep the PAT.
+  const onDesk = <T>(fn: () => Promise<T>) => gh.withToken(opts.deskToken, fn);
+  const dash = await onDesk(() => findDashboard(ctx, desk));
 
   // 1. Your commands, each comment handled once (by comment id) and answered with what was done.
   let decided = false;
   if (dash) {
     const doneKey = `dashboard-last-comment:${desk}`;
     const lastDone = Number(db.get(doneKey) ?? 0);
-    const comments = await gh.issueComments(desk, dash.number);
+    const comments = await onDesk(() => gh.issueComments(desk, dash.number));
     // First run on this dashboard: earlier comments are history, not orders.
     const fresh = lastDone ? comments.filter((c) => c.id > lastDone && c.author.toLowerCase() === me && !c.body.includes(REPLY_MARK)) : [];
     for (const c of fresh) {
@@ -158,7 +160,7 @@ export async function ciPublish(ctx: Ctx, opts: PublishOpts): Promise<void> {
         catch (e) { results.push(`❌ ${label(cmd)}: ${shortError(e)}`); }
       }
       for (const r of results) log(r);
-      await gh.commentOnIssue(desk, dash.number, `${REPLY_MARK}\n${results.join('\n')}${opts.runUrl ? `\n\n[log](${opts.runUrl})` : ''}`)
+      await onDesk(() => gh.commentOnIssue(desk, dash.number, `${REPLY_MARK}\n${results.join('\n')}${opts.runUrl ? `\n\n[log](${opts.runUrl})` : ''}`))
         .catch((e) => log(`reply failed: ${(e as Error).message}`));
     }
     db.set(doneKey, String(Math.max(lastDone, comments.at(-1)?.id ?? 0, 1)));
@@ -170,14 +172,14 @@ export async function ciPublish(ctx: Ctx, opts: PublishOpts): Promise<void> {
   });
   let number = dash?.number;
   if (!dash) {
-    const created = await gh.createIssue(desk, { title: DASHBOARD_TITLE, body });
+    const created = await onDesk(() => gh.createIssue(desk, { title: DASHBOARD_TITLE, body }));
     number = created.number;
     db.set(`dashboard:${desk}`, String(created.number));
     db.set(`dashboard-last-comment:${desk}`, '1');
-    await gh.pinIssue(desk, created.number).catch(() => undefined);
+    await onDesk(() => gh.pinIssue(desk, created.number)).catch(() => undefined);
     log(`dashboard #${created.number} created`);
   } else if (decided || dashboardChanged(dash.body, body)) {
-    await gh.editIssueBody(desk, dash.number, body);
+    await onDesk(() => gh.editIssueBody(desk, dash.number, body));
     log(`dashboard #${dash.number} updated`);
   }
 
