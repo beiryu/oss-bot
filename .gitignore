@@ -4,3 +4,4 @@ data/
 work/
 config.yaml
 .env
+state/
