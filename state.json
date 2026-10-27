@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-27T16:59:04.066Z",
+ "exported_at": "2026-10-27T20:42:02.133Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-27T09:25:43.507Z"
+    "last_scanned": "2026-10-27T20:41:02.495Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -7088,7 +7088,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:24:58.527Z",
+    "snapshot_at": "2026-10-27T20:40:30.835Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7103,7 +7103,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:04.045Z",
+    "snapshot_at": "2026-10-27T20:40:35.538Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7115,12 +7115,12 @@
     "last_seen_at": "2026-10-19T10:01:30Z",
     "opened_at": "2026-10-19T10:01:24.590Z",
     "head_sha": "54b320f263ab47396c785452d0e896177fc5b7f6",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:08.842Z",
+    "snapshot_at": "2026-10-27T20:40:38.654Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 119,
@@ -7133,7 +7133,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:13.448Z",
+    "snapshot_at": "2026-10-27T20:40:42.321Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7148,7 +7148,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:18.188Z",
+    "snapshot_at": "2026-10-27T20:40:45.928Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7163,7 +7163,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:23.059Z",
+    "snapshot_at": "2026-10-27T20:40:49.334Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7178,7 +7178,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:28.400Z",
+    "snapshot_at": "2026-10-27T20:40:52.950Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7205,12 +7205,12 @@
     "last_seen_at": "2026-10-16T03:35:45Z",
     "opened_at": "2026-10-16T03:34:07Z",
     "head_sha": "f196b9e737df462e3d0209bd0d127bbe36de311c",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:33.707Z",
+    "snapshot_at": "2026-10-27T20:40:55.860Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 167,
@@ -7220,12 +7220,12 @@
     "last_seen_at": "2026-10-16T02:42:02Z",
     "opened_at": "2026-10-16T02:40:56Z",
     "head_sha": "d63fc11585496902bb3417fd3a7ec8996a7f9583",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-27T09:25:39.126Z",
+    "snapshot_at": "2026-10-27T20:40:59.877Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 168,
@@ -11599,7 +11599,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 208    claim   agent-sandbox#2015  \"Sandbox reports Ready=True while its Pod is termin\"  score 0.82\n                         Add a DeletionTimestamp check in computeReadyCondition (controllers/sandbox_controller.go) that returns Ready=\n  approve 206    claim   k8sgpt#1860  \"bug: HPA analyzer rejects lowercase scaleTargetRef\"  score 0.93\n                         Normalize scaleTargetRef.Kind with strings.ToLower in the switch in pkg/analyzer/hpa.go (AnalyzeHPA) and lower\n  approve 203    claim   go-sdk#1422  \"oauthex: RegisterClient fails when the registratio\"  score 0.72\n                         Lenient jwks decoding via a json.RawMessage shadow field in oauthex/dcr.go (ClientRegistrationResponse.Unmarsh\n  approve 83     PR      adk-go#848  \"feat(adkgo): add repeatable --env flag to deploy a\"  (7d)\n  approve 66     PR      kubernetes-mcp-server#1435  \"test(mcp): fail when a tool has no RBAC metadata\"  (7d)\n  approve 177    PR      kgateway#14861  \"fix(reports): report Merged when a policy is only \"  (7d)\n  approve 173    PR      open-code-review#1789  \"fix(llm): re-send completion once on net error aft\"  (7d)\n  approve 180    PR      deja-vu#5401  \"fix(sources): name the real cause of an excluded h\"  (7d)\n  approve a6     fix     deja-vu#5381  fix for review comments  (7d)\n  approve a7     rebase  kubernetes-mcp-server#1512  Rebase onto main @ c500ad1026: the agent re-applied it: Reba  (5d)"
+    "value": "  approve 208    claim   agent-sandbox#2015  \"Sandbox reports Ready=True while its Pod is termin\"  score 0.82\n                         Add a DeletionTimestamp check in computeReadyCondition (controllers/sandbox_controller.go) that returns Ready=\n  approve 206    claim   k8sgpt#1860  \"bug: HPA analyzer rejects lowercase scaleTargetRef\"  score 0.93\n                         Normalize scaleTargetRef.Kind with strings.ToLower in the switch in pkg/analyzer/hpa.go (AnalyzeHPA) and lower\n  approve 203    claim   go-sdk#1422  \"oauthex: RegisterClient fails when the registratio\"  score 0.72\n                         Lenient jwks decoding via a json.RawMessage shadow field in oauthex/dcr.go (ClientRegistrationResponse.Unmarsh\n  approve 180    PR      deja-vu#5401  \"fix(sources): name the real cause of an excluded h\"  (5h)\n  approve 173    PR      open-code-review#1789  \"fix(llm): re-send completion once on net error aft\"  (5h)\n  approve 177    PR      kgateway#14861  \"fix(reports): report Merged when a policy is only \"  (5h)\n  approve 66     PR      kubernetes-mcp-server#1435  \"test(mcp): fail when a tool has no RBAC metadata\"  (5h)\n  approve 83     PR      adk-go#848  \"feat(adkgo): add repeatable --env flag to deploy a\"  (5h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
