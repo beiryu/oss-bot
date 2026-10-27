@@ -138,6 +138,7 @@ export async function ciPublish(ctx: Ctx, opts: PublishOpts): Promise<void> {
   const { desk } = opts;
   const me = (await gh.currentUser()).toLowerCase(); // the PAT's owner, checked against github_user
   const notes: string[] = [];
+  db.dropActionsOfClosedPrs(); // before the commands: a draft for a merged PR is no decision
   // Every call on the desk goes with the desk's own token; upstream calls keep the PAT.
   const onDesk = <T>(fn: () => Promise<T>) => gh.withToken(opts.deskToken, fn);
   const dash = await onDesk(() => findDashboard(ctx, desk));

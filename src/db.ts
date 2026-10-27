@@ -381,6 +381,11 @@ export class Db {
   setActionStatus(id: number, status: PendingAction['status']) {
     this.sql.prepare('UPDATE pending_actions SET status = ? WHERE id = ?').run(status, id);
   }
+  /** Drafts for a PR that is merged or closed have nothing left to go to; returns how many were dropped. */
+  dropActionsOfClosedPrs(): number {
+    return this.sql.prepare(`UPDATE pending_actions SET status = 'rejected' WHERE status = 'pending'
+      AND issue_id IN (SELECT issue_id FROM prs WHERE state != 'open')`).run().changes;
+  }
 
   // --- agent calls & cost ---
   recordCall(c: {

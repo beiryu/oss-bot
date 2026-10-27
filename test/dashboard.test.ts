@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { applyCommand } from '../src/ci.js';
 import { Db } from '../src/db.js';
 import { dashboardChanged, DASHBOARD_MARK, parseCommands, renderDashboard } from '../src/dashboard.js';
+import { approveFollowup } from '../src/orchestrator.js';
 
 const cfg = { repos: [{ full_name: 'o/r', fork: 'me/r', claim_comment: '/assign', require_assignment: true, default_branch: 'main' }] } as never;
 const OWN = '\n\n<!-- oss-bot: your reply goes above this line -->\no/r requires review answers in your own words. Write…';
@@ -90,5 +91,19 @@ describe('state JSON', () => {
     expect(copy.pendingActions()).toEqual(db.pendingActions());
     expect(copy.get('k')).toBe('v');
     expect(() => copy.importJson({ version: 2 } as never)).toThrow('unsupported');
+  });
+});
+
+describe('drafts for a closed PR', () => {
+  it('are dropped, and approving one says why', async () => {
+    const { db, id, reply } = setup();
+    expect(db.dropActionsOfClosedPrs()).toBe(0);
+    db.updatePr(id(3), { state: 'merged' });
+    expect(db.dropActionsOfClosedPrs()).toBe(2);
+    expect(db.action(reply).status).toBe('rejected');
+    expect(renderDashboard(db, cfg, {})).toContain('### Cần bạn (2)');
+    const late = db.addAction(id(3), 'fix', 'drafted before the merge was seen', 'diff');
+    await expect(approveFollowup({ cfg, db, runId: null }, late)).rejects.toThrow('is merged');
+    expect(db.action(late).status).toBe('rejected');
   });
 });

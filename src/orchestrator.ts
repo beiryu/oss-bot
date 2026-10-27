@@ -73,6 +73,8 @@ export async function runOnce(ctx: Ctx, opts: { dry: boolean; repo?: string; iss
   }
 
   const events: string[] = [];
+  const dropped = db.dropActionsOfClosedPrs();
+  if (dropped) log(`dropped ${dropped} draft(s) for PRs that are merged or closed`);
   const heads = new Map<string, string>();
 
   for (const rc of cfg.repos) {
@@ -597,6 +599,7 @@ async function followUp(ctx: Ctx, issueId: number): Promise<string | null> {
   if (snap.state !== 'open') {
     db.updatePr(issueId, { state: snap.state });
     db.transition(issueId, snap.state === 'merged' ? 'done' : 'closed');
+    db.dropActionsOfClosedPrs(); // a reply or fix drafted for it has nowhere to go
     if (snap.state === 'merged') {
       await notify(cfg, `🎉 oss-bot: ${pr.url} was merged.`);
     } else {
@@ -1022,6 +1025,10 @@ export async function approveFollowup(ctx: Ctx, actionId: number, o: { asDrafted
   if (action.status !== 'pending') throw new Error(`action is ${action.status}`);
   const issue = db.issue(action.issue_id);
   const pr = db.prForIssue(issue.id)!;
+  if (pr.state !== 'open') {
+    db.setActionStatus(actionId, 'rejected');
+    throw new Error(`${pr.url} is ${pr.state}; the draft has nowhere to go and is dropped`);
+  }
   const dir = issueDir(issue.repo, issue.number);
   if (action.kind === 'rebase') return approveRebase(ctx, action, issue, pr);
 
