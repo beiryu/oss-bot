@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-28T01:58:09.035Z",
+ "exported_at": "2026-10-28T08:23:55.486Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:16:21.149Z"
+    "last_scanned": "2026-10-28T08:22:05.052Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -37,7 +37,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- [AGENTS.md](AGENTS.md) -- detailed project structure, coding style, and testing guidelines.\n- [docs/](docs/) -- user-facing documentation.\n- [docs/specs/](docs/specs/) -- feature specifications (living documentation for contributors and coding agents).\n- [README.md](README.md) -- project overview and setup instructions.\n\n— AGENTS.md:\nThis Agents.md file provides comprehensive guidance for AI assistants and coding agents (like Claude, Gemini, Cursor, and others) to work with this codebase.\n\n— AGENTS.md:\nThis repository contains the kubernetes-mcp-server project,\na powerful Go-based Model Context Protocol (MCP) server that provides native Kubernetes and OpenShift cluster management capabilities without external dependencies.\nThis MCP server enables AI assistants (like Claude, Gemini, Cursor, and others) to interact with Kubernetes clusters using the Model Context Protocol (MCP).\n\n— AGENTS.md:\n- `docs/README.md` – Documentation index and navigation\n- `docs/configuration.md` – **Complete TOML configuration reference** (all `Config` options, drop-in configuration, dynamic reload)\n- `docs/prompts.md` – MCP Prompts configuration guide\n- `docs/logging.md` – MCP Logging guide (automatic K8s error logging, secret redaction)\n- `docs/OTEL.md` – OpenTelemetry observability setup\n- `docs/KIALI.md` – Kiali toolset configuration\n- `docs/getting-started-kubernetes.md` – Kubernetes ServiceAccount setup\n- `docs/getting-started-claude-code.md` – Claude Code CLI integration\n- `docs/KEYCLOAK_OIDC_SETUP.md` – OAuth/OIDC developer setup\n\n— AGENTS.md:\nThe `docs/specs/` directory contains feature specifications (living documentation for coding agents):",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:16:23.164Z"
+    "last_scanned": "2026-10-28T08:22:06.779Z"
    },
    {
     "full_name": "google/adk-go",
@@ -55,7 +55,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n**Where should I start?**\n- If you are new to the project, please check out the [good first issue](https://github.com/k8sgpt-ai/k8sgpt/labels/good%20first%20issue) label.\n- If you are looking for something to work on, check out our [open issues](https://github.com/k8sgpt-ai/k8sgpt/issues).\n- If you have an idea for a new feature, please open an issue, and we can discuss it.\n- We are also happy to help you find something to work on. Just reach out to us.\n\n— CODE_OF_CONDUCT.md:\nInstances of abusive, harassing, or otherwise unacceptable behavior may be\nreported to the community leaders responsible for enforcement at\ncontact@k8sgpt.ai.\nAll complaints will be reviewed and investigated promptly and fairly.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:17:52.547Z"
+    "last_scanned": "2026-10-28T08:22:09.096Z"
    },
    {
     "full_name": "kgateway-dev/kgateway",
@@ -64,7 +64,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:17:55.154Z"
+    "last_scanned": "2026-10-28T08:22:11.800Z"
    },
    {
     "full_name": "kubernetes-sigs/agent-sandbox",
@@ -73,7 +73,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- **CLA Requirement:** All contributors must sign the [Contributor License Agreement](https://git.k8s.io/community/CLA.md). PRs without a signed CLA will not be reviewed.\n- **AI-Assisted Code Reviews:** We use CodeRabbit to provide automated, first-pass code reviews to help identify low-hanging fruit and improve review velocity.\n  - **⚠️ Important Contribution Note (CLA Requirement):** If CodeRabbit provides a code suggestion in your PR, **do not click the \"Commit suggestion\" button** in the GitHub UI. Doing so adds the AI bot as a co-author to the commit. Since bots cannot sign the Kubernetes CLA, this will cause the CLA check to fail and block your PR. Instead, please manually apply the suggested changes in your local environment and push the commit yourself.\n  - **CodeRabbit:** CodeRabb\n\n— AGENTS.md:\nGuidance for AI coding agents working in this repository. Human contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md), [docs/development.md](docs/development.md), and [docs/testing.md](docs/testing.md), which are the source of truth.\n\n— AGENTS.md:\n`agent-sandbox` is a Kubernetes controller that provides the `Sandbox` CRD: a stateful, singleton, pod-backed workload with a stable identity, intended for AI agent runtimes, dev environments, notebooks, and similar use cases. It is a SIG Apps subproject (`sigs.k8s.io/agent-sandbox`) and follows Kubernetes / `controller-runtime` conventions.\n\n— AGENTS.md:\n| Path | What lives there |\n| --- | --- |\n| [**.agents/skills/**](.agents/skills/) | Specialized instructions for you (AI agents). See \"Agent Skills\" section below. |\n| [api/v1beta1/](api/v1beta1/) | Core `Sandbox` types and kubebuilder markers. |\n| [extensions/api/v1beta1/](extensions/api/v1beta1/) | `SandboxClaim`, `SandboxTemplate`, `SandboxWarmPool` types. |\n| [controllers/](controllers/) | Core `Sandbox` reconciler + tests. |\n| [extensions/controllers/](extensions/controllers/) | Reconcilers for the extension CRDs. |\n| [cmd/agent-sandbox-controller/](cmd/agent-sandbox-controller/), [cmd/metrics-docs-gen/](cmd/metrics-docs-gen/) | Controller manager entrypoint (`bin/manager`) and metrics reference generator. |\n| [internal/](internal/) | Shared internals (`lifecycle`, `metrics`, `metric\n\n— AGENTS.md:\nThis repository provides specialized instructions for AI agents in [`.agents/skills/`](.agents/skills/), following the Agent Skills specification (`dev-rules`, `k8s-api-conventions`, `bump-go-version`, `fix-flakes`, `test-pyramid`, `triage-issues`). Note that [CLAUDE.md](CLAUDE.md) imports this file via `@AGENTS.md`.\n\n— AGENTS.md:\n- This is a Kubernetes SIG project: contributors must have a signed [CNCF CLA](https://git.k8s.io/community/CLA.md). PRs without one are not reviewed.\n- CI runs through Prow (configured in [kubernetes/test-infra](https://github.com/kubernetes/test-infra)). The `k8s-ci-robot` merges PRs once they have `lgtm` + `approve` and presubmits pass. Default merge mode is squash; use `/label tide/merge-method-rebase` only when distinct commits matter.\n- CodeRabbit provides automated first-pass reviews on open PRs. **Never click \"Commit suggestion\" in the GitHub UI** — that adds the AI bot as a co-author, and AI bots cannot sign the Kubernetes CLA, so the CLA check will fail and block the PR. Instead: read the suggestion, apply the change manually in your local checkout, and push it as a normal commit\n\n— .github/pull_request_template.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->\n\n— .github/PULL_REQUEST_TEMPLATE.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:18:42.469Z"
+    "last_scanned": "2026-10-28T08:22:48.148Z"
    },
    {
     "full_name": "modelcontextprotocol/go-sdk",
@@ -82,7 +82,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-28T01:18:47.047Z"
+    "last_scanned": "2026-10-28T08:22:51.836Z"
    }
   ],
   "issues": [
@@ -4123,11 +4123,11 @@
     "title": "Kgateway Admin UI",
     "body": "Do kgateway plan to have admin UI? Like Kong gateway has Kong Manager.\n\nThis will be good so we can directly replace Kong Ingress Controller with Kgateway.",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13965",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.02,
+    "triage_reason": "Roadmap question asking for a full admin UI (a Kong Manager equivalent); it is a large product decision with no concrete code location in the repository, not something a focused change can deliver.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: Roadmap question asking for a full admin UI (a Kong Manager equivalent); it is a large product decision with no concrete code location in the repository, not something a focused change can deliver.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4139,7 +4139,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:00.083Z",
+    "updated_at": "2026-10-28T08:22:24.078Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4154,9 +4154,9 @@
     "title": "Prefix-based path rewriting in HTTProutes",
     "body": "### kgateway version\n\nv2.3.0-beta.5\n\n### Is your feature request related to a problem? Please describe.\n\n## Summary \n\nWe are trying to standardize API request routing and path rewriting across services using HTTPRoute multi-level delegation. In particular, we want to apply a consistent prefix-based path transformation at a higher-level (parent) HTTPRoute and have that transformation propagate through delegated (child) HTTPRoutes.\n\nHowever, we are encountering the following limitations:\n\n- URLRewrite filters are not propagated across delegated HTTPRoutes\n\n   When using multi-level delegation, a rewrite applied at the parent HTTPRoute is not preserved or visible to child HTTPRoutes. Each route effectively operates on the original request path rather than the transformed one.\n\n- URLRewrite must be defined individually for each matched path. In cases where an HTTPRoute defines a large number of paths (e.g., 100+), this leads to:\n\n   - Significant configuration duplication and Increased maintenance overhead\n   - Potential performance concerns due to large rule sets\n\n- TrafficPolicy-based regex rewrites are not compatible with delegation\n\n   While regex-based rewrites via TrafficPolicy can achieve the desired prefix transformation at the edge, the rewritten path is not consistently honoured when forwarding to delegated HTTPRoutes with explicit path matches.\n\n- Existing rewrite types do not fully address prefix transformation use cases\n   The current options:\n      - ReplaceFullPath\n      - ReplacePrefixMatch\n         do not provide a clean way to express reusable, composable prefix transformations (e.g., /api/* → /test/*) across delegated routing layers.\n\nOverall, the lack of rewrite propagation and reuse makes it difficult to implement clean, scalable routing patterns that are easily achievable in other systems such as Traefik using middleware chaining.\n\n### Describe the solution you'd like\n\n## Proposed Solution\n\nSupport for prefix-based path rewriting (prefix replacement / path prefix transformation) that works seamlessly across HTTPRoute multi-level delegation.\n\nDesired capabilities:\n\n- Parent-level rewrite definition (single source of truth)\n   Allow a parent HTTPRoute to define a single URLRewrite rule (e.g., replace /api with /helloworld) that is applied to all matching traffic.\n\n- Rewrite propagation through delegation\n   Ensure that the rewritten path is forwarded to child HTTPRoutes, so that:\n       - Child routes evaluate matches against the transformed path\n       - No duplicate rewrite configuration is required downstream\n- Separation of concerns between routing layers\n       - Parent HTTPRoute:\n            - Matches incoming external paths (e.g., /api/v1*, /api/v2/*)\n            - Applies prefix replacement rewrite\n            - Delegates to child routes\n        - Child HTTPRoute:\n            - Defines allowed backend paths (e.g., /helloworld/v1/*, /helloworld/v2/*)\n            - Does not need to re-declare rewrite logic\n\n\nParent HTTProute\n\n```yaml\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: parent\n  namespace: kgateway-system\nspec:\n  hostnames:\n  - helloworld.example.com\n  parentRefs:\n  - name: http\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /api\n    filters:\n      - type: URLRewrite\n        urlRewrite:\n          path: \n            type: ReplacePrefixMatch\n            replacePrefixMatch: /helloworld\n    backendRefs:\n    - group: gateway.networking.k8s.io\n      kind: HTTPRoute\n      name: \"*\"\n      namespace: helloworld\n```\n\nChild HTTProute\n\n```yaml\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: child-httproute\n  namespace: helloworld\nspec:\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /helloworld/test/v1\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /helloworld/test/v2\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /helloworld/test/v3\n    backendRefs:\n    - name: helloworld\n      port: 8000\n```\n\n### Describe alternatives you've considered\n\n## Investigated\nWe explored the following alternatives:\n\n- Regex-based rewrites via TrafficPolicy\n   This approach can successfully perform prefix transformations when using a single, broad match (e.g., /api). However:\n     - The rewritten path is not consistently propagated to delegated HTTPRoutes\n     - When child routes define multiple explicit path matches, routing fails or does not behave as expected\n- Defining URLRewrite per path match\n   This works functionally but does not scale:\n      - Requires duplicating rewrite rules across many matches\n      - Becomes difficult to maintain and error-prone as the number of routes grows\n- Flattening routing into a single HTTPRoute\n   Avoids delegation issues but:\n      - Breaks modular route ownership\n      - Reduces clarity and separation of concerns between teams/services\n\n### Additional Context\n\n## Additional Information\n\nRequesting support for propagated, reusable prefix-based path rewriting across HTTPRoute delegation boundaries, enabling a parent route to apply a transformation once and have it honoured by all child routes.",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13945",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "triaged",
+    "score": 0.1,
+    "triage_reason": "Propagating a parent URLRewrite into delegated child route matches (pkg/kgateway/translator/httproute/delegation.go) is a design-level feature with Envoy single-pass matching semantics and possible API changes, so it needs a maintainer decision.",
     "attempts": 0,
     "skip_reason": null,
     "feedback": null,
@@ -4170,7 +4170,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:00.787Z",
+    "updated_at": "2026-10-28T08:22:35.963Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4185,11 +4185,11 @@
     "title": "HTTPS Health Monitor with Proxy Header – Support and Configuration",
     "body": "**Background:**\nWe are using kgateway as our Gateway API implementation and have a question regarding health check configuration with an F5 load balancer:\n\nWe want to perform health checks on our NodePorts (e.g., 30443 for HTTPS) where the F5 sends a monitor string including a Proxy header. The monitor string looks like this:\n\n`PROXY TCP4 <client-ip> <server-ip> 0 443\\r\\nGET /ready HTTP/1.1\\r\\nHost: <hostname>\\r\\nConnection: Close\\r\\n\\r\\n `\nThis works on port 80 (HTTP), but not on port 443 (HTTPS).\nOn port 443, TLS is expected and the monitor fails.\nCould it also be caused by the Proxy Protocol being sent in plaintext, instead of over a TLS connection?\n\n**Questions:**\nDoes kgateway (or the kgateway-proxy, e.g. Envoy) support health checks with Proxy headers on HTTPS/TLS listeners?\nIf yes: How should the monitor be configured so that an HTTPS health check with Proxy header works?\nIs there any special configuration required for the listener on port 443 to accept the Proxy header and respond correctly to the health check?\nIf not: Are there any recommendations for health checks on HTTPS NodePorts with F5?\n\nThank you for your support!\n\n",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13734",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.05,
+    "triage_reason": "This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4201,7 +4201,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:01.371Z",
+    "updated_at": "2026-10-28T08:22:45.521Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4216,11 +4216,11 @@
     "title": "Authenticate user if Basic authentication OR JWT authentication completed successfully",
     "body": "### kgateway version\n\n2.2.1\n\n### Is your feature request related to a problem? Please describe.\n\nNeed to support both basic and JWT authentication. If user provides correct username:password OR token, kgateway should authenticate him.\n\nNow multiple authentication types defined in `TrafficPolicy` are combined using logical AND, at least for `basicAuth` and `jwtAuth`, that is requiring to provide both username:password AND token.\n\nIf only token is provided, kgateway returns \"User authentication failed. Expected 'Basic' authentication scheme.\"\n\nIf only username:password is provided, kgateway returns \"Jwt is missing\".\n\n### Describe the solution you'd like\n\nThere can be two approaches.\n\nFirst. `TrafficPolicy` should combine multiple authentication policies using logical OR by default. Even if `validationMode` is `Strict`.\n\nSecond.\n1. `basicAuth` spec inside `TrafficPolicy` should allow optional validation mode (like `AllowMissing` in `jwt` `GatewayExtension`).\n2. If all authentication policies is optional, there should be protection against unauthenticated requests. It seems that `rbac` attribute of `TrafficPolicy` fits well for this, but: 1) I didnt find any docs on this; 2) according to docs there are no available authentication variables that can be used in expressions to check if any authentication is passed.\n\nThis approach is [implemented in agentgateway](https://github.com/agentgateway/agentgateway/issues/771#issuecomment-3699957639). Also, agentgateway provides [variables](https://agentgateway.dev/docs/standalone/latest/reference/cel/#variables), that can be used in expressions. This is very useful for header manipulation, including password masking, which is impossible with kgateway now (there is no way to extract username from basic auth header).\n\n### Describe alternatives you've considered\n\n_No response_\n\n### Additional Context\n\nEnvoy gateway community now works on same [feature](https://github.com/envoyproxy/gateway/issues/8491).",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13699",
-    "state": "discovered",
+    "state": "skipped",
     "score": null,
     "triage_reason": null,
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "label \"stale\"",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4232,7 +4232,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:02.021Z",
+    "updated_at": "2026-10-28T08:22:45.964Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4247,11 +4247,11 @@
     "title": "Kgateway 2.2 / envoy metrics - no metric with request method label",
     "body": "### kgateway version\n\n2.2\n\n### Kubernetes Version\n\nv1.32.9\n\n### Describe the bug\n\nHi all,\n\nwe have migrated some of our non-prod clusters from NGINX ingress controller to Kgateway 2.2. We are slowly rebuilding Grafana dashboards to mirror our NGINX dashboards which were pimped during years of operations. One of the important metric label we use to monitor the environment is \"method\" of a request. E.g. GET, POST etc.\n\nSo far I have found no metric from kgateway/envoy which bears the _method_ label. Is this as expected? Is it a bug? I can't even find envoy proxy related documentation where the actual metrics are documented in detail.\n\nHow can this be enabled (if possible?)\n\nNote: I do see the method in the gateway logs e.g.\n\n`{\"bytes_sent\":0,\"duration\":0,\"http_referrer\":null,\"http_user_agent\":\"Blackbox Exporter/0.24.0\",\"ingress_host\":null,\"ingress_name\":\"listener~80~*-route-0-httproute-all-redirect-to-https-kgateway-0-0-matcher-0\",\"ingress_service\":null,\"method\":\"GET\",\"path\":\"/\",\"remote_addr\":\"10.93.2.149\",\"request_id\":\"b463f6ff-4c6f-4904-987f-15ac1a390227\",\"request_length\":0,\"request_proto\":\"HTTP/1.1\",\"request_time\":0,\"response_flags\":\"-\",\"status\":301,\"time\":\"2026-03-19T12:10:07.391Z\",\"upstream_connect_time\":null,\"upstream_header_time\":null,\"upstream_response_time\":null,\"vhost\":\"example.com:80\"}`\n\n(the field names we have renamed to match the nginx ones for easier migration). the \"method\"  field name is matched to `%REQ(X-ENVOY-ORIGINAL-METHOD?:METHOD)%`\n\n### Expected Behavior\n\n- metrics related to requests should contain request_method label and value\n- kgateway specific metrics are documented at https://kgateway.dev/docs/envoy/latest/observability/gateway-metrics/\n\n### Steps to reproduce the bug\n\n1. Deploy Kgateway 2.2\n2. create test httproute and start the traffic\n3. search through the all envoy/kgateway metrics and look for request related _method_ label\n4. there's no metric providing this label, but it is logged on gateway pods\n\n### Additional Environment Detail\n\n_No response_\n\n### Additional Context\n\n_No response_",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13687",
-    "state": "discovered",
+    "state": "skipped",
     "score": null,
     "triage_reason": null,
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "label \"stale\"",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4263,7 +4263,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:02.715Z",
+    "updated_at": "2026-10-28T08:22:46.438Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -7863,7 +7863,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:29.238Z",
+    "snapshot_at": "2026-10-28T08:21:38.109Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7878,7 +7878,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:33.415Z",
+    "snapshot_at": "2026-10-28T08:21:41.538Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7893,7 +7893,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:36.765Z",
+    "snapshot_at": "2026-10-28T08:21:44.692Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7908,7 +7908,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:39.858Z",
+    "snapshot_at": "2026-10-28T08:21:47.931Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7923,7 +7923,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:42.924Z",
+    "snapshot_at": "2026-10-28T08:21:50.790Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7938,7 +7938,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:46.034Z",
+    "snapshot_at": "2026-10-28T08:21:53.861Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7950,12 +7950,12 @@
     "last_seen_at": "2026-10-16T03:31:51.000Z",
     "opened_at": "2026-10-16T03:31:51Z",
     "head_sha": "65e4c531a2477578896ce14180d952a590c20b4b",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:49.259Z",
+    "snapshot_at": "2026-10-28T08:21:56.539Z",
     "ci_seen_sha": null,
-    "merge_state": "BLOCKED"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 165,
@@ -7983,7 +7983,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:52.479Z",
+    "snapshot_at": "2026-10-28T08:21:59.815Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7998,7 +7998,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T01:14:55.901Z",
+    "snapshot_at": "2026-10-28T08:22:02.843Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -13117,6 +13117,48 @@
     "ok": 1,
     "result_json": "{\"parsed\":{\"title\":\"feat(lang): add Starlark .star and .bzl review support\",\"body\":\"Fixes #1014\\n\\n## Description\\n\\nAdds `.star` and `.bzl` (Starlark) files to the review allowlist and maps them to the existing `python.md` rules, since Starlark is a Python dialect.\\n\\nChanges:\\n- `supported_file_types.json`: add `.star` and `.bzl`.\\n- `system_rules.json`: extend the Python glob to `**/*.{py,pyi,ipynb,star,bzl}`.\\n\\nBazel `BUILD` and `WORKSPACE` files are not included. The allowlist matches by extension, so they are not covered by this change.\\n\\n## Type of Change\\n\\n- [ ] Bug fix (non-breaking change that fixes an issue)\\n- [x] New feature (non-breaking change that adds functionality)\\n- [ ] Breaking change (fix or feature that would cause existing functionality to change)\\n- [ ] Refactoring (no functional changes)\\n- [ ] Documentation update\\n- [ ] CI / Build / Tooling\\n\\n## How Has This Been Tested?\\n\\nAdded tests:\\n- `TestIsAllowedExtStarlark` in `internal/config/allowlist`: checks `.star`, `.bzl` and their uppercase forms are allowed.\\n- New `.star` and `.bzl` cases in `TestIsAllowedExt`.\\n- New `tools/defs.bzl` and `config/rules.star` cases in `TestResolve_DefaultRules` in `internal/config/rules`: checks the Python rules are selected.\\n\\n- [x] `make test` passes locally\\n- [ ] Manual testing (describe below)\\n\\n## Checklist\\n\\n- [x] My code follows the project's coding style (`go fmt`, `go vet`)\\n- [ ] I have performed a self-review of my code\\n- [x] I have added tests that prove my fix is effective or my feature works\\n- [x] New and existing unit tests pass locally with my changes\\n- [ ] I have updated the documentation accordingly (if applicable)\\n- [ ] I have signed the CLA\\n- [ ] I did not use AI/LLM to create this PR, or I disclosed the tool/model below and reviewed its output; I did not attribute commits to AI and will answer maintainer questions and review comments myself without AI/LLM.\\n\\n## Related Issues\\n\\ncloses #1014\\n\",\"why\":[{\"en\":\"ocr skipped Starlark files, so I could not review them at all. I wanted these files to get a review like other Python code.\",\"vi\":\"ocr bỏ qua các tệp Starlark nên tôi không thể review chúng. Tôi muốn các tệp này được review giống như mã Python khác.\"},{\"en\":\"Starlark is a dialect of Python, so the Python rules fit it well. This small change reuses them and does not add new rule files.\",\"vi\":\"Starlark là một phương ngữ của Python nên các quy tắc Python phù hợp với nó. Thay đổi nhỏ này dùng lại các quy tắc đó và không thêm tệp quy tắc mới.\"}]},\"result\":\"Title: \\\"feat(lang): review Starlark .star and .bzl files\\\" (the issue uses a `feat(lang)` prefix).\\n\\n```json\\n{\\\"title\\\": \\\"feat(lang): add Starlark .star and .bzl review support\\\", \\\"body\\\": \\\"Fixes #1014\\\\n\\\\n## Description\\\\n\\\\nAdds `.star` and `.bzl` (Starlark) files to the review allowlist and maps them to the existing `python.md` rules, since Starlark is a Python dialect.\\\\n\\\\nChanges:\\\\n- `supported_file_types.json`: add `.star` and `.bzl`.\\\\n- `system_rules.json`: extend the Python glob to `**/*.{py,pyi,ipynb,star,bzl}`.\\\\n\\\\nBazel `BUILD` and `WORKSPACE` files are not included. The allowlist matches by extension, so they are not covered by this change.\\\\n\\\\n## Type of Change\\\\n\\\\n- [ ] Bug fix (non-breaking change that fixes an issue)\\\\n- [x] New feature (non-breaking change that adds functionality)\\\\n- [ ] Breaking change (fix or feature that would cause existing functionality to change)\\\\n- [ ] Refactoring (no functional changes)\\\\n- [ ] Documentation update\\\\n- [ ] CI / Build / Tooling\\\\n\\\\n## How Has This Been Tested?\\\\n\\\\nAdded tests:\\\\n- `TestIsAllowedExtStarlark` in `internal/config/allowlist`: checks `.star`, `.bzl` and their uppercase forms are allowed.\\\\n- New `.star` and `.bzl` cases in `TestIsAllowedExt`.\\\\n- New `tools/defs.bzl` and `config/rules.star` cases in `TestResolve_DefaultRules` in `internal/config/rules`: checks the Python rules are selected.\\\\n\\\\n- [x] `make test` passes locally\\\\n- [ ] Manual te",
     "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 359,
+    "run_id": "7ee5bea3-6cd7-4be7-b21c-1cae723be207",
+    "issue_id": 131,
+    "agent": "triage",
+    "started_at": "2026-10-28T08:22:16.389Z",
+    "duration_ms": 7689,
+    "input_tokens": 8888,
+    "output_tokens": 194,
+    "cost_usd": 0.0172766,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.02,\"reason\":\"Roadmap question asking for a full admin UI (a Kong Manager equivalent); it is a large product decision with no concrete code location in the repository, not something a focused change can deliver.\"},\"result\":\"This issue is a question about whether kgateway plans an admin UI, similar to Kong Manager. It's a product-direction question, not a defined task. Delivering a UI would be a large feature that needs a maintainer decision on scope, and it has no clear place in the repository. I didn't inspect the code because the issue doesn't point at any.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.02, \\\"reason\\\": \\\"Roadmap question asking for a full admin UI (a Kong Manager equivalent); it is a large product decision with no concrete code location in the repository, not something a focused change can deliver.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 360,
+    "run_id": "7ee5bea3-6cd7-4be7-b21c-1cae723be207",
+    "issue_id": 132,
+    "agent": "triage",
+    "started_at": "2026-10-28T08:22:25.299Z",
+    "duration_ms": 10664,
+    "input_tokens": 21871,
+    "output_tokens": 536,
+    "cost_usd": 0.027639900000000002,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.1,\"reason\":\"Propagating a parent URLRewrite into delegated child route matches (pkg/kgateway/translator/httproute/delegation.go) is a design-level feature with Envoy single-pass matching semantics and possible API changes, so it needs a maintainer decision.\"},\"result\":\"This is a feature request. It would add semantics for propagating a rewritten path through delegation. A rewrite that is applied at the parent route and then re-matched by child routes changes how Envoy routing works. Envoy matches routes once, on the original path, so the child's matches would need to be rewritten. That is a design decision a maintainer would have to make. It is also ambiguous whether the feature should be a new API, which would need CRD changes. I did not read the delegation code in depth. The score is based on the issue's scope and Envoy's route-matching model.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.1, \\\"reason\\\": \\\"Propagating a parent URLRewrite into delegated child route matches (pkg/kgateway/translator/httproute/delegation.go) is a design-level feature with Envoy single-pass matching semantics and possible API changes, so it needs a maintainer decision.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 361,
+    "run_id": "7ee5bea3-6cd7-4be7-b21c-1cae723be207",
+    "issue_id": 133,
+    "agent": "triage",
+    "started_at": "2026-10-28T08:22:37.086Z",
+    "duration_ms": 8435,
+    "input_tokens": 9283,
+    "output_tokens": 272,
+    "cost_usd": 0.019044099999999998,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.05,\"reason\":\"This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.\"},\"result\":\"This is a support question, not a bug report or a concrete feature request. I did not inspect the code, since the issue names no specific defect. The user asks whether Envoy or kgateway can accept a PROXY protocol header on an HTTPS listener and how to configure it.\\n\\nkgateway does have a listener policy that can enable PROXY protocol, but that is a config and docs answer. The fix would be at most a documentation update, and `docs/` is a path the bot may not edit. No focused code change would fix this, and a maintainer would have to decide what the answer is.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.05, \\\"reason\\\": \\\"This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
    }
   ],
   "kv": [
@@ -13130,7 +13172,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (0m)\n  approve 249    PR      adk-go#1984  \"fix(agentanalytics): report parallel branch errors\"  (11m)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (1h)"
+    "value": "  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (7h)\n  approve 249    PR      adk-go#1984  \"fix(agentanalytics): report parallel branch errors\"  (7h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (8h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
@@ -13138,7 +13180,7 @@
    },
    {
     "key": "dashboard-last-comment:beiryu/maintainer-desk",
-    "value": "6458583240"
+    "value": "6458598567"
    },
    {
     "key": "notified-dashboard",
