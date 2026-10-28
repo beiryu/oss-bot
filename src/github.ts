@@ -21,6 +21,26 @@ async function ghJson<T>(args: string[]): Promise<T> {
   return JSON.parse(await gh(args)) as T;
 }
 
+/**
+ * A GraphQL read that keeps a partial answer. GitHub fails a whole query with INTERNAL when one
+ * node is out of the token's reach (a cross-reference from a repo it cannot see: the node comes
+ * back null), yet answers the rest; callers skip null nodes.
+ */
+async function graphqlRead<T>(query: string, vars: Record<string, string | number>): Promise<T> {
+  const args = ['api', 'graphql', '-f', `query=${query}`, ...Object.entries(vars).flatMap(([k, v]) => ['-F', `${k}=${v}`])];
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return JSON.parse(await gh(args, undefined, false)).data as T;
+    } catch (e) {
+      const partial = (() => { try { return JSON.parse((e as { stdout?: string }).stdout ?? '').data; } catch { return null; } })();
+      if (partial) return partial as T;
+      const text = `${(e as { stderr?: string }).stderr ?? ''} ${(e as Error).message}`;
+      if (attempt >= 4 || !TRANSIENT.test(text)) throw e;
+      await new Promise((r) => setTimeout(r, 2000 * attempt ** 2));
+    }
+  }
+}
+
 export interface GhIssue {
   number: number;
   title: string;
@@ -108,11 +128,9 @@ export async function linkedOpenPrCount(repo: string, number: number): Promise<n
     closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{state}}
     timelineItems(first:50,itemTypes:[CROSS_REFERENCED_EVENT]){nodes{... on CrossReferencedEvent{source{... on PullRequest{state}}}}}
   }}}`;
-  const data = await ghJson<any>(['api', 'graphql', '-f', `query=${query}`,
-    '-F', `owner=${owner}`, '-F', `name=${name}`, '-F', `number=${number}`]);
-  const issue = data.data.repository.issue;
-  const closing = issue.closedByPullRequestsReferences.nodes.filter((n: any) => n.state === 'OPEN').length;
-  const refs = issue.timelineItems.nodes.filter((n: any) => n.source?.state === 'OPEN').length;
+  const issue = (await graphqlRead<any>(query, { owner, name, number })).repository.issue;
+  const closing = issue.closedByPullRequestsReferences.nodes.filter((n: any) => n?.state === 'OPEN').length;
+  const refs = issue.timelineItems.nodes.filter((n: any) => n?.source?.state === 'OPEN').length;
   return closing + refs;
 }
 
@@ -124,10 +142,8 @@ export async function otherOpenPrs(repo: string, number: number, me: string): Pr
     closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{${pr}}}
     timelineItems(first:50,itemTypes:[CROSS_REFERENCED_EVENT]){nodes{... on CrossReferencedEvent{source{${pr}}}}}
   }}}`;
-  const data = await ghJson<any>(['api', 'graphql', '-f', `query=${query}`,
-    '-F', `owner=${owner}`, '-F', `name=${name}`, '-F', `number=${number}`]);
-  const issue = data.data.repository.issue;
-  const prs = [...issue.closedByPullRequestsReferences.nodes, ...issue.timelineItems.nodes.map((n: any) => n.source)]
+  const issue = (await graphqlRead<any>(query, { owner, name, number })).repository.issue;
+  const prs = [...issue.closedByPullRequestsReferences.nodes, ...issue.timelineItems.nodes.map((n: any) => n?.source)]
     .filter((p: any) => p?.state === 'OPEN' && p.author?.login && p.author.login.toLowerCase() !== me.toLowerCase());
   const own = `https://github.com/${repo}/pull/`;
   return [...new Set(prs.map((p: any) => `${p.url.startsWith(own) ? `#${p.number}` : p.url.replace('https://github.com/', '')} by @${p.author.login}`))];
