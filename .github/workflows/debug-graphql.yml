@@ -1,0 +1,19 @@
+# Temporary: which part of the linked-PR query fails with the classic PAT. Prints GitHub's answers only.
+name: debug-graphql
+on: workflow_dispatch
+permissions: {}
+jobs:
+  q:
+    runs-on: ubuntu-latest
+    environment: bot
+    env:
+      GH_TOKEN: ${{ secrets.OSS_BOT_TOKEN }}
+    steps:
+      - run: |
+          q() { echo "== $1"; gh api graphql -f query="query{repository(owner:\"vshulcz\",name:\"deja-vu\"){issue(number:5647){$2}}}" 2>&1 | head -c 600; echo; }
+          gh api -i user 2>/dev/null | grep -i '^x-oauth-scopes' || true
+          q number 'number'
+          q closing 'closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{state}}'
+          q closing-author 'closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{state number url author{login}}}'
+          q timeline 'timelineItems(first:50,itemTypes:[CROSS_REFERENCED_EVENT]){nodes{... on CrossReferencedEvent{source{... on PullRequest{state}}}}}'
+          q timeline-author 'timelineItems(first:50,itemTypes:[CROSS_REFERENCED_EVENT]){nodes{... on CrossReferencedEvent{source{... on PullRequest{state number url author{login}}}}}}'
