@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-28T08:23:55.486Z",
+ "exported_at": "2026-10-28T16:39:08.046Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:05.052Z"
+    "last_scanned": "2026-10-28T16:37:00.376Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -37,7 +37,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- [AGENTS.md](AGENTS.md) -- detailed project structure, coding style, and testing guidelines.\n- [docs/](docs/) -- user-facing documentation.\n- [docs/specs/](docs/specs/) -- feature specifications (living documentation for contributors and coding agents).\n- [README.md](README.md) -- project overview and setup instructions.\n\n— AGENTS.md:\nThis Agents.md file provides comprehensive guidance for AI assistants and coding agents (like Claude, Gemini, Cursor, and others) to work with this codebase.\n\n— AGENTS.md:\nThis repository contains the kubernetes-mcp-server project,\na powerful Go-based Model Context Protocol (MCP) server that provides native Kubernetes and OpenShift cluster management capabilities without external dependencies.\nThis MCP server enables AI assistants (like Claude, Gemini, Cursor, and others) to interact with Kubernetes clusters using the Model Context Protocol (MCP).\n\n— AGENTS.md:\n- `docs/README.md` – Documentation index and navigation\n- `docs/configuration.md` – **Complete TOML configuration reference** (all `Config` options, drop-in configuration, dynamic reload)\n- `docs/prompts.md` – MCP Prompts configuration guide\n- `docs/logging.md` – MCP Logging guide (automatic K8s error logging, secret redaction)\n- `docs/OTEL.md` – OpenTelemetry observability setup\n- `docs/KIALI.md` – Kiali toolset configuration\n- `docs/getting-started-kubernetes.md` – Kubernetes ServiceAccount setup\n- `docs/getting-started-claude-code.md` – Claude Code CLI integration\n- `docs/KEYCLOAK_OIDC_SETUP.md` – OAuth/OIDC developer setup\n\n— AGENTS.md:\nThe `docs/specs/` directory contains feature specifications (living documentation for coding agents):",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:06.779Z"
+    "last_scanned": "2026-10-28T16:37:01.869Z"
    },
    {
     "full_name": "google/adk-go",
@@ -55,7 +55,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n**Where should I start?**\n- If you are new to the project, please check out the [good first issue](https://github.com/k8sgpt-ai/k8sgpt/labels/good%20first%20issue) label.\n- If you are looking for something to work on, check out our [open issues](https://github.com/k8sgpt-ai/k8sgpt/issues).\n- If you have an idea for a new feature, please open an issue, and we can discuss it.\n- We are also happy to help you find something to work on. Just reach out to us.\n\n— CODE_OF_CONDUCT.md:\nInstances of abusive, harassing, or otherwise unacceptable behavior may be\nreported to the community leaders responsible for enforcement at\ncontact@k8sgpt.ai.\nAll complaints will be reviewed and investigated promptly and fairly.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:09.096Z"
+    "last_scanned": "2026-10-28T16:37:03.491Z"
    },
    {
     "full_name": "kgateway-dev/kgateway",
@@ -64,7 +64,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:11.800Z"
+    "last_scanned": "2026-10-28T16:37:05.661Z"
    },
    {
     "full_name": "kubernetes-sigs/agent-sandbox",
@@ -73,7 +73,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- **CLA Requirement:** All contributors must sign the [Contributor License Agreement](https://git.k8s.io/community/CLA.md). PRs without a signed CLA will not be reviewed.\n- **AI-Assisted Code Reviews:** We use CodeRabbit to provide automated, first-pass code reviews to help identify low-hanging fruit and improve review velocity.\n  - **⚠️ Important Contribution Note (CLA Requirement):** If CodeRabbit provides a code suggestion in your PR, **do not click the \"Commit suggestion\" button** in the GitHub UI. Doing so adds the AI bot as a co-author to the commit. Since bots cannot sign the Kubernetes CLA, this will cause the CLA check to fail and block your PR. Instead, please manually apply the suggested changes in your local environment and push the commit yourself.\n  - **CodeRabbit:** CodeRabb\n\n— AGENTS.md:\nGuidance for AI coding agents working in this repository. Human contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md), [docs/development.md](docs/development.md), and [docs/testing.md](docs/testing.md), which are the source of truth.\n\n— AGENTS.md:\n`agent-sandbox` is a Kubernetes controller that provides the `Sandbox` CRD: a stateful, singleton, pod-backed workload with a stable identity, intended for AI agent runtimes, dev environments, notebooks, and similar use cases. It is a SIG Apps subproject (`sigs.k8s.io/agent-sandbox`) and follows Kubernetes / `controller-runtime` conventions.\n\n— AGENTS.md:\n| Path | What lives there |\n| --- | --- |\n| [**.agents/skills/**](.agents/skills/) | Specialized instructions for you (AI agents). See \"Agent Skills\" section below. |\n| [api/v1beta1/](api/v1beta1/) | Core `Sandbox` types and kubebuilder markers. |\n| [extensions/api/v1beta1/](extensions/api/v1beta1/) | `SandboxClaim`, `SandboxTemplate`, `SandboxWarmPool` types. |\n| [controllers/](controllers/) | Core `Sandbox` reconciler + tests. |\n| [extensions/controllers/](extensions/controllers/) | Reconcilers for the extension CRDs. |\n| [cmd/agent-sandbox-controller/](cmd/agent-sandbox-controller/), [cmd/metrics-docs-gen/](cmd/metrics-docs-gen/) | Controller manager entrypoint (`bin/manager`) and metrics reference generator. |\n| [internal/](internal/) | Shared internals (`lifecycle`, `metrics`, `metric\n\n— AGENTS.md:\nThis repository provides specialized instructions for AI agents in [`.agents/skills/`](.agents/skills/), following the Agent Skills specification (`dev-rules`, `k8s-api-conventions`, `bump-go-version`, `fix-flakes`, `test-pyramid`, `triage-issues`). Note that [CLAUDE.md](CLAUDE.md) imports this file via `@AGENTS.md`.\n\n— AGENTS.md:\n- This is a Kubernetes SIG project: contributors must have a signed [CNCF CLA](https://git.k8s.io/community/CLA.md). PRs without one are not reviewed.\n- CI runs through Prow (configured in [kubernetes/test-infra](https://github.com/kubernetes/test-infra)). The `k8s-ci-robot` merges PRs once they have `lgtm` + `approve` and presubmits pass. Default merge mode is squash; use `/label tide/merge-method-rebase` only when distinct commits matter.\n- CodeRabbit provides automated first-pass reviews on open PRs. **Never click \"Commit suggestion\" in the GitHub UI** — that adds the AI bot as a co-author, and AI bots cannot sign the Kubernetes CLA, so the CLA check will fail and block the PR. Instead: read the suggestion, apply the change manually in your local checkout, and push it as a normal commit\n\n— .github/pull_request_template.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->\n\n— .github/PULL_REQUEST_TEMPLATE.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:48.148Z"
+    "last_scanned": "2026-10-28T16:37:46.115Z"
    },
    {
     "full_name": "modelcontextprotocol/go-sdk",
@@ -82,7 +82,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-28T08:22:51.836Z"
+    "last_scanned": "2026-10-28T16:37:48.747Z"
    }
   ],
   "issues": [
@@ -4278,11 +4278,11 @@
     "title": "Document kgateway support guarantees for major dependencies",
     "body": "## Summary\n\n[PR #13671](https://github.com/kgateway-dev/kgateway/pull/13671) highlighted that kgateway does not currently have a clearly defined, easy-to-find support policy for Gateway API and other major upstream dependencies.\n\nToday, users can infer different things from different places:\n\n- the version support page documents one Gateway API line per kgateway release line\n- the nightly workflow tests multiple Gateway API releases and channels\n- individual PRs end up making policy decisions ad hoc (for example, whether to keep compatibility shims for promoted resources such as `XListenerSet` -> `ListenerSet`)\n\nWe should define and document what kgateway actually guarantees so users and maintainers can answer questions like:\n\n- Which Gateway API versions are supported vs only tested?\n- Do we support `N`, `N-1`, or `N-2` for Gateway API?\n- Does that differ for `standard` vs `experimental` Gateway API channels?\n- When an experimental API graduates, how long do we keep compatibility with the pre-promotion form?\n- What is the difference between a compatibility target, a CI-tested target, and a release-blocking support guarantee?\n- What guarantees do we provide for other major dependencies such as Kubernetes, Istio, Envoy, and the Gateway API Inference Extension?\n\nThis issue is about defining the policy and publishing it clearly. Follow-up implementation issues can refine CI, docs, and compatibility behavior once the policy is agreed.\n\n## Guidance\n\nIstio is a useful model here because it documents:\n\n- release support windows and maintenance expectations\n- compatibility matrices\n- support status by release line\n- temporary compatibility behavior during upgrades\n\nReferences:\n\n- [Istio supported releases](https://istio.io/latest/docs/releases/supported-releases/)\n- [Istio compatibility versions](https://istio.io/latest/docs/setup/additional-setup/compatibility-versions/)\n- [Istio support status of releases](https://istio.io/latest/docs/releases/supported-releases/#support-status-of-istio-releases)\n\n## Related\n\n- [PR #13671](https://github.com/kgateway-dev/kgateway/pull/13671)\n- [Issue #13682](https://github.com/kgateway-dev/kgateway/issues/13682)\n\n## Scenarios To Cover\n\nThe policy should explicitly address scenarios like these:\n\n- Gateway API resource promotion, such as `XListenerSet` graduating to `ListenerSet`\n- Gateway API fields moving from `experimental` to `standard`\n- Gateway API features being present only behind kgateway feature gates\n- Old experimental Gateway API resources no longer existing in current Go dependencies, while users may still run older CRDs\n- Schema tightening between Gateway API releases that makes previously accepted manifests invalid\n- Conformance tests added in a newer upstream Gateway API release when kgateway only partially supports the promoted API surface\n- Whether CI testing multiple versions implies official support, best-effort compatibility, or only regression detection\n- Whether `standard` and `experimental` Gateway API channels should have different support windows\n- How long compatibility shims should remain after upstream promotions or removals\n- How support guarantees should differ across Kubernetes, Istio, Envoy, Gateway API, and the Gateway API Inference Extension\n\n## Checklist\n\n- [ ] Define the difference between `supported`, `tested in CI`, `best effort`, and `not supported` for upstream dependencies.\n- [ ] Define the Gateway API support policy by channel: `standard` and `experimental`.\n- [ ] Decide whether Gateway API support should be `N`, `N-1`, `N-2`, or something else, and whether that policy differs by channel.\n- [ ] Decide what happens when an experimental Gateway API resource or field graduates, such as `XListenerSet` -> `ListenerSet`.\n- [ ] Decide how long compatibility shims for promoted or removed Gateway API APIs should remain in kgateway.\n- [ ] Decide whether conformance coverage is required for every supported Gateway API version/channel combination, or only for a primary target.\n- [ ] Define the policy for Gateway API feature gates and how gated features affect what we advertise in `GatewayClass.status.supportedFeatures`.\n- [ ] Define what support guarantee kgateway provides for Kubernetes versions, and how that differs from nightly min/max CI coverage.\n- [ ] Define what support guarantee kgateway provides for Istio versions, including whether we want a compatibility matrix similar to Istio's published docs.\n- [ ] Define what support guarantee kgateway provides for Envoy / xDS / protobuf dependency sets, especially when transitive updates can affect validation behavior.\n- [ ] Define what support guarantee kgateway provides for the Gateway API Inference Extension, if any, and how its versioning should be communicated.\n- [ ] Decide where the canonical dependency support policy should live in docs and how release notes should call out changes to that policy.\n- [ ] Update repo automation and CI so the documented policy and the nightly/test matrix do not drift apart.\n- [ ] Add follow-up issues as needed for any changes in CI, docs, conformance lanes, or compatibility shims once the policy is agreed.\n\n## Desired Outcome\n\nA user should be able to answer, from one clear page and a small number of linked references:\n\n- what kgateway officially supports today\n- what is only tested as a compatibility signal\n- what upgrade path the project expects for each major dependency\n- what temporary compatibility behavior exists during upstream transitions\n",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13683",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.05,
+    "triage_reason": "The issue needs maintainer policy decisions (Gateway API N/N-1 windows, shim lifetimes, Istio/Envoy/Inference Extension guarantees). The work would also touch the docs and .github nightly workflow paths the bot may not edit.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: The issue needs maintainer policy decisions (Gateway API N/N-1 windows, shim lifetimes, Istio/Envoy/Inference Extension guarantees). The work would also touch the docs and .github nightly workflow paths the bot may not edit.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4294,7 +4294,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:03.633Z",
+    "updated_at": "2026-10-28T16:37:19.054Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4309,11 +4309,11 @@
     "title": "Define a process to keep kgateway closer to upstream Gateway API releases",
     "body": "## Summary\n\n[PR #13671](https://github.com/kgateway-dev/kgateway/pull/13671) showed that waiting until a full Gateway API release cycle has passed makes the eventual bump much larger, riskier, and more time-consuming than it needs to be.\n\nkgateway should have a clearer process for staying closer to upstream Gateway API so version bumps are smaller, conformance drift is caught earlier, and promoted/renamed resources do not pile up into a single large change.\n\n## Goals\n\n- reduce the size and risk of future Gateway API bumps\n- detect upstream Gateway API changes earlier\n- keep conformance and supported-feature reporting closer to upstream behavior over time\n\n## Related\n\n- [PR #13671](https://github.com/kgateway-dev/kgateway/pull/13671)\n- #12880\n- #13458\n- #13582\n- #13673\n- #13674\n- #13675\n\n## Checklist\n\n- [ ] Define and document an expected Gateway API bump cadence for kgateway (for example: every upstream release, or within a bounded window after each upstream release).\n- [ ] Decide whether kgateway should also track upstream prereleases, release candidates, or main-branch snapshots in a non-blocking lane.\n- [ ] Add lightweight automation or issue creation so a new upstream Gateway API release creates a visible follow-up task instead of relying on manual discovery.\n- [ ] Add a CI signal that regularly exercises kgateway against the newest supported Gateway API release so compatibility drift is detected before the next major bump PR.\n- [ ] Define how N-2 support should interact with promoted resources so compatibility shims are planned intentionally instead of being discovered mid-bump.\n- [ ] Document how supported features and conformance exemptions/skips should be handled during each bump.\n- [ ] Identify the minimum set of checks that should pass before a Gateway API bump PR is considered ready (is full conformance required).\n- [ ] Split out any tooling or workflow improvements needed to make smaller, more frequent Gateway API bumps practical.\n\n## Additional Context\n\nThis is not only about dependency hygiene. The larger the version gap, the more likely we are to accumulate:\n\n- promoted API resources that need dual-version compatibility\n- conformance test deltas that are harder to reason about\n- transitive dependency churn from Kubernetes, Istio, Envoy, and related tooling\n- bigger reviewer burden and more CI/debugging time\n",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13682",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.1,
+    "triage_reason": "Process/policy issue needing maintainer decisions (cadence, N-2 policy, required checks); the automation and CI parts require edits under .github/ and the Makefile, which the bot may not touch.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: Process/policy issue needing maintainer decisions (cadence, N-2 policy, required checks); the automation and CI parts require edits under .github/ and the Makefile, which the bot may not touch.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4325,7 +4325,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:04.426Z",
+    "updated_at": "2026-10-28T16:37:26.603Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4340,11 +4340,11 @@
     "title": "Resource for custom Envoy config patching",
     "body": "### kgateway version\n\nv2.2\n\n### Is your feature request related to a problem? Please describe.\n\nThere have been quite a few times where a desired feature or configuration is not supported by kgateway, but is supported by envoy. In our other Envoy based system (Istio, which we use for our service mesh), we have the ability to apply patches directly into the config using their [EnvoyFilter](https://istio.io/latest/docs/reference/config/networking/envoy-filter/) resource. \n\n### Describe the solution you'd like\n\nIt would be great if there was a resource, similar to Istios [EnvoyFilter](https://istio.io/latest/docs/reference/config/networking/envoy-filter/) or Envoy Gateways [EnvoyPatchPolicy](https://gateway.envoyproxy.io/docs/api/extension_types/#envoypatchpolicy) to allow the more adventurous amongst us to more directly control envoy when the abstraction doesn't quite do what we need.\n\n### Describe alternatives you've considered\n\n_No response_\n\n### Additional Context\n\nWhilst I think on balance this would be a good feature, and give users a break glass mechanism when faced with something that the need that is not (yet) supported natively, there are risks/downsides too, e.g. security implications for misconfiguration.",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13664",
-    "state": "discovered",
+    "state": "skipped",
     "score": null,
     "triage_reason": null,
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "label \"stale\"",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4356,7 +4356,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:05.166Z",
+    "updated_at": "2026-10-28T16:37:26.864Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4371,11 +4371,11 @@
     "title": "ListenerPolicy for tracing only supports OpenTelemetry. Datadog-native tracing is needed to avoid OTLP-side sampling",
     "body": "### kgateway version\n\nv2.2.1\n\n### Is your feature request related to a problem? Please describe.\n\nHi Team,\n\nWe are migrating from NGINX to kgateway and validating distributed tracing with Datadog.\n\nIn our environment, traces that enter Datadog through the OTLP receivers on ports 4317/4318 are subject to company sampling policy. Traces sent through the Datadog Agent trace intake on port 8126 go through a different path.\n\nWith kgateway, `ListenerPolicy.spec.default.httpSettings.tracing.provider` currently exposes only `openTelemetry`, so the supported Datadog path is OTLP, not Envoy's native Datadog tracer.\n\nBecause of that, even when we configure kgateway tracing to 100%:\n- `clientSampling: 100`\n- `randomSampling: 100`\n- `overallSampling: 100`\n- OTel tracer sampler set to always-on\n\nthe effective trace volume visible in Datadog is still lower than expected, because sampling is applied downstream on the Datadog OTLP intake path.\n\nThis makes kgateway tracing behavior materially different from gateways that expose Envoy's native Datadog tracer and can send traces directly to Datadog Agent trace intake on 8126.\n\nThis issue is related to, but different from, [#11173](https://github.com/kgateway-dev/kgateway/issues/11173). That issue added OpenTelemetry tracing support. This issue is about the remaining gap for Datadog-native tracing / end-to-end sampling behaviour when Datadog OTLP intake is sampled by policy.\n\n### Current kgateway configuration:\n\n```yaml\napiVersion: gateway.kgateway.dev/v1alpha1\nkind: ListenerPolicy\nmetadata:\n  name: tracing-policy\n  namespace: kgateway-system\nspec:\n  targetRefs:\n    - group: gateway.networking.k8s.io\n      kind: Gateway\n      name: abc-gateway\n  default:\n    httpSettings:\n      tracing:\n        clientSampling: 100\n        randomSampling: 100\n        overallSampling: 100\n        provider:\n          openTelemetry:\n            serviceName: \"abc-kgateway\"\n            resourceDetectors:\n              - environmentResourceDetector: {}\n            grpcService:\n              backendRef:\n                name: opentelemetry-collector\n                namespace: otlp\n                port: 4317\n        spawnUpstreamSpan: true\n        attributes:\n          - name: env\n            literal:\n              value: \"nonprod\"\n          - name: geo\n            literal:\n              value: \"amap\"\n          - name: region\n            literal:\n              value: \"centralus\"\n    perConnectionBufferLimitBytes: 26214400\n```\n\n### Expected behaviour:\n\nIf Datadog is the target tracing backend, users should have a supported way to configure Envoy's native Datadog tracer in kgateway and send traces directly to the Datadog Agent trace intake on port 8126.\n\n### Actual behaviour:\n\nThe only tracing provider currently exposed for ListenerPolicy is OpenTelemetry, so Datadog users are forced through the OTLP intake path on 4317/4318. In environments where that path is sampled by policy, the delivered traces in Datadog are sampled even though kgateway tracing is configured for 100%.\n\n### Describe the solution you'd like\n\nPlease expose Envoy's native Datadog tracer in the Envoy data plane API, in addition to the current OpenTelemetry provider.\n\nA possible configuration shape would be something conceptually like:\n```yaml\ntracing:\n  provider:\n    datadog:\n      backendRef:\n        name: datadog-agent\n        namespace: datadog\n        port: 8126\n      serviceName: abc-gateway\n```\n\n### Describe alternatives you've considered\n\nFor testing purpose I tried migrating from KGatway to [Envoy Gateway](https://gateway.envoyproxy.io/docs/tasks/quickstart/) which supports [OpenTelemetry, Zipkin, and Datadog tracing providers](https://gateway.envoyproxy.io/docs/tasks/observability/proxy-trace/#tracing-provider), including Datadog Agent port 8126.\n\n### Additional Context\n\n### Our current Datadog cluster agent setup looks like below:\nOTLP Agent ingestion on 4317 (gRPC) and 4318 (HTTP)\nDatadog Agent trace API on 8126\n\n### Some supporting images:\nPriority sampling happening in datadog agent:\n\n<img width=\"2056\" height=\"224\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bc320bf5-b0b6-475a-8f08-a1c664dc3a68\" />\n\n### KGateway APM Trace dashboard for Requests for 10 sec: **_~700 reqs_**\n\n<img width=\"1540\" height=\"1164\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9f2bcf4f-10cf-4c42-b36c-c09e9791c0e3\" />\n\n### After migrating to Envouy Gateway, dashboard for Requests for 10 sec: **_~10K reqs_**\n\n<img width=\"1540\" height=\"1164\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a6b13eb4-95d3-4ae4-9cfd-f23fb1c19084\" />\n\n\nYou can see kgateway through otel is heavily sampled.\n\nPreviously the team managing Nginx pipelines faced the same issue (**_I meant issue from our company stand point and not real issue with OTEL_**) when they where using the opentelemtry and now they are using DD ingress injection module (I don't know what that is)\n<img width=\"816\" height=\"198\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/cdf6a572-e9c3-4f5a-bd8e-54b59b92fd0b\" />\n\nCompany policy to have the sampling rate applied for OTEL is because there are teams who publishes unwanted metrics and logs which add cost to the company. Hence its recommended to push the traces through 8126 trace port which is unfiltered/unsampled.",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13652",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.1,
+    "triage_reason": "Adding a Datadog tracing provider to the ListenerPolicy tracing API (api/v1alpha1) needs API/CRD changes and codegen touching api/applyconfiguration and helm CRDs, which the bot cannot run or edit, and it needs maintainer design decisions.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: Adding a Datadog tracing provider to the ListenerPolicy tracing API (api/v1alpha1) needs API/CRD changes and codegen touching api/applyconfiguration and helm CRDs, which the bot cannot run or edit, and it needs maintainer design decisions.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4387,7 +4387,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:05.815Z",
+    "updated_at": "2026-10-28T16:37:36.796Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -4402,11 +4402,11 @@
     "title": "Add Envoy Network RBAC support to `ListenerPolicy`",
     "body": "### kgateway version\n\nv2.2.0\n\n### Is your feature request related to a problem? Please describe.\n\nCurrently, kgateway supports RBAC rules only on a HTTP level via `TrafficPolicy`. Envoy, however, has a [\"network\"-level RBAC](https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/network_filters/rbac_filter) filter. There is currently no way in kgateway to enforce certain restrictions on a listener/port level, e.g. inspecting presented client certificates.\n\n### Describe the solution you'd like\n\nkgateway should allow specifying RBAC rules in a `ListenerPolicy` that in turn get translated into an Envoy RBAC network filter. The existing API types for RBAC ought to be reusable due to Envoy's [unified matching API](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/advanced/matching/matching_api).\n\n### Describe alternatives you've considered\n\nClient IP restrictions etc. could be enforced via Kubernetes network policies or via firewalls, but closer inspection of the connection is not possible this way.\n\n### Additional Context\n\nThis would pair nicely with #13491 if support for CIDR matching is added to the listener-level API right away.",
     "url": "https://github.com/kgateway-dev/kgateway/issues/13513",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.08,
+    "triage_reason": "Adding network RBAC to ListenerPolicy requires new API/CRD fields (api/v1alpha1 ListenerPolicy) and codegen the bot cannot run, plus API design decisions and a new network filter in the listener policy plugin.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: Adding network RBAC to ListenerPolicy requires new API/CRD fields (api/v1alpha1 ListenerPolicy) and codegen the bot cannot run, plus API design decisions and a new network filter in the listener policy plugin.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -4418,7 +4418,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:17:06.631Z",
+    "updated_at": "2026-10-28T16:37:44.791Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -7804,6 +7804,68 @@
     "repro_notes": "Custom parent cancels a parallelagent's context with a branch error and yields it. runner.Run yields 1 error, but INVOCATION_ERROR rows = 0, want 1. contextFailureCause stops at the non-branch parallelagent span and drops the branch's cause.",
     "why": "[{\"en\":\"The plugin said an invocation completed fine when it had really failed. I want the error to show up in the analytics data.\",\"vi\":\"Plugin báo invocation hoàn thành bình thường trong khi thực tế đã lỗi. Tôi muốn lỗi hiển thị trong dữ liệu analytics.\"},{\"en\":\"Patterns like errgroup.WithContext are common in custom agents. This change makes sure they do not hide a branch error from the logs.\",\"vi\":\"Các mẫu như errgroup.WithContext rất phổ biến trong custom agent. Thay đổi này đảm bảo chúng không làm mất lỗi của nhánh trong log.\"}]",
     "pr_text": null
+   },
+   {
+    "id": 250,
+    "repo": "modelcontextprotocol/go-sdk",
+    "number": 1471,
+    "title": "Internal server errors are disclosed to clients as protocol errors",
+    "body": "### Checklist\n\n- [x] I searched the existing issues, and this has not been reported before.\n- [x] This is a real problem that I ran into myself, using the latest release of the SDK.\n- [x] I ran into it in a production system, not in a toy example, a benchmark, or an automated or AI-driven scan of the code.\n- [x] I (a human) examined the relevant SDK code, and wrote or reviewed every line of this report. It is not unreviewed AI output.\n- [x] This report is brief and concise, and sticks to the facts needed to understand the problem.\n\n### What happened?\n\nWhen a resource, prompt, or low-level tool handler returns an arbitrary Go `error`, the SDK routes it into the protocol-error channel and copies the raw `err.Error()` string verbatim into the client-facing `error.message`. The typed `AddTool` handler has a similar problem when a client-visible error isn't set.\n\n### How to reproduce\n\n\nOne version of this can be triggered in the SDK itself, and doesn't depend on any other code throwing an error that shouldn't be client visible. It's actually already present in the unit tests:\n\nhttps://github.com/modelcontextprotocol/go-sdk/blob/fbd36cb7870176bfc3e8e423df697cf110d0f927/mcp/shared_test.go#L636-L659\n\nThat test asserts the message contains `\"unmarshaling\"`. The word itself is harmless but illustrates the leak: the internal Go type name and the echoed raw request bytes. For the array-vs-struct params in that test the full message is:\n\n\ninvalid params: unmarshaling \"[\\\"a\\\",\\\"b\\\"]\" into a *mcp.PingParams: json: cannot unmarshal \"[\\\"a\\\",\\\"b\\\"]\" into Go value of type mcp.PingParams\n\n\nThe test should assert those internal details (the `*mcp.*` type name and the echoed bytes) are *absent*, rather than asserting `\"unmarshaling\"` is present. The `tools/call` PoC below hits the same code path and leaks `*mcp.CallToolParamsRaw` plus the client-supplied bytes.\n\nClients can trigger this error by crafting an invalid payload:\n\n\n**1. Start the demo server.**\n```\ngo run ./examples/server/everything -http localhost:8080\n```\n\n**2. Initialize — capture the session ID from the response header**\n```\nSID=$(curl -sS -D - -o /dev/null -X POST http://localhost:8080 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json, text/event-stream' \\\n  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-06-18\",\"capabilities\":{},\"clientInfo\":{\"name\":\"repro\",\n\"version\":\"0.0.1\"}}}' \\\n  | tr -d '\\r' | awk -F': ' '/^Mcp-Session-Id/{print $2}')\n```\n\n**3. Complete the handshake**\n```\ncurl -sS -o /dev/null -X POST http://localhost:8080 \\\n  -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \\\n  -H \"Mcp-Session-Id: $SID\" \\\n  -d '{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\"}'\n```\n\n**4. Your malformed call — pass the session ID**\n```\ncurl -sS -X POST http://localhost:8080 \\\n  -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' \\\n  -H \"Mcp-Session-Id: $SID\" \\\n  -d '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/call\",\"params\":{\"name\":12345,\"arguments\":{}}}'\n```\n\n\nThe example above only exposes SDK type names. The more serious variant is an arbitrary error returned from a handler, which reaches the client verbatim with `code: 0`. This needs a handler that returns such an error, but the handler doesn't need to do anything unusual. A wrapped backend error is enough. The following test (package `mcp`) demonstrates it and currently fails:\n\n```go\nfunc TestInternalErrorLeaksToClient(t *testing.T) {\n        ctx := context.Background()\n\n        const internalDetail = \"querying account balance: dial tcp payments-db.prod.svc.cluster.local:5432: connect: connection refused\"\n\n        cs, _, cleanup := basicConnection(t, func(s *Server) {\n                s.AddResource(\n                        &Resource{URI: \"file:///report.txt\", Name: \"report\", MIMEType: \"text/plain\"},\n                        func(ctx context.Context, req *ReadResourceRequest) (*ReadResourceResult, error) {\n                                return nil, errors.New(internalDetail)\n                        },\n                )\n        })\n        defer cleanup()\n\n        _, err := cs.ReadResource(ctx, &ReadResourceParams{URI: \"file:///report.txt\"})\n        var rpcErr *jsonrpc.Error\n        if !errors.As(err, &rpcErr) {\n                t.Fatalf(\"got %T, want *jsonrpc.Error\", err)\n        }\n        if strings.Contains(rpcErr.Message, internalDetail) {\n                t.Errorf(\"LEAK: internal error detail reached the client in error.message: %q\", rpcErr.Message)\n        }\n}\n```\n\n\nObserved:\n\n\n```\nclient-visible error code:    0\nclient-visible error message: \"querying account balance: dial tcp payments-db.prod.svc.cluster.local:5432: connect: connection refused\"\n```\n\nThe internal error string (possibly carrying sensitive info) is delivered to the client verbatim.\n\n\n### Where did you hit this?\n\nDiscovered while developing a production MCP server using this SDK\n\n### Go MCP SDK version\n\n1.6.1\n\n### Go version\n\n1.26.10\n\n### Logs\n\n```text\n\n```",
+    "url": "https://github.com/modelcontextprotocol/go-sdk/issues/1471",
+    "state": "triaged",
+    "score": 0.3,
+    "triage_reason": "Masking handler errors in mcp/server.go (resource/prompt/tool handlers) is a behavior-change decision for maintainers and may need API or proposal. Only the narrow fix of sanitizing the SDK's own unmarshal invalid-params message is clearly scoped.",
+    "attempts": 0,
+    "skip_reason": null,
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-28T16:38:08.039Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
+   },
+   {
+    "id": 251,
+    "repo": "modelcontextprotocol/go-sdk",
+    "number": 1470,
+    "title": "mcp: a client DELETE waits for a pending keepalive ping",
+    "body": "### What\n\nOn a streamable HTTP server with `ServerOptions.KeepAlive` set, a client `DELETE` does not get its answer until any pending keepalive ping times out. The wait is up to `KeepAlive/2`. When the ping times out, the server also logs `keepalive ping failed; closing session` for a session that the client closed on purpose.\n\nThe cause is in `startKeepalive` (`mcp/shared.go`, line 890 in v1.8.0, line 994 on `main`). Each ping gets its context from `context.Background()`, not from the keepalive context:\n\n```go\npingCtx, pingCancel := context.WithTimeout(context.Background(), interval/2)\nerr := session.Ping(pingCtx, nil)\n```\n\nThe `DELETE` branch of `StreamableHTTPHandler` calls `ServerSession.Close`. `Close` calls `keepaliveCancel()`, but that cancel does not reach the pending ping. Then `jsonrpc2.Connection.Close` waits until no outgoing calls are in flight. So `Close`, and with it the `DELETE` response, waits until the ping times out.\n\nA ping is pending whenever the client no longer answers. A client that ends its session (for example, an agent at the end of a turn) usually stops reading the standalone stream first. So this happens on a large share of normal closes, not only with broken clients.\n\n### Impact\n\nWe run a streamable HTTP server with `KeepAlive: 30s`. Our agent client opens one session per turn and sends `DELETE` at the end of the turn. The `DELETE` took 15 to 30 s on many turns. During that time each closing session holds a goroutine, an open request, and its place in any per-session limit. Each of these closes also logs a false keepalive failure.\n\n### Reproduce\n\nThe program below uses only the SDK. It initializes a session, opens the standalone stream, waits for the server's ping, does not answer it, and then sends `DELETE`.\n\n```go\npackage main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"log/slog\"\n\t\"net/http\"\n\t\"net/http/httptest\"\n\t\"os\"\n\t\"strings\"\n\t\"time\"\n\n\t\"github.com/modelcontextprotocol/go-sdk/mcp\"\n)\n\nfunc main() {\n\tinterval := 2 * time.Second\n\tlogger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelWarn}))\n\tserver := mcp.NewServer(&mcp.Implementation{Name: \"repro\", Version: \"0\"}, &mcp.ServerOptions{KeepAlive: interval, Logger: logger})\n\tts := httptest.NewServer(mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, nil))\n\tdefer ts.Close()\n\n\tpost := func(sid, body string) *http.Response {\n\t\treq, _ := http.NewRequest(http.MethodPost, ts.URL, strings.NewReader(body))\n\t\treq.Header.Set(\"Content-Type\", \"application/json\")\n\t\treq.Header.Set(\"Accept\", \"application/json, text/event-stream\")\n\t\tif sid != \"\" {\n\t\t\treq.Header.Set(\"Mcp-Session-Id\", sid)\n\t\t}\n\t\tresp, err := http.DefaultClient.Do(req)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\treturn resp\n\t}\n\n\tresp := post(\"\", `{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-11-25\",\"capabilities\":{},\"clientInfo\":{\"name\":\"raw\",\"version\":\"0\"}}}`)\n\tsid := resp.Header.Get(\"Mcp-Session-Id\")\n\tresp.Body.Close()\n\tpost(sid, `{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\"}`).Body.Close()\n\n\treq, _ := http.NewRequest(http.MethodGet, ts.URL, nil)\n\treq.Header.Set(\"Accept\", \"text/event-stream\")\n\treq.Header.Set(\"Mcp-Session-Id\", sid)\n\tstream, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tscanner := bufio.NewScanner(stream.Body)\n\tfor scanner.Scan() {\n\t\tif strings.Contains(scanner.Text(), `\"method\":\"ping\"`) {\n\t\t\tbreak\n\t\t}\n\t}\n\tfmt.Println(\"ping received, not answering; sending DELETE\")\n\n\treq, _ = http.NewRequest(http.MethodDelete, ts.URL, nil)\n\treq.Header.Set(\"Mcp-Session-Id\", sid)\n\tstart := time.Now()\n\tdel, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tdel.Body.Close()\n\tfmt.Printf(\"DELETE -> %d after %v\\n\", del.StatusCode, time.Since(start).Round(time.Millisecond))\n\ttime.Sleep(500 * time.Millisecond)\n}\n```\n\nOutput on v1.8.0 (the same on v1.6.1):\n\n```text\nping received, not answering; sending DELETE\nlevel=ERROR msg=\"keepalive ping failed; closing session\" error=\"context deadline exceeded\" consecutiveFailures=1 failureThreshold=1\nDELETE -> 204 after 1.001s\n```\n\nThe `DELETE` waits the full ping timeout (`KeepAlive/2` = 1 s), and the close is logged as a keepalive failure.\n\n### Suggested fix\n\nGet the ping context from the keepalive context. If that context is cancelled, stop the loop without a failure:\n\n```diff\n \t\t\tcase <-ticker.C:\n-\t\t\t\tpingCtx, pingCancel := context.WithTimeout(context.Background(), interval/2)\n+\t\t\t\tpingCtx, pingCancel := context.WithTimeout(ctx, interval/2)\n \t\t\t\terr := session.Ping(pingCtx, nil)\n \t\t\t\tpingCancel()\n+\t\t\t\tif ctx.Err() != nil {\n+\t\t\t\t\treturn\n+\t\t\t\t}\n \t\t\t\tif err == nil {\n```\n\nThe `ctx.Err()` check is necessary. Without it, the cancelled ping counts as a failure, and the server logs `keepalive ping failed ... error=\"context canceled\"` on every close that it interrupts.\n\nWe tested this change against v1.8.0. With the program above, the `DELETE` returns at once (`DELETE -> 204 after 0s`) and nothing is logged. `go test ./mcp/` passes. A cancelled ping leaves the in-flight set through `conn.Retire` in `call` (`mcp/transport.go`), so `Connection.Close` no longer waits for it.\n\n`ClientSession` uses the same `startKeepalive`, so the change also applies to the client. We did not test the client path.\n\n### Related\n\n- #1281 / #1282: the level of the keepalive failure log. This issue removes one common source of those records, a session that the client closed on purpose.\n- #1183: the client-side `Close` waits for its `DELETE`. That is a different code path.\n",
+    "url": "https://github.com/modelcontextprotocol/go-sdk/issues/1470",
+    "state": "awaiting_claim",
+    "score": 0.9,
+    "triage_reason": "In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil after the ping. It's a tiny, internal change with no API impact, and the issue includes a repro that can become a test.",
+    "attempts": 0,
+    "skip_reason": null,
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-28T16:38:15.774Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
    }
   ],
   "prs": [
@@ -7863,7 +7925,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:38.109Z",
+    "snapshot_at": "2026-10-28T16:36:35.618Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7878,7 +7940,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:41.538Z",
+    "snapshot_at": "2026-10-28T16:36:38.649Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7893,7 +7955,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:44.692Z",
+    "snapshot_at": "2026-10-28T16:36:41.459Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7908,7 +7970,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:47.931Z",
+    "snapshot_at": "2026-10-28T16:36:44.483Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7923,7 +7985,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:50.790Z",
+    "snapshot_at": "2026-10-28T16:36:47.080Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7938,7 +8000,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:53.861Z",
+    "snapshot_at": "2026-10-28T16:36:49.714Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -7950,12 +8012,12 @@
     "last_seen_at": "2026-10-16T03:31:51.000Z",
     "opened_at": "2026-10-16T03:31:51Z",
     "head_sha": "65e4c531a2477578896ce14180d952a590c20b4b",
-    "mergeable": "UNKNOWN",
+    "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:56.539Z",
+    "snapshot_at": "2026-10-28T16:36:52.378Z",
     "ci_seen_sha": null,
-    "merge_state": "UNKNOWN"
+    "merge_state": "BLOCKED"
    },
    {
     "issue_id": 165,
@@ -7983,7 +8045,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:21:59.815Z",
+    "snapshot_at": "2026-10-28T16:36:55.365Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -7998,7 +8060,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T08:22:02.843Z",
+    "snapshot_at": "2026-10-28T16:36:58.304Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -13159,6 +13221,90 @@
     "ok": 1,
     "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.05,\"reason\":\"This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.\"},\"result\":\"This is a support question, not a bug report or a concrete feature request. I did not inspect the code, since the issue names no specific defect. The user asks whether Envoy or kgateway can accept a PROXY protocol header on an HTTPS listener and how to configure it.\\n\\nkgateway does have a listener policy that can enable PROXY protocol, but that is a config and docs answer. The fix would be at most a documentation update, and `docs/` is a path the bot may not edit. No focused code change would fix this, and a maintainer would have to decide what the answer is.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.05, \\\"reason\\\": \\\"This is a usage question about PROXY protocol on HTTPS listeners with an F5 monitor, with no concrete code defect or feature request. Any answer would be docs-only, and docs/ is off-limits.\\\"}\\n```\\n\"}",
     "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 362,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 136,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:37:09.122Z",
+    "duration_ms": 9931,
+    "input_tokens": 10690,
+    "output_tokens": 290,
+    "cost_usd": 0.0227416,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.05,\"reason\":\"The issue needs maintainer policy decisions (Gateway API N/N-1 windows, shim lifetimes, Istio/Envoy/Inference Extension guarantees). The work would also touch the docs and .github nightly workflow paths the bot may not edit.\"},\"result\":\"This issue asks the project to define and publish a dependency support policy. That is a maintainer decision: it needs choices on N/N-1 windows, how long to keep compatibility shims, and which Istio, Envoy and Inference Extension guarantees to offer. An automated contributor can't make those choices. The official docs also live outside this repository (the `docs/` path is off limits). The CI and nightly workflow alignment sits under `.github/`, which the bot may not edit. I did not inspect the code, since the issue is about policy rather than a code defect.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.05, \\\"reason\\\": \\\"The issue needs maintainer policy decisions (Gateway API N/N-1 windows, shim lifetimes, Istio/Envoy/Inference Extension guarantees). The work would also touch the docs and .github nightly workflow paths the bot may not edit.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 363,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 137,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:37:19.987Z",
+    "duration_ms": 6615,
+    "input_tokens": 9648,
+    "output_tokens": 243,
+    "cost_usd": 0.0196666,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.1,\"reason\":\"Process/policy issue needing maintainer decisions (cadence, N-2 policy, required checks); the automation and CI parts require edits under .github/ and the Makefile, which the bot may not touch.\"},\"result\":\"This issue is a process and policy tracker, not a code fix. Its checklist items need maintainer decisions: bump cadence, whether to track prereleases, N-2 shim policy, and which checks gate a bump PR. Most of the deliverables would live in `.github/` workflows for automation and CI, or in `Makefile` targets. The bot may not edit either path. A documentation-only slice might fit under `devel/`, but that would still record decisions nobody has made.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.1, \\\"reason\\\": \\\"Process/policy issue needing maintainer decisions (cadence, N-2 policy, required checks); the automation and CI parts require edits under .github/ and the Makefile, which the bot may not touch.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 364,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 139,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:37:28.194Z",
+    "duration_ms": 8602,
+    "input_tokens": 10885,
+    "output_tokens": 351,
+    "cost_usd": 0.023839100000000002,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.1,\"reason\":\"Adding a Datadog tracing provider to the ListenerPolicy tracing API (api/v1alpha1) needs API/CRD changes and codegen touching api/applyconfiguration and helm CRDs, which the bot cannot run or edit, and it needs maintainer design decisions.\"},\"result\":\"This request requires adding a new `datadog` provider field to the ListenerPolicy tracing API in `api/v1alpha1`. That means a CRD and API change, which needs `make go-generate-apis` and generated CRD and applyconfiguration updates. The bot cannot run those, and hand-editing generated code is prohibited. The change would also touch `api/applyconfiguration/` and `install/helm/` CRDs, which are paths the bot may not edit. The feature also involves design choices a maintainer would need to make, such as the Datadog field shape, the backendRef handling, and the Envoy DatadogConfig proto. I did not open the code; this assessment rests on the issue text and the project rules.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.1, \\\"reason\\\": \\\"Adding a Datadog tracing provider to the ListenerPolicy tracing API (api/v1alpha1) needs API/CRD changes and codegen touching api/applyconfiguration and helm CRDs, which the bot cannot run or edit, and it needs maintainer design decisions.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 365,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 140,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:37:38.059Z",
+    "duration_ms": 6731,
+    "input_tokens": 9262,
+    "output_tokens": 219,
+    "cost_usd": 0.0184616,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.08,\"reason\":\"Adding network RBAC to ListenerPolicy requires new API/CRD fields (api/v1alpha1 ListenerPolicy) and codegen the bot cannot run, plus API design decisions and a new network filter in the listener policy plugin.\"},\"result\":\"This issue needs a new field on the `ListenerPolicy` CRD, which means API and CRD changes. Those require `make go-generate-apis`, and the bot can't run it. The change also touches `api/` and generated code. It also needs a design decision on how the Envoy network RBAC filter should be exposed in the API, and the work is large.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.08, \\\"reason\\\": \\\"Adding network RBAC to ListenerPolicy requires new API/CRD fields (api/v1alpha1 ListenerPolicy) and codegen the bot cannot run, plus API design decisions and a new network filter in the listener policy plugin.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 366,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 250,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:37:57.071Z",
+    "duration_ms": 10968,
+    "input_tokens": 19090,
+    "output_tokens": 532,
+    "cost_usd": 0.0240314,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.3,\"reason\":\"Masking handler errors in mcp/server.go (resource/prompt/tool handlers) is a behavior-change decision for maintainers and may need API or proposal. Only the narrow fix of sanitizing the SDK's own unmarshal invalid-params message is clearly scoped.\"},\"result\":\"The issue touches several code paths: resource, prompt, low-level tool, and typed `AddTool` handlers, plus the SDK's own unmarshal errors. Redacting handler errors changes behavior that users may already rely on. Maintainers would likely have to decide whether to mask errors by default, which could need a proposal or an opt-in API. That risks the \\\"no API change\\\" rule. Existing tests also assert on the current messages. I did not read the handler code beyond the grep, so this is a judgement from the issue text and the grep hits.\\n\\nThe unmarshal-message part is small and clear: drop the type name and echoed bytes from the invalid-params error. The main concern, hiding arbitrary handler errors, is a design decision.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.3, \\\"reason\\\": \\\"Masking handler errors in mcp/server.go (resource/prompt/tool handlers) is a behavior-change decision for maintainers and may need API or proposal. Only the narrow fix of sanitizing the SDK's own unmarshal invalid-params message is clearly scoped.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 367,
+    "run_id": "34d62b7f-512f-4422-828f-b4f3443f2064",
+    "issue_id": 251,
+    "agent": "triage",
+    "started_at": "2026-10-28T16:38:08.284Z",
+    "duration_ms": 7489,
+    "input_tokens": 20409,
+    "output_tokens": 360,
+    "cost_usd": 0.024641700000000002,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.9,\"reason\":\"In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil after the ping. It's a tiny, internal change with no API impact, and the issue includes a repro that can become a test.\"},\"result\":\"The code matches the issue. In `startKeepalive` in `mcp/shared.go`, line 994 builds the ping context from `context.Background()`. The fix is a two-line change that doesn't touch the exported API. A regression test would be straightforward too. I haven't run the suggested fix or its tests.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.9, \\\"reason\\\": \\\"In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil after the ping. It's a tiny, internal change with no API impact, and the issue includes a repro that can become a test.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
    }
   ],
   "kv": [
@@ -13172,7 +13318,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (7h)\n  approve 249    PR      adk-go#1984  \"fix(agentanalytics): report parallel branch errors\"  (7h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (8h)"
+    "value": "  approve 251    claim   go-sdk#1470  \"mcp: a client DELETE waits for a pending keepalive\"  score 0.9\n                         In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil af\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (15h)\n  approve 249    PR      adk-go#1984  \"fix(agentanalytics): report parallel branch errors\"  (15h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (16h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
@@ -13184,7 +13330,7 @@
    },
    {
     "key": "notified-dashboard",
-    "value": "- **248 · mở PR** [alibaba/open-code-review#1014](https://github.com/alibaba/open-code-review/issues/1014) feat(lang): add Starlark .star and .bzl review support\n- **249 · mở PR** [google/adk-go#1984](https://github.com/google/adk-go/issues/1984) fix(agentanalytics): report parallel branch errors passed on by a custom parent\n- **238 · mở PR** [vshulcz/deja-vu#5647](https://github.com/vshulcz/deja-vu/issues/5647) docs(guide): add memory-for-codebuddy page for CodeBuddy and WorkBuddy"
+    "value": "- **251 · claim** [modelcontextprotocol/go-sdk#1470](https://github.com/modelcontextprotocol/go-sdk/issues/1470) mcp: a client DELETE waits for a pending keepalive ping · score 0.9\n- **248 · mở PR** [alibaba/open-code-review#1014](https://github.com/alibaba/open-code-review/issues/1014) feat(lang): add Starlark .star and .bzl review support\n- **249 · mở PR** [google/adk-go#1984](https://github.com/google/adk-go/issues/1984) fix(agentanalytics): report parallel branch errors passed on by a custom parent\n- **238 · mở PR** [vshulcz/deja-vu#5647](https://github.com/vshulcz/deja-vu/issues/5647) docs(guide): add memory-for-codebuddy page for CodeBuddy and WorkBuddy"
    },
    {
     "key": "synced-head:54",
