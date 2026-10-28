@@ -4,7 +4,7 @@ import { execa, execaSync } from 'execa';
 
 // GitHub answers 502/504 now and then, mostly on GraphQL; retry those, nothing else.
 // Writes pass retry=false: a 5xx can arrive after the comment or PR was created.
-const TRANSIENT = /HTTP 5\d\d|timed? ?out|ECONNRESET|connection reset/i;
+const TRANSIENT = /HTTP 5\d\d|timed? ?out|ECONNRESET|connection reset|Something went wrong while executing your query/i;
 
 async function gh(args: string[], input?: string, retry = true) {
   for (let attempt = 1; ; attempt++) {
