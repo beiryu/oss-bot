@@ -11,7 +11,8 @@ jobs:
     steps:
       - run: |
           q() { echo "== $1"; gh api graphql -f query="query{repository(owner:\"vshulcz\",name:\"deja-vu\"){issue(number:5647){$2}}}" 2>&1 | head -c 600; echo; }
-          gh api -i user 2>/dev/null | grep -i '^x-oauth-scopes' || true
+          gh api -i user 2>/dev/null | grep -iE '^(x-oauth-scopes|x-accepted|github-authentication-token-expiration|x-github-sso)' || echo "(no scope headers)"
+          echo "prefix: ${GH_TOKEN:0:4}"   # ghp_ = classic, github_pat_ = fine-grained; 4 chars reveal nothing
           q number 'number'
           q closing 'closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{state}}'
           q closing-author 'closedByPullRequestsReferences(first:10,includeClosedPrs:false){nodes{state number url author{login}}}'
