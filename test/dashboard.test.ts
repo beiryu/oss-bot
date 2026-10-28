@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyCommand } from '../src/ci.js';
+import { applyCommand, shortError } from '../src/ci.js';
 import { Db } from '../src/db.js';
 import { dashboardChanged, DASHBOARD_MARK, parseCommands, renderDashboard } from '../src/dashboard.js';
 import { approveFollowup } from '../src/orchestrator.js';
@@ -105,5 +105,17 @@ describe('drafts for a closed PR', () => {
     const late = db.addAction(id(3), 'fix', 'drafted before the merge was seen', 'diff');
     await expect(approveFollowup({ cfg, db, runId: null }, late)).rejects.toThrow('is merged');
     expect(db.action(late).status).toBe('rejected');
+  });
+});
+
+describe('shortError', () => {
+  it('names the subcommand past -c options and keeps what the server said', () => {
+    const e = Object.assign(new Error('Command failed with exit code 1: git -c user.name=x -c commit.gpgsign=true push -u fork fix/1'), {
+      stderr: 'To https://github.com/me/r.git\n ! [remote rejected] fix/1 -> fix/1 (refusing to allow a Personal Access Token to create or update workflow `.github/workflows/ci.yml` without `workflow` scope)\nerror: failed to push some refs to \'https://github.com/me/r.git\'',
+    });
+    const s = shortError(e);
+    expect(s).toMatch(/^git push failed \(exit 1\): ! \[remote rejected\]/);
+    expect(s).toContain('`workflow` scope');
+    expect(shortError(Object.assign(new Error('Command failed with exit code 1: gh api graphql -f query=x'), { stderr: 'gh: boom' }))).toBe('gh api failed (exit 1): gh: boom');
   });
 });

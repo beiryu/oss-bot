@@ -67,9 +67,14 @@ export async function ciAgent(ctx: Ctx, opts: { minutes: number }) {
 /** One readable line for a failure: a git/gh command line is noise, its exit code and stderr are not. */
 export function shortError(e: unknown): string {
   const msg = (e as Error).message ?? String(e);
-  const cmd = /^Command failed with exit code (\d+): (git|gh)\b.*?\b(checkout|fetch|push|apply|clone|commit|api|pr|issue)\b/.exec(msg);
-  const stderr = ((e as { stderr?: string }).stderr ?? msg.split('\n').slice(1).join('\n')).trim().split('\n').filter(Boolean).pop();
-  if (cmd) return `${cmd[2]} ${cmd[3]} failed (exit ${cmd[1]})${stderr ? `: ${stderr.slice(0, 160)}` : ''}`;
+  // The subcommand is the first word after the tool that is neither an option nor the value of a `-c`.
+  const cmd = /^Command failed with exit code (\d+): (git|gh)((?: +-c +\S+| +--?[\w-]+(?:=\S+)?)*) +(\S+)/.exec(msg);
+  const lines = ((e as { stderr?: string }).stderr ?? msg.split('\n').slice(1).join('\n')).trim().split('\n').filter(Boolean);
+  // What the server said beats git's summary ("failed to push some refs").
+  const said = lines.find((l) => /^remote: +(error|fatal)|refusing|! \[(remote )?rejected\]|denied/i.test(l)) ?? lines.at(-1);
+  const hint = /without `?workflow`? scope/.test(lines.join('\n'))
+    ? ' (the commits under the PR include upstream workflow changes the fork lacks: give OSS_BOT_TOKEN the `workflow` scope)' : '';
+  if (cmd) return `${cmd[2]} ${cmd[4]} failed (exit ${cmd[1]})${said ? `: ${said.trim().replace(/^remote: +/, '').slice(0, 200)}` : ''}${hint}`;
   return msg.split('\n')[0].slice(0, 300);
 }
 
