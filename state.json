@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-28T22:37:29.541Z",
+ "exported_at": "2026-10-29T05:41:58.758Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:33:52.858Z"
+    "last_scanned": "2026-10-29T05:39:31.630Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -37,7 +37,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- [AGENTS.md](AGENTS.md) -- detailed project structure, coding style, and testing guidelines.\n- [docs/](docs/) -- user-facing documentation.\n- [docs/specs/](docs/specs/) -- feature specifications (living documentation for contributors and coding agents).\n- [README.md](README.md) -- project overview and setup instructions.\n\n— AGENTS.md:\nThis Agents.md file provides comprehensive guidance for AI assistants and coding agents (like Claude, Gemini, Cursor, and others) to work with this codebase.\n\n— AGENTS.md:\nThis repository contains the kubernetes-mcp-server project,\na powerful Go-based Model Context Protocol (MCP) server that provides native Kubernetes and OpenShift cluster management capabilities without external dependencies.\nThis MCP server enables AI assistants (like Claude, Gemini, Cursor, and others) to interact with Kubernetes clusters using the Model Context Protocol (MCP).\n\n— AGENTS.md:\n- `docs/README.md` – Documentation index and navigation\n- `docs/configuration.md` – **Complete TOML configuration reference** (all `Config` options, drop-in configuration, dynamic reload)\n- `docs/prompts.md` – MCP Prompts configuration guide\n- `docs/logging.md` – MCP Logging guide (automatic K8s error logging, secret redaction)\n- `docs/OTEL.md` – OpenTelemetry observability setup\n- `docs/KIALI.md` – Kiali toolset configuration\n- `docs/getting-started-kubernetes.md` – Kubernetes ServiceAccount setup\n- `docs/getting-started-claude-code.md` – Claude Code CLI integration\n- `docs/KEYCLOAK_OIDC_SETUP.md` – OAuth/OIDC developer setup\n\n— AGENTS.md:\nThe `docs/specs/` directory contains feature specifications (living documentation for coding agents):",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:33:54.886Z"
+    "last_scanned": "2026-10-29T05:39:45.880Z"
    },
    {
     "full_name": "google/adk-go",
@@ -46,7 +46,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n-   [How to contribute](#how-to-contribute)\n-   [Branches](#branches)\n    -   [Backporting to `v1`](#backporting-to-v1)\n-   [Multi-Module Development](#multi-module-development)\n-   [Experimental features](#experimental-features)\n-   [Before you begin](#before-you-begin)\n    -   [Sign our Contributor License Agreement](#sign-our-contributor-license-agreement)\n    -   [Review our community guidelines](#review-our-community-guidelines)\n    -   [Code reviews](#code-reviews)\n-   [Contribution workflow](#contribution-workflow)\n    -   [Finding Issues to Work On](#finding-issues-to-work-on)\n    -   [Requirement for PRs](#requirement-for-prs)\n    -   [Checks to run before you open a PR](#checks-to-run-before-you-open-a-pr)\n    -   [Large or Complex Changes](#large-or-complex-changes)\n    -   [Tes\n\n— CONTRIBUTING.md:\nAll submissions to this project need to follow Google’s [Contributor\nLicense Agreement (CLA)](https://cla.developers.google.com/about), which\ncovers any original work of authorship included in the submission. This\ndoesn't prohibit the use of coding assistance tools, including tool-,\nAI-, or machine-generated code, as long as these submissions abide by the\nCLA's requirements.\n\n— CONTRIBUTING.md:\n-   Cover new features, edge cases, error conditions, and typical\n    use cases.\n-   **Fail without your change.** Revert the source change, keep the test, and\n    run the package: it must go red. A test that passes either way is not\n    testing your change. Name the failing test in your testing plan.\n-   Free of external dependencies (use mocks or fixtures as needed). Tests run\n    offline — LLM traffic is replayed from `testdata/*.httprr` — so never add a\n    live model or network call.\n-   Named so that a failure message identifies what broke without opening the\n    file.\n-   Fast and isolated, with comments for complex scenarios.\n\n— CONTRIBUTING.md:\n## AI-assisted development\n\n— CONTRIBUTING.md:\nThis repo ships skills for AI coding agents (Antigravity, Gemini CLI, Claude\nCode, and others) in `.agents/skills/`. Compatible tools load them on their own;\notherwise read the relevant `SKILL.md` before starting that kind of work.\n\n— AGENTS.md:\nContext for AI coding agents (Claude Code, Gemini CLI, Cursor, Copilot, etc.)\nworking in the ADK Go repository. Human contributors should start with\nCONTRIBUTING.md.\n\n— AGENTS.md:\nADK Go (`google.golang.org/adk/v2`) is an open-source, code-first Go toolkit for\nbuilding, evaluating, and deploying AI agents. It is model-agnostic but\noptimized for Gemini, and is one of several ADK implementations — Go, Python,\nJava, Kotlin, and TypeScript — that share a conceptual model but are independent\ncodebases. Requires the Go version declared in `go.mod`.\n\n— AGENTS.md:\nSee [AI-assisted development](CONTRIBUTING.md#ai-assisted-development) in\n`CONTRIBUTING.md` for what this repo ships. The rule for agents: task-specific\ninstructions live in `.agents/skills/<name>/SKILL.md`, and you read the matching\none before starting that kind of work.\n\n— AGENTS.md:\n- `agent/`     Agent interface + types (`llmagent`, `remoteagent`, `workflowagent`;\n  `workflowagents/` holds `loopagent`, `parallelagent`, `sequentialagent`)\n- `runner/`    Execution engine that drives the run loop\n- `workflow/`  Node/graph-based workflow engine for multi-agent apps\n- `model/`     LLM abstraction (`gemini`, `apigee`, `openaimodel`)\n- `tool/`      Tool/Toolset interface + built-in tools (incl. `skilltoolset/`, `mcptoolset/`)\n- `session/`   Conversation state + events\n- `memory/`, `artifact/`   Long-term memory and file/data services\n- `auth/`      Credentials and auth providers for outbound requests\n- `agentregistry/`  Client for Google Cloud Agent Registry (A2A agents, MCP servers, models)\n- `plugin/`    Cross-cutting lifecycle hooks; `plugin/agentanalytics` is a separate\n\n— AGENTS.md:\n- **LLM traffic is replayed, not live.** A package with `testdata/*.httprr`\n  replays through `internal/httprr` with no flags and no credentials. Each of\n  those files is an **HTTP recording**: one request-and-response exchange,\n  captured once against a real model and replayed on every run afterwards, so\n  tests stay deterministic and need no API key. `session/vertexai` uses a\n  second, unrelated system for **RPC recordings** — `rpcreplay` with\n  `testdata/*.replay` files, refreshed by `UPDATE_REPLAYS=true`. Never add a\n  live model or network call to a test.\n- `-httprecord` takes a **regexp matched against the recording's file path**,\n  not a `-run` test-name filter. Keep it as narrow as the set of recordings you\n  mean to replace: recording against a live model produces a different resp\n\n— AGENTS.md:\n**Never**\n- Break the public API — keep changes backward-compatible. An `apidiff` check\n  compares every module against the merge base and fails on an incompatible\n  change. A `breaking-change` label downgrades that failure to a report, so\n  applying it is a deliberate decision to make with a maintainer, not a way\n  round a red check. Packages under `exp/` are the exception: a break there is\n  allowed, and the label records it.\n- Edit vendored code (`internal/httprr`) or commit secrets / API keys.\n- Add tests that make live LLM or network calls.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:33:58.598Z"
+    "last_scanned": "2026-10-29T05:39:48.981Z"
    },
    {
     "full_name": "k8sgpt-ai/k8sgpt",
@@ -55,7 +55,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n**Where should I start?**\n- If you are new to the project, please check out the [good first issue](https://github.com/k8sgpt-ai/k8sgpt/labels/good%20first%20issue) label.\n- If you are looking for something to work on, check out our [open issues](https://github.com/k8sgpt-ai/k8sgpt/issues).\n- If you have an idea for a new feature, please open an issue, and we can discuss it.\n- We are also happy to help you find something to work on. Just reach out to us.\n\n— CODE_OF_CONDUCT.md:\nInstances of abusive, harassing, or otherwise unacceptable behavior may be\nreported to the community leaders responsible for enforcement at\ncontact@k8sgpt.ai.\nAll complaints will be reviewed and investigated promptly and fairly.",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:35:36.601Z"
+    "last_scanned": "2026-10-29T05:40:51.311Z"
    },
    {
     "full_name": "kgateway-dev/kgateway",
@@ -64,7 +64,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:35:39.142Z"
+    "last_scanned": "2026-10-29T05:40:53.534Z"
    },
    {
     "full_name": "kubernetes-sigs/agent-sandbox",
@@ -73,7 +73,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- **CLA Requirement:** All contributors must sign the [Contributor License Agreement](https://git.k8s.io/community/CLA.md). PRs without a signed CLA will not be reviewed.\n- **AI-Assisted Code Reviews:** We use CodeRabbit to provide automated, first-pass code reviews to help identify low-hanging fruit and improve review velocity.\n  - **⚠️ Important Contribution Note (CLA Requirement):** If CodeRabbit provides a code suggestion in your PR, **do not click the \"Commit suggestion\" button** in the GitHub UI. Doing so adds the AI bot as a co-author to the commit. Since bots cannot sign the Kubernetes CLA, this will cause the CLA check to fail and block your PR. Instead, please manually apply the suggested changes in your local environment and push the commit yourself.\n  - **CodeRabbit:** CodeRabb\n\n— AGENTS.md:\nGuidance for AI coding agents working in this repository. Human contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md), [docs/development.md](docs/development.md), and [docs/testing.md](docs/testing.md), which are the source of truth.\n\n— AGENTS.md:\n`agent-sandbox` is a Kubernetes controller that provides the `Sandbox` CRD: a stateful, singleton, pod-backed workload with a stable identity, intended for AI agent runtimes, dev environments, notebooks, and similar use cases. It is a SIG Apps subproject (`sigs.k8s.io/agent-sandbox`) and follows Kubernetes / `controller-runtime` conventions.\n\n— AGENTS.md:\n| Path | What lives there |\n| --- | --- |\n| [**.agents/skills/**](.agents/skills/) | Specialized instructions for you (AI agents). See \"Agent Skills\" section below. |\n| [api/v1beta1/](api/v1beta1/) | Core `Sandbox` types and kubebuilder markers. |\n| [extensions/api/v1beta1/](extensions/api/v1beta1/) | `SandboxClaim`, `SandboxTemplate`, `SandboxWarmPool` types. |\n| [controllers/](controllers/) | Core `Sandbox` reconciler + tests. |\n| [extensions/controllers/](extensions/controllers/) | Reconcilers for the extension CRDs. |\n| [cmd/agent-sandbox-controller/](cmd/agent-sandbox-controller/), [cmd/metrics-docs-gen/](cmd/metrics-docs-gen/) | Controller manager entrypoint (`bin/manager`) and metrics reference generator. |\n| [internal/](internal/) | Shared internals (`lifecycle`, `metrics`, `metric\n\n— AGENTS.md:\nThis repository provides specialized instructions for AI agents in [`.agents/skills/`](.agents/skills/), following the Agent Skills specification (`dev-rules`, `k8s-api-conventions`, `bump-go-version`, `fix-flakes`, `test-pyramid`, `triage-issues`). Note that [CLAUDE.md](CLAUDE.md) imports this file via `@AGENTS.md`.\n\n— AGENTS.md:\n- This is a Kubernetes SIG project: contributors must have a signed [CNCF CLA](https://git.k8s.io/community/CLA.md). PRs without one are not reviewed.\n- CI runs through Prow (configured in [kubernetes/test-infra](https://github.com/kubernetes/test-infra)). The `k8s-ci-robot` merges PRs once they have `lgtm` + `approve` and presubmits pass. Default merge mode is squash; use `/label tide/merge-method-rebase` only when distinct commits matter.\n- CodeRabbit provides automated first-pass reviews on open PRs. **Never click \"Commit suggestion\" in the GitHub UI** — that adds the AI bot as a co-author, and AI bots cannot sign the Kubernetes CLA, so the CLA check will fail and block the PR. Instead: read the suggestion, apply the change manually in your local checkout, and push it as a normal commit\n\n— .github/pull_request_template.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->\n\n— .github/PULL_REQUEST_TEMPLATE.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->",
     "block_reason": null,
-    "last_scanned": "2026-10-28T22:36:28.790Z"
+    "last_scanned": "2026-10-29T05:41:07.607Z"
    },
    {
     "full_name": "modelcontextprotocol/go-sdk",
@@ -2511,9 +2511,9 @@
     "title": "[docs]: Go is not rendering the OpenAPI documentation, resulting in a discrepancy with the live documentation endpoint.",
     "body": "** Please make sure you read the contribution guide and file the issues in the right place. **\n[Contribution guide.](https://google.github.io/adk-docs/contributing-guide/)\n\n## 🔴 Required Information\n\nThe ADK documentation (`https://adk.dev/api-reference/rest/openapi.json`) is inconsistent with the actual API endpoints exposed by the Go implementation.\n\nExample: \n\n- go uses /api as the prefix by default\n- go /health /apps/{app_name}/app-info is missing\n- go has `/run_live`, but it's not available in the production environment.\n- Go does not expose a `/docs` endpoint to render OpenAPI.  -- https://adk.dev/runtime/api-server/#interactive-api-docs\n\n\n**Steps to Reproduce:**\nPlease provide a numbered list of steps to reproduce the behavior:\n1. Install '...'\n2. Run '....'\n3. Open '....'\n4. Provide error or stacktrace\n\n**Expected Behavior:**\nA clear and concise description of what you expected to happen.\n\n**Observed Behavior:**\nWhat actually happened? Include error messages or crash stack traces here.\n\n**Environment Details:**\n\n - ADK Library Version: main\n - OS: [e.g., macOS, Linux, Windows]\n - Go Version: v1.26.5\n\n**Model Information:**\n - Which model is being used: (e.g., gemini-2.5-pro)\n\n---\n\n## 🟡 Optional Information\n*Providing this information greatly speeds up the resolution process.*\n\n**Regression:**\nDid this work in a previous version of ADK? (Yes/No) If so, which one?\n\n**Logs:**\nPlease attach relevant logs. Wrap them in code blocks (```) or attach a\ntext file.\n```text\n// Paste logs here\n```\n\n**Screenshots / Video:**\nIf applicable, add screenshots or screen recordings to help explain\nyour problem.\n\n**Additional Context:**\nAdd any other context about the problem here.\n\n**Minimal Reproduction Code:**\nPlease provide a code snippet or a link to a Gist/repo that isolates the issue.\n```go\n// Code snippet here\n```\n\n**How often has this issue occurred?:**\n\n - Always (100%)\n - Often (50%+)\n - Intermittently (<50%)\n - Once / Rare\n",
     "url": "https://github.com/google/adk-go/issues/1273",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "triaged",
+    "score": 0.2,
+    "triage_reason": "The issue mixes several asks (/docs and OpenAPI serving, /health, app-info, the /api prefix, run_live exposure) in server/adkrest/handler.go and cmd/launcher/web/api. They need maintainer design decisions and some could break the public API.",
     "attempts": 0,
     "skip_reason": null,
     "feedback": null,
@@ -2527,7 +2527,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:13:57.983Z",
+    "updated_at": "2026-10-29T05:40:39.605Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -2728,9 +2728,9 @@
     "title": "Feature request: retry mechanism for model errors",
     "body": "I am receiving frequent errors from Gemini models \n\n```\nerror=\"workflow execution failed: failed to call model: Error 503, Message: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later., Status: UNAVAILABLE, Details: []\"\n```\n\nI understand that the recommended solution is a retry mechanism ([link](https://discuss.ai.google.dev/t/handling-429-503-errors-from-the-gemini-api/124640))\n\n> To handle these errors, we strongly recommend implementing backoff and retry (our SDKs support this through retry config). \n\nHowever, the `adk-go` or `go-genai` packages do not appear to have built-in support or hooks for this. It would be great to have a configurable request retry mechanism to handle these cases.",
     "url": "https://github.com/google/adk-go/issues/710",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "triaged",
+    "score": 0.4,
+    "triage_reason": "Needs a new public config surface (retry wrapper for model.LLM or retry options in model/gemini) and design choices on which errors to retry and how to handle streaming, so it needs a maintainer decision; it is doable but not small or clear-cut.",
     "attempts": 0,
     "skip_reason": null,
     "feedback": null,
@@ -2744,7 +2744,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:14:11.889Z",
+    "updated_at": "2026-10-29T05:40:50.642Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -3069,11 +3069,11 @@
     "title": "Set up the bot for automatic issue triage and labelling",
     "body": "",
     "url": "https://github.com/google/adk-go/issues/287",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "skipped",
+    "score": 0.02,
+    "triage_reason": "Empty issue asking for GitHub bot/workflow setup for issue triage and labelling; that lives in .github/ (off-limits to the bot) and needs maintainer decisions and repo-level configuration, not a Go code change.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "triage: not feasible: Empty issue asking for GitHub bot/workflow setup for issue triage and labelling; that lives in .github/ (off-limits to the bot) and needs maintainer decisions and repo-level configuration, not a Go code change.",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -3085,7 +3085,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:14:22.655Z",
+    "updated_at": "2026-10-29T05:40:27.144Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -3379,9 +3379,9 @@
     "title": "[Question/Investigation] DeepMerge Inconsistencies",
     "body": "# `DeepMerge*` inherited-policy priorities ignore the parent/child preference for most fields\n\nGolden files added here: https://github.com/kgateway-dev/kgateway/pull/14723/files\n\n## Summary\n\nOn a delegation chain, the `PreferParent`/`PreferChild` half of\n`kgateway.dev/inherited-policy-priority: DeepMerge*` has no effect on most fields. Within a\ngiven plugin the two `DeepMerge*` values behave *identically*, and the two plugins settle on\nopposite fixed winners:\n\n| Field owned by | `DeepMergePreferChild` | `DeepMergePreferParent` |\n| --- | --- | --- |\n| builtin filters / rule fields — **all of them** | **parent** wins — contradicts the name | parent wins |\n| `TrafficPolicy` — 21 of 25 fields | child wins | **child** wins — contradicts the name |\n| `TrafficPolicy` — `extProc`, `extAuth`, `transformation`, `httpACL` | child preferred | parent preferred — as named |\n\nOnly those four `TrafficPolicy` fields implement a real deep merge that honors the\npreference. Everywhere else the deep strategies degenerate to a fixed winner that the\nannotation's name does not predict, and the two plugins degenerate in opposite directions —\nso `cors`, `timeouts` and `retry`, which exist on *both* sides, resolve to opposite winners\nunder one and the same annotation value depending on whether the user set them via a builtin\nrule field or a `TrafficPolicy`.\n\nOnly the `ShallowMerge*` values actually discriminate between parent and child outside those\nfour fields.\n\nA path rewrite is used as the worked example below because it is the case we hit and could\nverify end to end, but nothing about it is rewrite-specific.\n\nThis reads as an oversight rather than a decision. Two things point that way, both detailed\nunder [History](#history--the-gap-was-declared-the-consequence-wasnt) below:\n\n- `devel/policy_merging/overview.md` documents `OverridableDeepMerge` as \"deep merge, but\n  prefer `p2` on conflicts\", but `defaultMerge` keeps `p1` under both deep strategies, so\n  `p2` never wins a conflict. For the 21 fields routed through it, the implementation\n  contradicts kgateway's own documented semantics.\n- https://github.com/kgateway-dev/kgateway/pull/11675, which introduced all four annotation\n  values, states in its description that \"the DeepMerge* variants are only implemented for\n  TrafficPolicy's `transformation` field\" — so the surface shipped ahead of the\n  implementation, and what a `DeepMerge*` value should do to every other field was left\n  undefined rather than chosen.\n\nFiling to confirm which behavior is intended and to get it either fixed or documented.\n\n## Environment\n\nReproduced against `v2.4.0-rc.1` (commit `ff432b86b457`). Code references below are to that\ntree.\n\n## Reproduction\n\nThe existing delegation golden-test harness reproduces both halves with new fixtures — no\nnew test scaffolding needed. In both, the gateway and `a/svc-a` come from the directory's\n`common.yaml`.\n\n### Case 1 — builtin `URLRewrite`: `DeepMergePreferChild` gives the parent's rewrite\n\nAdd `pkg/kgateway/translator/gateway/testutils/inputs/delegation/deep_merge_prefer_child_rewrite.yaml`:\n\n```yaml\n# Parent and child each declare a URLRewrite filter. The parent carries\n# inherited-policy-priority: DeepMergePreferChild.\n#\n# Expected from the annotation name: the child's rewrite (/from-child) applies.\n# Actual: the parent's rewrite (/from-parent) applies.\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: parent-route\n  namespace: infra\n  annotations:\n    kgateway.dev/inherited-policy-priority: DeepMergePreferChild\nspec:\n  parentRefs:\n  - name: example-gateway\n  hostnames:\n  - \"example.com\"\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /api\n    filters:\n    - type: URLRewrite\n      urlRewrite:\n        path:\n          type: ReplacePrefixMatch\n          replacePrefixMatch: /from-parent\n    backendRefs:\n    - group: gateway.networking.k8s.io\n      kind: HTTPRoute\n      name: \"*\"\n      namespace: a\n---\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: child-route\n  namespace: a\nspec:\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /api/pets\n    filters:\n    - type: URLRewrite\n      urlRewrite:\n        path:\n          type: ReplacePrefixMatch\n          replacePrefixMatch: /from-child\n    backendRefs:\n    - name: svc-a\n      port: 8080\n```\n\nThe emitted route for `/api/pets` carries `prefixRewrite: /from-parent`.\n\nChanging the annotation to `ShallowMergePreferChild` — or dropping it, which resolves to the\nsame strategy — yields `/from-child`. `DeepMergePreferParent` yields `/from-parent`, i.e.\nidentical to `DeepMergePreferChild`.\n\n### Case 2 — `TrafficPolicy.spec.urlRewrite`: `DeepMergePreferParent` gives the child's rewrite\n\nSame chain, rewrites moved into `TrafficPolicy` and the annotation flipped. Add\n`inputs/delegation/deep_merge_prefer_parent_policy_rewrite.yaml`:\n\n```yaml\n# Parent and child each have a TrafficPolicy setting urlRewrite.pathRegex. The parent\n# carries inherited-policy-priority: DeepMergePreferParent.\n#\n# Expected from the annotation name: the parent's rewrite (/from-parent) applies.\n# Actual: the child's rewrite (/from-child) applies.\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: parent-route\n  namespace: infra\n  annotations:\n    kgateway.dev/inherited-policy-priority: DeepMergePreferParent\nspec:\n  parentRefs:\n  - name: example-gateway\n  hostnames:\n  - \"example.com\"\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /api\n    backendRefs:\n    - group: gateway.networking.k8s.io\n      kind: HTTPRoute\n      name: \"*\"\n      namespace: a\n---\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: child-route\n  namespace: a\nspec:\n  rules:\n  - matches:\n    - path:\n        type: PathPrefix\n        value: /api/pets\n    backendRefs:\n    - name: svc-a\n      port: 8080\n---\napiVersion: gateway.kgateway.dev/v1alpha1\nkind: TrafficPolicy\nmetadata:\n  name: parent-rewrite\n  namespace: infra\nspec:\n  targetRefs:\n  - group: gateway.networking.k8s.io\n    kind: HTTPRoute\n    name: parent-route\n  urlRewrite:\n    pathRegex:\n      pattern: \".*\"\n      substitution: /from-parent\n---\napiVersion: gateway.kgateway.dev/v1alpha1\nkind: TrafficPolicy\nmetadata:\n  name: child-rewrite\n  namespace: a\nspec:\n  targetRefs:\n  - group: gateway.networking.k8s.io\n    kind: HTTPRoute\n    name: child-route\n  urlRewrite:\n    pathRegex:\n      pattern: \".*\"\n      substitution: /from-child\n```\n\nThe emitted route's `regexRewrite.substitution` is `/from-child`. Only\n`ShallowMergePreferParent` produces `/from-parent`.\n\n### Registering them\n\nIn `TestRouteDelegation` (`pkg/kgateway/translator/gateway/gateway_translator_test.go`),\nnext to the existing `Built-in rule inheritance` case:\n\n```go\nt.Run(\"DeepMergePreferChild with a builtin path rewrite\", func(t *testing.T) {\n\ttest(t, \"deep_merge_prefer_child_rewrite.yaml\")\n})\n\nt.Run(\"DeepMergePreferParent with a TrafficPolicy path rewrite\", func(t *testing.T) {\n\ttest(t, \"deep_merge_prefer_parent_policy_rewrite.yaml\")\n})\n```\n\n### An existing fixture that already shows case 1\n\n`inputs/delegation/url_rewrite_inherit_parent_matcher.yaml` already has a parent and a child\nthat each declare a `URLRewrite`, and its golden output shows the **child's** rewrite\napplied. Adding `kgateway.dev/inherited-policy-priority: DeepMergePreferChild` to\n`infra/api-example-com-parent` flips the golden to the parent's. It is not usable as a\ndemonstration on its own only because both routes rewrite to `/`, making the two outcomes\ntextually identical — hence the separate fixture above with distinguishable replacements.\n\n## Why it happens\n\nBoth halves start from `GetMergeStrategy` (`pkg/pluginsdk/policy/merge.go`):\n`DeepMergePreferChild` → `AugmentedDeepMerge`, `DeepMergePreferParent` →\n`OverridableDeepMerge`. From there the two plugins diverge.\n\n### Builtin filter: always settable, and the parent applies last\n\n`IsSettable(p1, opts)` is implemented as `IsMergeable(p1, \"not-nil\", opts)`, and\n`IsMergeable` for either deep strategy returns `!isNil(p2)`. Because `p2` is the literal\n`\"not-nil\"`, this is **unconditionally true** — `p1`, the value already on the output route,\nis never inspected:\n\n```go\nfunc IsMergeable(p1, p2 any, opts MergeOptions) bool {\n    switch opts.Strategy {\n    case AugmentedShallowMerge:\n        return isNil(p1) && !isNil(p2)\n    case OverridableShallowMerge, AugmentedDeepMerge, OverridableDeepMerge:\n        return !isNil(p2)\n    ...\n```\n\n`isPathRewriteSettable` (`pkg/krtcollections/builtin.go`) is the conjunction of two\n`IsSettable` calls, so it is likewise always true under either deep strategy, and\n`urlRewriteIr.apply` overwrites whatever is already set.\n\nApplication order runs child-first. `ApplyForRoute` in `builtin.go` says so directly:\n\n> Currently, `ApplyForRoute` is invoked per policy in order of priority from\n> highest (child route policies) to lowest (parent route policies).\n\nand the ordering is built in `pkg/kgateway/translator/irtranslator/route.go`, which appends\nthe leaf's policies at `hierarchicalPriority := 0`, then walks `DelegatingParent` outward\ndecrementing. Net: the child writes its rewrite first, each ancestor overwrites it in turn,\nand the **outermost** ancestor is what reaches Envoy.\n\n### TrafficPolicy: the deep branch bails out when the field is already set\n\n`defaultMerge` (`pkg/kgateway/extensions2/plugins/trafficpolicy/merge.go`) — which\n`urlRewrite` goes through, along with most other `TrafficPolicy` fields — short-circuits in\nexactly the opposite way:\n\n```go\nswitch opts.Strategy {\ncase policy.AugmentedDeepMerge, policy.OverridableDeepMerge:\n    if p1Field != nil {\n        return\n    }\n    fallthrough // can override p1 if it is unset\n\ncase policy.AugmentedShallowMerge, policy.OverridableShallowMerge:\n    accessor.Set(&p1.spec, p2Field)\n```\n\nMerging also proceeds highest-priority-first, so `p1` already holds the child's value by the\ntime the parent's policy is merged in, and the deep branch returns without writing. Only\n`OverridableShallowMerge` (`ShallowMergePreferParent`) reaches the `Set`.\n\nEither behavior is coherent for a structured field, where \"deep merge\" means recursing into\nsub-fields. Neither is coherent for a scalar: there is nothing to recurse into, so both\ndegenerate to a fixed winner that the annotation's name does not predict — and they\ndegenerate to opposite winners.\n\n## Coverage gap\n\nNo test in the tree pairs a `DeepMerge*` priority with a path rewrite, or with any builtin\nfilter at all. The four fixtures using `DeepMergePrefer*` are:\n\n- `inputs/delegation/policy_deep_merge.yaml` — TrafficPolicy transformation\n- `inputs/traffic-policy/acl-route-delegation.yaml` — ACL list\n- `test/e2e/features/route_delegation/testdata/policy_merging.yaml` — TrafficPolicy\n- `test/e2e/features/extproc/testdata/deep-merge.yaml` — ExtProc\n\nEvery one of these lands on one of the four deep-aware fields — the cases that *do* honor\nthe preference — so the degenerate majority is never exercised. The only delegation fixture\nthat pairs the annotation with builtin filters,\n`inputs/delegation/builtin_rule_inheritance.yaml`, uses `ShallowMergePreferParent`.\n\nSo no test anywhere covers a `DeepMerge*` value against a field that lacks a dedicated deep\nmerge, on either plugin.\n\n## Scope\n\n### Builtin plugin — every field, parent wins\n\n`IsSettable` is not an incidental choice here; the `applyToRoute` interface contract\nrequires it:\n\n> the apply implementation must use `policy.IsSettable(field, mergeOpts)` to check if the\n> field on the output route can be set before being set.\n\nSo every builtin field inherits the always-true behavior: `sessionPersistence`, `timeout`,\n`retry`, `redirect`, `hostRewrite`, the path rewrites, and `cors`. (Request mirrors are\nexplicitly excluded from `IsSettable` and follow their own rule.)\n\n### TrafficPolicy — four fields honor the preference, the rest don't\n\nDeep-aware, parent/child preference respected: `extProc`, `extAuth`, `transformation`,\n`httpACL`. Each implements `AugmentedDeepMerge` and `OverridableDeepMerge` as genuinely\ndifferent operations — for `extProc`/`extAuth` the per-provider slice order flips; for\n`transformation` the JSON merge direction flips.\n\nFalling through to `defaultMerge`, so child wins under either deep value: `jwt`,\n`compression`, `decompression`, `oidc`, `rateLimit.local`, `rateLimit.global`, `cors`,\n`csrf`, `headerModifiers`, `requestMirror`, `buffer`, `autoHostRewrite`, `statPrefix`,\n`timeouts`, `rbac`, `apiKeyAuth`, `retry`, `internalRedirect`, `basicAuth`, `urlRewrite`,\n`tracing`, `faultInjection`.\n\nMost of that list is not scalar. Checking the CRD types\n(`api/v1alpha1/kgateway/traffic_policy_types.go`, `api/v1alpha1/shared/shared_types.go`,\n`api/v1alpha1/kgateway/retries.go`, `api/v1alpha1/shared/timeouts.go`):\n\n- Genuinely atomic — no sub-fields to recurse into, so \"deep merge\" has no meaning regardless\n  of implementation: `urlRewrite` (both the builtin path and `TrafficPolicy.pathRegex`,\n  since pattern/substitution isn't meaningful to merge piecewise), `statPrefix`,\n  `autoHostRewrite`.\n- Structured, with independent sub-fields or list-typed fields a real deep merge could\n  reasonably act on: `cors` (embeds `HTTPCORSFilter` — `allowOrigins`, `allowMethods`,\n  `allowHeaders`, `exposeHeaders`, `allowCredentials`, `maxAge`), `csrf`\n  (`percentageEnabled`, `percentageShadowed`, `additionalOrigins` list), `buffer`\n  (`maxRequestSize`, `disable`, `filterStage`), `compression`/`decompression` (a `libraries`\n  list plus `disable`), `tracing` (`clientSampling`, `randomSampling`, `overallSampling`,\n  `attributes` list, `disable`), `faultInjection` (`delay`, `abort`, `responseRateLimit`,\n  `maxActiveFaults`, `disable`, each with further sub-fields), `retry` (`retryOn` list,\n  `attempts`, `perTryTimeout`, `statusCodes` list, `backoffBaseInterval`), `timeouts`\n  (`request`, `streamIdle`), `headerModifiers` (`request`/`response`, each with\n  `set`/`add`/`remove` lists), `requestMirror` (two independent fields).\n\nSo the \"coherent for a structured field, incoherent for a scalar\" framing in\n[Why it happens](#why-it-happens) describes `urlRewrite` correctly but doesn't generalize to\nthe rest of this list. For most of these fields, `defaultMerge`'s blanket bail-out isn't\njust degenerating on a field with nothing to recurse into — it's forgoing a real, field-level\ndeep merge (e.g. union `additionalOrigins`, keep the more restrictive `maxRequestSize`, merge\n`request`/`streamIdle` independently) in favor of an all-or-nothing swap. That sharpens\n[Q1](#questions): unlike a scalar, most of the fallthrough fields don't need a \"no-op\"\nfallback decision — they need someone to decide what field-level deep merge should even mean\nfor them.\n\n## Blast radius: the annotation is set once per route, for every field\n\n`kgateway.dev/inherited-policy-priority` is read once off the parent HTTPRoute's own\nannotations and stamped onto everything that route carries, with no per-field or per-policy\noverride. `transformHttpRoute` (`pkg/krtcollections/policy.go:1310`):\n\n```go\ninheritedPolicyPriority := getInheritedPolicyPriority(i.Annotations)\n\nreturn &ir.HttpRouteIR{\n    ...\n    Rules: h.transformRules(\n        kctx, src, i.Spec.Rules, i.GetLabels(), i.GetAnnotations(), ir.WithInheritedPolicyPriority(inheritedPolicyPriority)),\n    AttachedPolicies: ToAttachedPolicies(\n        h.policies.GetTargetingPolicies(kctx, src, \"\", i.GetLabels()),\n        ir.WithInheritedPolicyPriority(inheritedPolicyPriority),\n    ),\n    ...\n```\n\nThe same `inheritedPolicyPriority` value flows into `Rules` (every builtin filter on the\nroute) and `AttachedPolicies` (every `TrafficPolicy`, or other policy CRD, targeting the\nroute) alike. There is no way to set `DeepMergePreferChild` for `transformation` — where it\nis implemented correctly — without that same value also governing `retry`, `cors`,\n`timeouts`, `urlRewrite`, and everything else attached to that route, where it silently\ndegenerates.\n\nSo a user can't route around this gap by being selective: picking a `DeepMerge*` value for\nthe one field that needs it forces the degenerate, name-contradicting behavior onto every\nother field on that route. This also sharpens [Q4](#questions) — the `cors`/`timeouts`/\n`retry` overlap between builtin fields and `TrafficPolicy` isn't just a coincidence the user\ncould design around, since both plugins consume the same route-level annotation value.\n\n## History — the gap was declared, the consequence wasn't\n\nThe four annotation values landed in\nhttps://github.com/kgateway-dev/kgateway/pull/11675 (\"policy: generalize merging API\"),\nwhose own description states:\n\n> The DeepMerge* variants are only implemented for TrafficPolicy's `transformation` field.\n\nSo the surface shipped knowingly ahead of the implementation. The same PR also added\nbuiltin policy inheritance (\"Implements policy inheritance for builtin policies, i.e. a\nparent route's inherited policy priority is honored unlike before\") without any\n`DeepMerge*` handling — which is where the builtin-side parent-wins behavior comes from.\n\nWhat doesn't appear to have been decided is what a `DeepMerge*` value should *do* to a field\nwith no deep-merge implementation. It is not rejected at validation and does not fall back\nto a documented default; it silently degenerates, and to opposite winners in the two\nplugins.\n\nThe mechanism was in fact seen in review. On `pkg/pluginsdk/policy/merge.go:61` — the\n`IsSettable` sentinel — a reviewer asked \"is the literal `1` just passed in as a concrete\nnon-nil value?\", and the change made in response was to rename the sentinel to `\"not-nil\"`.\nThat sentinel is precisely what makes `IsSettable` unconditionally true under both deep\nstrategies; the exchange treated it as a readability question.\n\nDeep merge proper arrived later and on a different axis:\nhttps://github.com/kgateway-dev/kgateway/pull/12111 added it for `extAuth`, `extProc` and\n`transformation` \"when multiple policies target the same resource\" — that is, driven by\n`Settings.PolicyMerge` for same-hierarchy merging, not by the delegation annotation.\n`httpACL` followed in https://github.com/kgateway-dev/kgateway/pull/13996. Those four are\nexactly the fields that honor the preference today.\n\n### The design doc describes behavior the code doesn't implement\n\n`devel/policy_merging/overview.md` documents the strategies as:\n\n| Strategy | Meaning |\n| --- | --- |\n| `AugmentedDeepMerge` | deep merge, but prefer `p1` on conflicts |\n| `OverridableDeepMerge` | deep merge, but prefer `p2` on conflicts |\n\nBut `defaultMerge` returns early and keeps `p1` for **both**, so `p2` never wins a conflict\nunder `OverridableDeepMerge`. For the 21 fields that go through it, the implementation\ncontradicts the documented semantics. This is the main reason we read the current behavior\nas an oversight rather than a decision.\n\n## Questions\n\n1. What should a `DeepMerge*` value do to a field that has no deep-merge implementation?\n   The options seem to be: fall back to the matching `ShallowMerge*` semantics, reject the\n   annotation at validation for unsupported fields, or keep today's silent degeneration and\n   document it. Today's answer also differs per plugin, which seems hardest to defend.\n2. `defaultMerge` keeping `p1` under `OverridableDeepMerge` contradicts\n   `devel/policy_merging/overview.md`'s \"prefer `p2` on conflicts\". Is the doc wrong, or the\n   code?\n3. If the behavior stays: is documenting it enough, or should the deep strategies fall back\n   to their shallow counterparts wherever no real deep merge exists, so\n   `PreferChild`/`PreferParent` means one thing regardless of field and plugin?\n4. The `cors` / `timeouts` / `retry` overlap seems like the sharpest case, since the same\n   annotation value resolves those opposite ways depending only on whether the user reached\n   for a builtin rule field or a `TrafficPolicy`. Is that worth treating separately?\n5. Either way, are fixtures like the two above worth adding to pin whichever behavior is\n   chosen?\n\n## Downstream context\n\nSurfaced while modeling rewrite precedence for delegation chains in the Solo Enterprise\nportal, which has to predict the data plane's effective rewrite at translation time in order\nto stitch OpenAPI paths. We currently mirror the behavior described above — including the\nper-plugin split — rather than the annotation's name, so a change here would be a behavior\nchange for us too. No urgency on our side; we'd just like to know which way it's meant to\ngo.\n",
     "url": "https://github.com/kgateway-dev/kgateway/issues/14724",
-    "state": "discovered",
-    "score": null,
-    "triage_reason": null,
+    "state": "triaged",
+    "score": 0.15,
+    "triage_reason": "The issue asks which DeepMerge* semantics to adopt (fallback to shallow, reject, or document). That needs a maintainer decision before changing GetMergeStrategy/IsMergeable in pkg/pluginsdk/policy/merge.go or defaultMerge in trafficpolicy/merge.go.",
     "attempts": 0,
     "skip_reason": null,
     "feedback": null,
@@ -3395,7 +3395,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-18T02:16:35.304Z",
+    "updated_at": "2026-10-29T05:41:06.145Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -7928,6 +7928,37 @@
     "repro_notes": null,
     "why": null,
     "pr_text": null
+   },
+   {
+    "id": 254,
+    "repo": "chainloop-dev/chainloop",
+    "number": 3749,
+    "title": "Trace: batch staged blob reads during Bash commit checkpoints",
+    "body": "## Problem\nIn #3631, `checkpointActiveShellAttribution` calls `ExecClient.IndexFile` for each changed staged path. Every call scans the full index with `git ls-files --stage` and starts `git cat-file --batch` for one blob, although `afterIndex[relPath]` already contains its hash.\n\nIn [@jiparis's review](https://github.com/chainloop-dev/chainloop/pull/3631#issuecomment-6473403414), a Bash call that staged 301 files in a 3.3k-file checkout took 10.6 seconds at `commit-msg`; the per-file index/blob reads account for about 5 seconds. The reviewer explicitly accepted this as a follow-up, not a blocker for #3631.\n\n## Scope\nRead only the changed staged blobs by their already captured hashes in one `git cat-file --batch` call. Preserve the effective-index snapshot (including split, sparse, and temporary indexes), the GoGit fallback, exact binary content, and existing same-call attribution behavior.\n\n## Acceptance criteria\n- [ ] The checkpoint takes one index snapshot and one batch blob read, without a full-index scan or Git process per changed file.\n- [ ] Regression tests cover multiple staged files, binary content, and hashes captured before a later index change; existing Bash commit lifecycle tests pass.\n- [ ] Record comparable before/after timing for the many-file scenario in #3631, without a timing-sensitive test assertion.\n\nImplemented in #3631 by commit [`77d2fe0e`](https://github.com/chainloop-dev/chainloop/commit/77d2fe0ea355b77075a5cb68f381b2a62ccccc87); the many-file timing remains to be recorded.",
+    "url": "https://github.com/chainloop-dev/chainloop/issues/3749",
+    "state": "skipped",
+    "score": 0.05,
+    "triage_reason": "checkpointActiveShellAttribution and ExecClient.IndexFile (from #3631) don't exist on main, so the batching change can't be made in this checkout. The many-file timing the issue wants recorded also can't be measured here.",
+    "attempts": 0,
+    "skip_reason": "triage: not feasible: checkpointActiveShellAttribution and ExecClient.IndexFile (from #3631) don't exist on main, so the batching change can't be made in this checkout. The many-file timing the issue wants recorded also can't be measured here.",
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-29T05:39:45.176Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
    }
   ],
   "prs": [
@@ -7984,12 +8015,12 @@
     "last_seen_at": "2026-10-20T06:54:34Z",
     "opened_at": "2026-10-19T14:49:17.053Z",
     "head_sha": "c7012ad5b6b568868dff38c37547b60155653de6",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:25.150Z",
+    "snapshot_at": "2026-10-29T05:39:06.594Z",
     "ci_seen_sha": null,
-    "merge_state": "BLOCKED"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 75,
@@ -7999,12 +8030,12 @@
     "last_seen_at": "2026-10-19T10:02:26.063Z",
     "opened_at": "2026-10-19T10:02:26.063Z",
     "head_sha": "f4c4c75a3aa4a9686a7ecb4acc3380d2759ffba2",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:28.541Z",
+    "snapshot_at": "2026-10-29T05:39:09.108Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 116,
@@ -8017,7 +8048,7 @@
     "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:31.426Z",
+    "snapshot_at": "2026-10-29T05:39:12.037Z",
     "ci_seen_sha": null,
     "merge_state": "UNKNOWN"
    },
@@ -8032,7 +8063,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:34.548Z",
+    "snapshot_at": "2026-10-29T05:39:15.140Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8044,12 +8075,12 @@
     "last_seen_at": "2026-10-15T07:16:17Z",
     "opened_at": "2026-10-15T04:12:17Z",
     "head_sha": "d911640dcc02a1917e0d1ff970b6c0dad4c8d51a",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:37.761Z",
+    "snapshot_at": "2026-10-29T05:39:18.089Z",
     "ci_seen_sha": null,
-    "merge_state": "BLOCKED"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 163,
@@ -8059,12 +8090,12 @@
     "last_seen_at": "2026-10-17T00:07:47Z",
     "opened_at": "2026-10-13T04:01:36Z",
     "head_sha": "2e1bb033fb1461da5e263b8d253f8a1a22893685",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:40.656Z",
+    "snapshot_at": "2026-10-29T05:39:20.912Z",
     "ci_seen_sha": null,
-    "merge_state": "BLOCKED"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 164,
@@ -8077,7 +8108,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:43.931Z",
+    "snapshot_at": "2026-10-29T05:39:23.764Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8104,12 +8135,12 @@
     "last_seen_at": "2026-10-16T03:35:45Z",
     "opened_at": "2026-10-16T03:34:07Z",
     "head_sha": "f196b9e737df462e3d0209bd0d127bbe36de311c",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:47.045Z",
+    "snapshot_at": "2026-10-29T05:39:26.277Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 167,
@@ -8119,12 +8150,12 @@
     "last_seen_at": "2026-10-16T02:42:02Z",
     "opened_at": "2026-10-16T02:40:56Z",
     "head_sha": "d63fc11585496902bb3417fd3a7ec8996a7f9583",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-28T22:33:50.377Z",
+    "snapshot_at": "2026-10-29T05:39:29.358Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 168,
@@ -13479,6 +13510,76 @@
     "ok": 1,
     "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.3,\"reason\":\"Marked by ON_EXPERIMENTAL_PROMOTION in pkg/pluginsdk/collections/setup.go, proxy_syncer/xlistenerset_status.go and wellknown/gwapi.go, but removing legacy XListenerSet support is a breaking-timing decision for maintainers, spans many files and tests, and the issue body is empty.\"},\"result\":\"The issue body is empty. The code already carries `ON_EXPERIMENTAL_PROMOTION` markers that reference #12827, and they show the shape of the removal:\\n\\n- `pkg/pluginsdk/collections/setup.go` has a legacy `XListenerSet` block gated on `EnableExperimentalGatewayAPIFeatures`.\\n- `pkg/kgateway/proxy_syncer/status_collections.go` registers the legacy status writer.\\n- `xlistenerset_status.go` and its test file are marked for deletion.\\n- `wellknown/gwapi.go` holds the legacy GVK and GVR constants.\\n- There is a converter, `convertLegacyXListenerSetToV1`.\\n\\nRemoving this drops support for the experimental `XListenerSet` kind for existing users. The promoted v1 `ListenerSet` is already supported, so the issue is mostly about timing. When to drop the legacy path is a maintainer decision, and the issue gives no direction. The change is also spread across several packages. Some of those packages, such as `pkg/kgateway/setup` and `pkg/kgateway/controller`, can't be tested here. Test fixtures and golden files that reference `XListenerSet` would need updating too.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.3, \\\"reason\\\": \\\"Marked by ON_EXPERIMENTAL_PROMOTION in pkg/pluginsdk/collections/setup.go, proxy_syncer/xlistenerset_status.go and wellknown/gwapi.go, but removing legacy XListenerSet support is a breaking-timing decision for maintainers, spans many files and tests, and the issue body is empty.\\\"}\\n```\\n\"}",
     "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 376,
+    "run_id": "1d41daf2-6a8d-4b3e-8b2b-2e76f0d24778",
+    "issue_id": 254,
+    "agent": "triage",
+    "started_at": "2026-10-29T05:39:33.367Z",
+    "duration_ms": 11809,
+    "input_tokens": 38745,
+    "output_tokens": 491,
+    "cost_usd": 0.0335527,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.05,\"reason\":\"checkpointActiveShellAttribution and ExecClient.IndexFile (from #3631) don't exist on main, so the batching change can't be made in this checkout. The many-file timing the issue wants recorded also can't be measured here.\"},\"result\":\"The code the issue refers to isn't on main. I searched the whole repo for `checkpointActiveShellAttribution` and `IndexFile(` and found no matches. PR #3631 and its commit `77d2fe0e` don't appear to be merged here, so there is nothing to optimize yet. I didn't search git history or other branches, and I didn't read the contribution files.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.05, \\\"reason\\\": \\\"checkpointActiveShellAttribution and ExecClient.IndexFile (from #3631) don't exist on main, so the batching change can't be made in this checkout. The many-file timing the issue wants recorded also can't be measured here.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 377,
+    "run_id": "1d41daf2-6a8d-4b3e-8b2b-2e76f0d24778",
+    "issue_id": 97,
+    "agent": "triage",
+    "started_at": "2026-10-29T05:40:20.184Z",
+    "duration_ms": 6959,
+    "input_tokens": 14645,
+    "output_tokens": 226,
+    "cost_usd": 0.0319891,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.02,\"reason\":\"Empty issue asking for GitHub bot/workflow setup for issue triage and labelling; that lives in .github/ (off-limits to the bot) and needs maintainer decisions and repo-level configuration, not a Go code change.\"},\"result\":\"The issue has an empty body. Its title, \\\"Set up the bot for automatic issue triage and labelling\\\", asks for bot or CI automation. That work would live in `.github/` workflows or config, which the bot may not edit. It also needs repository-level settings and secrets, and a maintainer would have to decide how it should work. I did not read the code or the contribution files, because the title alone settles this.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.02, \\\"reason\\\": \\\"Empty issue asking for GitHub bot/workflow setup for issue triage and labelling; that lives in .github/ (off-limits to the bot) and needs maintainer decisions and repo-level configuration, not a Go code change.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 378,
+    "run_id": "1d41daf2-6a8d-4b3e-8b2b-2e76f0d24778",
+    "issue_id": 79,
+    "agent": "triage",
+    "started_at": "2026-10-29T05:40:28.480Z",
+    "duration_ms": 11125,
+    "input_tokens": 31480,
+    "output_tokens": 648,
+    "cost_usd": 0.0414208,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.2,\"reason\":\"The issue mixes several asks (/docs and OpenAPI serving, /health, app-info, the /api prefix, run_live exposure) in server/adkrest/handler.go and cmd/launcher/web/api. They need maintainer design decisions and some could break the public API.\"},\"result\":\"The issue bundles several separate asks, and some of them need a maintainer to decide. I didn't read the handler code in detail. I only counted where `run_live`, `app-info`, `/health`, `/docs` and `openapi` appear, which shows the REST handler in `server/adkrest/handler.go` and its routers.\\n\\n- **Docs endpoint:** serving `/docs` and an OpenAPI spec is a new feature. It needs a spec source, either a generated or an embedded `openapi.json`, and a UI. Adding a UI could mean a new dependency or embedded assets.\\n- **`/health` and `/apps/{app_name}/app-info`:** these are small additions, but their response shapes should match adk-python. The issue doesn't say what those shapes are.\\n- **`/api` prefix:** this is a deliberate default in the launcher. Changing it would break existing users, so a maintainer has to decide.\\n- **`run_live` in production:** whether to expose it is a policy choice, not something to fix here.\\n\\nThe issue itself is vague. It has no reproduction steps and no stated expected behavior, and it mixes several concerns. Doing it as one change is too large and too open to design questions.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.2, \\\"reason\\\": \\\"The issue mixes several asks (/docs and OpenAPI serving, /health, app-info, the /api prefix, run_live exposure) in server/adkrest/handler.go and cmd/launcher/web/api. They need maintainer design decisions and some could break the public API.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 379,
+    "run_id": "1d41daf2-6a8d-4b3e-8b2b-2e76f0d24778",
+    "issue_id": 86,
+    "agent": "triage",
+    "started_at": "2026-10-29T05:40:40.978Z",
+    "duration_ms": 9664,
+    "input_tokens": 30325,
+    "output_tokens": 453,
+    "cost_usd": 0.0378577,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.4,\"reason\":\"Needs a new public config surface (retry wrapper for model.LLM or retry options in model/gemini) and design choices on which errors to retry and how to handle streaming, so it needs a maintainer decision; it is doable but not small or clear-cut.\"},\"result\":\"Gemini has no retry hook in adk-go. A fix means adding a new public config surface. The likely options are a retry wrapper around `model.LLM` or a `genai.HTTPOptions` retry option in `gemini.ClientConfig`. Either one touches the public API and needs a maintainer decision on its shape. Streaming adds a further problem: a partial stream can't be safely retried. adk-python solves this with `HttpRetryOptions` passed through to genai. I didn't read the Gemini model code, so this is based on the issue and a search for retry code.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.4, \\\"reason\\\": \\\"Needs a new public config surface (retry wrapper for model.LLM or retry options in model/gemini) and design choices on which errors to retry and how to handle streaming, so it needs a maintainer decision; it is doable but not small or clear-cut.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 380,
+    "run_id": "1d41daf2-6a8d-4b3e-8b2b-2e76f0d24778",
+    "issue_id": 107,
+    "agent": "triage",
+    "started_at": "2026-10-29T05:40:57.687Z",
+    "duration_ms": 8458,
+    "input_tokens": 17008,
+    "output_tokens": 380,
+    "cost_usd": 0.0394366,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":true,\"score\":0.15,\"reason\":\"The issue asks which DeepMerge* semantics to adopt (fallback to shallow, reject, or document). That needs a maintainer decision before changing GetMergeStrategy/IsMergeable in pkg/pluginsdk/policy/merge.go or defaultMerge in trafficpolicy/merge.go.\"},\"result\":\"The issue is an open design question. Its own questions ask whether to fall back to shallow semantics, reject the annotation, or document the current behavior. Choosing among those needs a maintainer decision. Any fix would also change the behavior of both the builtin and TrafficPolicy plugins, so the blast radius is wide. I did not inspect the code, but the issue's own framing is enough to place it below the bar for an automated fix.\\n\\nA narrow slice could still be done: adding the two golden fixtures and tests from the issue. Maintainers probably wouldn't merge fixtures that lock in behavior they consider a bug. The doc fix at `devel/policy_merging/overview.md` is possible, but the issue doesn't say which side, the doc or the code, is wrong.\\n\\n```json\\n{\\\"feasible\\\": true, \\\"score\\\": 0.15, \\\"reason\\\": \\\"The issue asks which DeepMerge* semantics to adopt (fallback to shallow, reject, or document). That needs a maintainer decision before changing GetMergeStrategy/IsMergeable in pkg/pluginsdk/policy/merge.go or defaultMerge in trafficpolicy/merge.go.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
    }
   ],
   "kv": [
@@ -13492,7 +13593,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 251    claim   go-sdk#1470  \"mcp: a client DELETE waits for a pending keepalive\"  score 0.9\n                         In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil af\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (21h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (22h)"
+    "value": "  approve 251    claim   go-sdk#1470  \"mcp: a client DELETE waits for a pending keepalive\"  score 0.9\n                         In startKeepalive (mcp/shared.go:994), derive pingCtx from the keepalive ctx and return if ctx.Err() != nil af\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (28h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (29h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
