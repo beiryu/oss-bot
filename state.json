@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-29T19:38:02.167Z",
+ "exported_at": "2026-10-29T23:58:10.347Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:35:44.653Z"
+    "last_scanned": "2026-10-29T23:56:16.125Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -46,7 +46,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n-   [How to contribute](#how-to-contribute)\n-   [Branches](#branches)\n    -   [Backporting to `v1`](#backporting-to-v1)\n-   [Multi-Module Development](#multi-module-development)\n-   [Experimental features](#experimental-features)\n-   [Before you begin](#before-you-begin)\n    -   [Sign our Contributor License Agreement](#sign-our-contributor-license-agreement)\n    -   [Review our community guidelines](#review-our-community-guidelines)\n    -   [Code reviews](#code-reviews)\n-   [Contribution workflow](#contribution-workflow)\n    -   [Finding Issues to Work On](#finding-issues-to-work-on)\n    -   [Requirement for PRs](#requirement-for-prs)\n    -   [Checks to run before you open a PR](#checks-to-run-before-you-open-a-pr)\n    -   [Large or Complex Changes](#large-or-complex-changes)\n    -   [Tes\n\n— CONTRIBUTING.md:\nAll submissions to this project need to follow Google’s [Contributor\nLicense Agreement (CLA)](https://cla.developers.google.com/about), which\ncovers any original work of authorship included in the submission. This\ndoesn't prohibit the use of coding assistance tools, including tool-,\nAI-, or machine-generated code, as long as these submissions abide by the\nCLA's requirements.\n\n— CONTRIBUTING.md:\n-   Cover new features, edge cases, error conditions, and typical\n    use cases.\n-   **Fail without your change.** Revert the source change, keep the test, and\n    run the package: it must go red. A test that passes either way is not\n    testing your change. Name the failing test in your testing plan.\n-   Free of external dependencies (use mocks or fixtures as needed). Tests run\n    offline — LLM traffic is replayed from `testdata/*.httprr` — so never add a\n    live model or network call.\n-   Named so that a failure message identifies what broke without opening the\n    file.\n-   Fast and isolated, with comments for complex scenarios.\n\n— CONTRIBUTING.md:\n## AI-assisted development\n\n— CONTRIBUTING.md:\nThis repo ships skills for AI coding agents (Antigravity, Gemini CLI, Claude\nCode, and others) in `.agents/skills/`. Compatible tools load them on their own;\notherwise read the relevant `SKILL.md` before starting that kind of work.\n\n— AGENTS.md:\nContext for AI coding agents (Claude Code, Gemini CLI, Cursor, Copilot, etc.)\nworking in the ADK Go repository. Human contributors should start with\nCONTRIBUTING.md.\n\n— AGENTS.md:\nADK Go (`google.golang.org/adk/v2`) is an open-source, code-first Go toolkit for\nbuilding, evaluating, and deploying AI agents. It is model-agnostic but\noptimized for Gemini, and is one of several ADK implementations — Go, Python,\nJava, Kotlin, and TypeScript — that share a conceptual model but are independent\ncodebases. Requires the Go version declared in `go.mod`.\n\n— AGENTS.md:\nSee [AI-assisted development](CONTRIBUTING.md#ai-assisted-development) in\n`CONTRIBUTING.md` for what this repo ships. The rule for agents: task-specific\ninstructions live in `.agents/skills/<name>/SKILL.md`, and you read the matching\none before starting that kind of work.\n\n— AGENTS.md:\n- `agent/`     Agent interface + types (`llmagent`, `remoteagent`, `workflowagent`;\n  `workflowagents/` holds `loopagent`, `parallelagent`, `sequentialagent`)\n- `runner/`    Execution engine that drives the run loop\n- `workflow/`  Node/graph-based workflow engine for multi-agent apps\n- `model/`     LLM abstraction (`gemini`, `apigee`, `openaimodel`)\n- `tool/`      Tool/Toolset interface + built-in tools (incl. `skilltoolset/`, `mcptoolset/`)\n- `session/`   Conversation state + events\n- `memory/`, `artifact/`   Long-term memory and file/data services\n- `auth/`      Credentials and auth providers for outbound requests\n- `agentregistry/`  Client for Google Cloud Agent Registry (A2A agents, MCP servers, models)\n- `plugin/`    Cross-cutting lifecycle hooks; `plugin/agentanalytics` is a separate\n\n— AGENTS.md:\n- **LLM traffic is replayed, not live.** A package with `testdata/*.httprr`\n  replays through `internal/httprr` with no flags and no credentials. Each of\n  those files is an **HTTP recording**: one request-and-response exchange,\n  captured once against a real model and replayed on every run afterwards, so\n  tests stay deterministic and need no API key. `session/vertexai` uses a\n  second, unrelated system for **RPC recordings** — `rpcreplay` with\n  `testdata/*.replay` files, refreshed by `UPDATE_REPLAYS=true`. Never add a\n  live model or network call to a test.\n- `-httprecord` takes a **regexp matched against the recording's file path**,\n  not a `-run` test-name filter. Keep it as narrow as the set of recordings you\n  mean to replace: recording against a live model produces a different resp\n\n— AGENTS.md:\n**Never**\n- Break the public API — keep changes backward-compatible. An `apidiff` check\n  compares every module against the merge base and fails on an incompatible\n  change. A `breaking-change` label downgrades that failure to a report, so\n  applying it is a deliberate decision to make with a maintainer, not a way\n  round a red check. Packages under `exp/` are the exception: a break there is\n  allowed, and the label records it.\n- Edit vendored code (`internal/httprr`) or commit secrets / API keys.\n- Add tests that make live LLM or network calls.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:35:47.247Z"
+    "last_scanned": "2026-10-29T23:56:18.232Z"
    },
    {
     "full_name": "k8sgpt-ai/k8sgpt",
@@ -55,7 +55,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n**Where should I start?**\n- If you are new to the project, please check out the [good first issue](https://github.com/k8sgpt-ai/k8sgpt/labels/good%20first%20issue) label.\n- If you are looking for something to work on, check out our [open issues](https://github.com/k8sgpt-ai/k8sgpt/issues).\n- If you have an idea for a new feature, please open an issue, and we can discuss it.\n- We are also happy to help you find something to work on. Just reach out to us.\n\n— CODE_OF_CONDUCT.md:\nInstances of abusive, harassing, or otherwise unacceptable behavior may be\nreported to the community leaders responsible for enforcement at\ncontact@k8sgpt.ai.\nAll complaints will be reviewed and investigated promptly and fairly.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:36:23.862Z"
+    "last_scanned": "2026-10-29T23:56:50.451Z"
    },
    {
     "full_name": "kgateway-dev/kgateway",
@@ -64,7 +64,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:36:26.718Z"
+    "last_scanned": "2026-10-29T23:56:52.584Z"
    },
    {
     "full_name": "kubernetes-sigs/agent-sandbox",
@@ -73,7 +73,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- **CLA Requirement:** All contributors must sign the [Contributor License Agreement](https://git.k8s.io/community/CLA.md). PRs without a signed CLA will not be reviewed.\n- **AI-Assisted Code Reviews:** We use CodeRabbit to provide automated, first-pass code reviews to help identify low-hanging fruit and improve review velocity.\n  - **⚠️ Important Contribution Note (CLA Requirement):** If CodeRabbit provides a code suggestion in your PR, **do not click the \"Commit suggestion\" button** in the GitHub UI. Doing so adds the AI bot as a co-author to the commit. Since bots cannot sign the Kubernetes CLA, this will cause the CLA check to fail and block your PR. Instead, please manually apply the suggested changes in your local environment and push the commit yourself.\n  - **CodeRabbit:** CodeRabb\n\n— AGENTS.md:\nGuidance for AI coding agents working in this repository. Human contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md), [docs/development.md](docs/development.md), and [docs/testing.md](docs/testing.md), which are the source of truth.\n\n— AGENTS.md:\n`agent-sandbox` is a Kubernetes controller that provides the `Sandbox` CRD: a stateful, singleton, pod-backed workload with a stable identity, intended for AI agent runtimes, dev environments, notebooks, and similar use cases. It is a SIG Apps subproject (`sigs.k8s.io/agent-sandbox`) and follows Kubernetes / `controller-runtime` conventions.\n\n— AGENTS.md:\n| Path | What lives there |\n| --- | --- |\n| [**.agents/skills/**](.agents/skills/) | Specialized instructions for you (AI agents). See \"Agent Skills\" section below. |\n| [api/v1beta1/](api/v1beta1/) | Core `Sandbox` types and kubebuilder markers. |\n| [extensions/api/v1beta1/](extensions/api/v1beta1/) | `SandboxClaim`, `SandboxTemplate`, `SandboxWarmPool` types. |\n| [controllers/](controllers/) | Core `Sandbox` reconciler + tests. |\n| [extensions/controllers/](extensions/controllers/) | Reconcilers for the extension CRDs. |\n| [cmd/agent-sandbox-controller/](cmd/agent-sandbox-controller/), [cmd/metrics-docs-gen/](cmd/metrics-docs-gen/) | Controller manager entrypoint (`bin/manager`) and metrics reference generator. |\n| [internal/](internal/) | Shared internals (`lifecycle`, `metrics`, `metric\n\n— AGENTS.md:\nThis repository provides specialized instructions for AI agents in [`.agents/skills/`](.agents/skills/), following the Agent Skills specification (`dev-rules`, `k8s-api-conventions`, `bump-go-version`, `fix-flakes`, `test-pyramid`, `triage-issues`). Note that [CLAUDE.md](CLAUDE.md) imports this file via `@AGENTS.md`.\n\n— AGENTS.md:\n- This is a Kubernetes SIG project: contributors must have a signed [CNCF CLA](https://git.k8s.io/community/CLA.md). PRs without one are not reviewed.\n- CI runs through Prow (configured in [kubernetes/test-infra](https://github.com/kubernetes/test-infra)). The `k8s-ci-robot` merges PRs once they have `lgtm` + `approve` and presubmits pass. Default merge mode is squash; use `/label tide/merge-method-rebase` only when distinct commits matter.\n- CodeRabbit provides automated first-pass reviews on open PRs. **Never click \"Commit suggestion\" in the GitHub UI** — that adds the AI bot as a co-author, and AI bots cannot sign the Kubernetes CLA, so the CLA check will fail and block the PR. Instead: read the suggestion, apply the change manually in your local checkout, and push it as a normal commit\n\n— .github/pull_request_template.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->\n\n— .github/PULL_REQUEST_TEMPLATE.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:36:42.557Z"
+    "last_scanned": "2026-10-29T23:56:56.869Z"
    },
    {
     "full_name": "modelcontextprotocol/go-sdk",
@@ -82,7 +82,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-29T19:36:55.007Z"
+    "last_scanned": "2026-10-29T23:57:09.768Z"
    }
   ],
   "issues": [
@@ -8145,6 +8145,37 @@
     "repro_notes": null,
     "why": null,
     "pr_text": null
+   },
+   {
+    "id": 261,
+    "repo": "kubernetes-sigs/agent-sandbox",
+    "number": 2108,
+    "title": "OLM Bundle no loger updated",
+    "body": "### What happened?\n\nIt looks like the updates are no longer (last success 2 months ago) pushed to OLM\n\nhttps://github.com/k8s-operatorhub/community-operators/tree/main/operators/agent-sandbox-operator\n\n### How can we reproduce it (as minimally and precisely as possible)?\n\nlook at https://github.com/k8s-operatorhub/community-operators/tree/main/operators/agent-sandbox-operator\n\n### Version\n\nlatest\n\n### Anything else we need to know?\n\nPlease let me know if this is still a supported install scenario.",
+    "url": "https://github.com/kubernetes-sigs/agent-sandbox/issues/2108",
+    "state": "skipped",
+    "score": 0.1,
+    "triage_reason": "The OLM publishing path lives in olm/ (README.md, Makefile) and likely release automation under .github/ or dev/, all off-limits to the bot. The cause is probably external release or CI failure, and the reporter's question about support needs a maintainer decision.",
+    "attempts": 0,
+    "skip_reason": "triage: not feasible: The OLM publishing path lives in olm/ (README.md, Makefile) and likely release automation under .github/ or dev/, all off-limits to the bot. The cause is probably external release or CI failure, and the reporter's question about support needs a maintainer decision.",
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-29T23:57:09.171Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
    }
   ],
   "prs": [
@@ -8204,7 +8235,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:18.065Z",
+    "snapshot_at": "2026-10-29T23:55:51.838Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8219,7 +8250,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:21.102Z",
+    "snapshot_at": "2026-10-29T23:55:54.485Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -8234,7 +8265,7 @@
     "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:23.852Z",
+    "snapshot_at": "2026-10-29T23:55:57.669Z",
     "ci_seen_sha": null,
     "merge_state": "UNKNOWN"
    },
@@ -8249,7 +8280,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:26.881Z",
+    "snapshot_at": "2026-10-29T23:56:00.439Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8264,7 +8295,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:29.854Z",
+    "snapshot_at": "2026-10-29T23:56:02.917Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8279,7 +8310,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:33.057Z",
+    "snapshot_at": "2026-10-29T23:56:05.644Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8291,12 +8322,12 @@
     "last_seen_at": "2026-10-16T03:31:51.000Z",
     "opened_at": "2026-10-16T03:31:51Z",
     "head_sha": "65e4c531a2477578896ce14180d952a590c20b4b",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:35.953Z",
+    "snapshot_at": "2026-10-29T23:56:07.889Z",
     "ci_seen_sha": null,
-    "merge_state": "BLOCKED"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 165,
@@ -8324,7 +8355,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:39.185Z",
+    "snapshot_at": "2026-10-29T23:56:10.841Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -8339,7 +8370,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T19:35:42.523Z",
+    "snapshot_at": "2026-10-29T23:56:14.216Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -13962,6 +13993,20 @@
     "ok": 1,
     "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.1,\"reason\":\"Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.\"},\"result\":\"Publishing the sandboxd image means changing release and image-push tooling. That tooling lives under dev/tools/ (push-images) and dev/ci, plus possibly the release workflows in .github/. All of those paths are off-limits for the bot. The decision to publish is also a maintainer's call, and it would be a release-process change, not a code fix.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.1, \\\"reason\\\": \\\"Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.\\\"}\\n```\\n\"}",
     "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 395,
+    "run_id": "d91b3d15-999b-49d1-b674-24915fe243f7",
+    "issue_id": 261,
+    "agent": "triage",
+    "started_at": "2026-10-29T23:56:59.426Z",
+    "duration_ms": 9744,
+    "input_tokens": 52506,
+    "output_tokens": 485,
+    "cost_usd": 0.0666014,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.1,\"reason\":\"The OLM publishing path lives in olm/ (README.md, Makefile) and likely release automation under .github/ or dev/, all off-limits to the bot. The cause is probably external release or CI failure, and the reporter's question about support needs a maintainer decision.\"},\"result\":\"The issue reports that OLM bundle publishing to k8s-operatorhub/community-operators stopped about two months ago. The only references to that repo are in `olm/README.md` and `olm/Makefile`, and both are under `olm/`, which the bot may not edit. I didn't find a publishing workflow in the repo, so I didn't look further. Any workflow would be under `.github/` or `dev/`, also off-limits. The cause is probably an external failure, such as a broken release automation, an expired token, or a pull request to community-operators that was never merged. That needs a maintainer to check. The reporter also asks whether this install path is still supported, which is a maintainer decision.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.1, \\\"reason\\\": \\\"The OLM publishing path lives in olm/ (README.md, Makefile) and likely release automation under .github/ or dev/, all off-limits to the bot. The cause is probably external release or CI failure, and the reporter's question about support needs a maintainer decision.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
    }
   ],
   "kv": [
@@ -13975,7 +14020,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 255    PR      kubernetes-mcp-server#1587  \"fix(metrics): sanitize invalid UTF-8 in metric att\"  (7h)\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (42h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (43h)"
+    "value": "  approve 255    PR      kubernetes-mcp-server#1587  \"fix(metrics): sanitize invalid UTF-8 in metric att\"  (11h)\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (46h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (47h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
