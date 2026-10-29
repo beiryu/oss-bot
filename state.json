@@ -1,6 +1,6 @@
 {
  "version": 1,
- "exported_at": "2026-10-29T13:05:48.812Z",
+ "exported_at": "2026-10-29T19:38:02.167Z",
  "tables": {
   "repos": [
    {
@@ -28,7 +28,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\nThis repository has [Chainloop Trace](https://docs.chainloop.dev/reference/operator/trace) enabled. This means that AI coding sessions can optionally be tracked as part of the software supply chain. See [`.chainloop.yml`](./.chainloop.yml) for the configuration.\n\n— AI_POLICY.md:\n# AI Contribution Policy\n\n— AI_POLICY.md:\nThis policy sets clear expectations for AI-assisted contributions. It is not\nan anti-AI stance — maintainers and contributors alike use AI tools in their\ndaily workflows, and we encourage you to do the same. AI can accelerate\nlearning, improve documentation, generate test scaffolding, and help explore\ndesign alternatives. We welcome contributors who use AI as a productivity\namplifier, not as a substitute for understanding.\n\n— AI_POLICY.md:\n**AI tools are welcome in the Chainloop contributor workflow. The human\ncontributor is always accountable for every line submitted.**\n\n— AI_POLICY.md:\n- **Own your changes.** You must be able to explain every change you submit.\n  \"The AI generated it\" is never an acceptable answer during review.\n- **Design before coding.** For non-trivial changes, open a GitHub Issue with\n  clear reasoning before a PR. PRs that ignore established patterns will be\n  closed.\n- **Quality over quantity.** One well-understood, well-tested PR is worth more\n  than many AI-assisted drive-by fixes. A flood of low-effort PRs exhausts\n  maintainer attention and delays everyone in the queue.\n- **Tests are required.** Bug fixes need regression tests; new features need\n  unit and integration tests. AI-generated tests that do not actually exercise\n  the relevant behaviour will be rejected.\n- **Legal compliance.** Chainloop is [Apache 2.0 licensed](LICENSE).\n  Contribut\n\n— AI_POLICY.md:\nIf AI assisted in producing any part of your contribution, disclose it in the\nPR description. Add an `Assisted-by:` trailer to each affected commit:\n\n— AI_POLICY.md:\n```\nAssisted-by: GitHub Copilot\nAssisted-by: Claude Code\nAssisted-by: ChatGPT o3\nAssisted-by: OpenCode\n```\n\n— AI_POLICY.md:\nUse the name of the AI coding tool that actually produced the work (e.g.\n`OpenCode`, `Claude Code`, `GitHub Copilot`), not the underlying model. Do not\nblindly copy an example — pick the value that matches the tool you are running.\n\n— AI_POLICY.md:\n- **Respond personally.** Do not pipe review feedback back into an AI and\n  apply the output blindly. Responses during review must reflect genuine\n  understanding of the code and the project's design goals.\n- **No AI ping-pong.** If maintainers observe a pattern of AI-driven responses\n  without real engagement, the PR will be closed without further explanation.\n- Maintainers reserve the right to close any low-effort AI contribution without\n  a detailed technical critique.\n\n— AI_POLICY.md:\n## Maintainer Use of AI\n\n— AI_POLICY.md:\nMaintainers also use AI tools: for reviewing changes, exploring implementation\noptions, and improving documentation. The same disclosure and ownership\nexpectations apply to maintainer-authored commits.\n\n— AI_POLICY.md:\nThis policy is inspired by the\n[go-git AI Policy](https://github.com/go-git/go-git/blob/main/AI_POLICY.md),\nthe [Kubewarden AI Policy](https://github.com/kubewarden/community/blob/main/AI_POLICY.md),\nthe [CloudNativePG AI Policy](https://github.com/cloudnative-pg/governance/blob/main/AI_POLICY.md),\nand the [Kyverno AI Usage Policy](https://github.com/kyverno/kyverno/blob/main/AI_POLICY.md).\nIt aligns with the Linux Foundation's\n[Generative AI guidance](https://www.linuxfoundation.org/legal/generative-ai)\nand the CNCF community's evolving norms on sustainable AI-assisted open source\ndevelopment.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:53:39.155Z"
+    "last_scanned": "2026-10-29T19:35:44.653Z"
    },
    {
     "full_name": "containers/kubernetes-mcp-server",
@@ -46,7 +46,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n-   [How to contribute](#how-to-contribute)\n-   [Branches](#branches)\n    -   [Backporting to `v1`](#backporting-to-v1)\n-   [Multi-Module Development](#multi-module-development)\n-   [Experimental features](#experimental-features)\n-   [Before you begin](#before-you-begin)\n    -   [Sign our Contributor License Agreement](#sign-our-contributor-license-agreement)\n    -   [Review our community guidelines](#review-our-community-guidelines)\n    -   [Code reviews](#code-reviews)\n-   [Contribution workflow](#contribution-workflow)\n    -   [Finding Issues to Work On](#finding-issues-to-work-on)\n    -   [Requirement for PRs](#requirement-for-prs)\n    -   [Checks to run before you open a PR](#checks-to-run-before-you-open-a-pr)\n    -   [Large or Complex Changes](#large-or-complex-changes)\n    -   [Tes\n\n— CONTRIBUTING.md:\nAll submissions to this project need to follow Google’s [Contributor\nLicense Agreement (CLA)](https://cla.developers.google.com/about), which\ncovers any original work of authorship included in the submission. This\ndoesn't prohibit the use of coding assistance tools, including tool-,\nAI-, or machine-generated code, as long as these submissions abide by the\nCLA's requirements.\n\n— CONTRIBUTING.md:\n-   Cover new features, edge cases, error conditions, and typical\n    use cases.\n-   **Fail without your change.** Revert the source change, keep the test, and\n    run the package: it must go red. A test that passes either way is not\n    testing your change. Name the failing test in your testing plan.\n-   Free of external dependencies (use mocks or fixtures as needed). Tests run\n    offline — LLM traffic is replayed from `testdata/*.httprr` — so never add a\n    live model or network call.\n-   Named so that a failure message identifies what broke without opening the\n    file.\n-   Fast and isolated, with comments for complex scenarios.\n\n— CONTRIBUTING.md:\n## AI-assisted development\n\n— CONTRIBUTING.md:\nThis repo ships skills for AI coding agents (Antigravity, Gemini CLI, Claude\nCode, and others) in `.agents/skills/`. Compatible tools load them on their own;\notherwise read the relevant `SKILL.md` before starting that kind of work.\n\n— AGENTS.md:\nContext for AI coding agents (Claude Code, Gemini CLI, Cursor, Copilot, etc.)\nworking in the ADK Go repository. Human contributors should start with\nCONTRIBUTING.md.\n\n— AGENTS.md:\nADK Go (`google.golang.org/adk/v2`) is an open-source, code-first Go toolkit for\nbuilding, evaluating, and deploying AI agents. It is model-agnostic but\noptimized for Gemini, and is one of several ADK implementations — Go, Python,\nJava, Kotlin, and TypeScript — that share a conceptual model but are independent\ncodebases. Requires the Go version declared in `go.mod`.\n\n— AGENTS.md:\nSee [AI-assisted development](CONTRIBUTING.md#ai-assisted-development) in\n`CONTRIBUTING.md` for what this repo ships. The rule for agents: task-specific\ninstructions live in `.agents/skills/<name>/SKILL.md`, and you read the matching\none before starting that kind of work.\n\n— AGENTS.md:\n- `agent/`     Agent interface + types (`llmagent`, `remoteagent`, `workflowagent`;\n  `workflowagents/` holds `loopagent`, `parallelagent`, `sequentialagent`)\n- `runner/`    Execution engine that drives the run loop\n- `workflow/`  Node/graph-based workflow engine for multi-agent apps\n- `model/`     LLM abstraction (`gemini`, `apigee`, `openaimodel`)\n- `tool/`      Tool/Toolset interface + built-in tools (incl. `skilltoolset/`, `mcptoolset/`)\n- `session/`   Conversation state + events\n- `memory/`, `artifact/`   Long-term memory and file/data services\n- `auth/`      Credentials and auth providers for outbound requests\n- `agentregistry/`  Client for Google Cloud Agent Registry (A2A agents, MCP servers, models)\n- `plugin/`    Cross-cutting lifecycle hooks; `plugin/agentanalytics` is a separate\n\n— AGENTS.md:\n- **LLM traffic is replayed, not live.** A package with `testdata/*.httprr`\n  replays through `internal/httprr` with no flags and no credentials. Each of\n  those files is an **HTTP recording**: one request-and-response exchange,\n  captured once against a real model and replayed on every run afterwards, so\n  tests stay deterministic and need no API key. `session/vertexai` uses a\n  second, unrelated system for **RPC recordings** — `rpcreplay` with\n  `testdata/*.replay` files, refreshed by `UPDATE_REPLAYS=true`. Never add a\n  live model or network call to a test.\n- `-httprecord` takes a **regexp matched against the recording's file path**,\n  not a `-run` test-name filter. Keep it as narrow as the set of recordings you\n  mean to replace: recording against a live model produces a different resp\n\n— AGENTS.md:\n**Never**\n- Break the public API — keep changes backward-compatible. An `apidiff` check\n  compares every module against the merge base and fails on an incompatible\n  change. A `breaking-change` label downgrades that failure to a report, so\n  applying it is a deliberate decision to make with a maintainer, not a way\n  round a red check. Packages under `exp/` are the exception: a break there is\n  allowed, and the label records it.\n- Edit vendored code (`internal/httprr`) or commit secrets / API keys.\n- Add tests that make live LLM or network calls.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:53:57.961Z"
+    "last_scanned": "2026-10-29T19:35:47.247Z"
    },
    {
     "full_name": "k8sgpt-ai/k8sgpt",
@@ -55,7 +55,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n**Where should I start?**\n- If you are new to the project, please check out the [good first issue](https://github.com/k8sgpt-ai/k8sgpt/labels/good%20first%20issue) label.\n- If you are looking for something to work on, check out our [open issues](https://github.com/k8sgpt-ai/k8sgpt/issues).\n- If you have an idea for a new feature, please open an issue, and we can discuss it.\n- We are also happy to help you find something to work on. Just reach out to us.\n\n— CODE_OF_CONDUCT.md:\nInstances of abusive, harassing, or otherwise unacceptable behavior may be\nreported to the community leaders responsible for enforcement at\ncontact@k8sgpt.ai.\nAll complaints will be reviewed and investigated promptly and fairly.",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:54:38.591Z"
+    "last_scanned": "2026-10-29T19:36:23.862Z"
    },
    {
     "full_name": "kgateway-dev/kgateway",
@@ -64,7 +64,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:54:41.063Z"
+    "last_scanned": "2026-10-29T19:36:26.718Z"
    },
    {
     "full_name": "kubernetes-sigs/agent-sandbox",
@@ -73,7 +73,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "— CONTRIBUTING.md:\n- **CLA Requirement:** All contributors must sign the [Contributor License Agreement](https://git.k8s.io/community/CLA.md). PRs without a signed CLA will not be reviewed.\n- **AI-Assisted Code Reviews:** We use CodeRabbit to provide automated, first-pass code reviews to help identify low-hanging fruit and improve review velocity.\n  - **⚠️ Important Contribution Note (CLA Requirement):** If CodeRabbit provides a code suggestion in your PR, **do not click the \"Commit suggestion\" button** in the GitHub UI. Doing so adds the AI bot as a co-author to the commit. Since bots cannot sign the Kubernetes CLA, this will cause the CLA check to fail and block your PR. Instead, please manually apply the suggested changes in your local environment and push the commit yourself.\n  - **CodeRabbit:** CodeRabb\n\n— AGENTS.md:\nGuidance for AI coding agents working in this repository. Human contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md), [docs/development.md](docs/development.md), and [docs/testing.md](docs/testing.md), which are the source of truth.\n\n— AGENTS.md:\n`agent-sandbox` is a Kubernetes controller that provides the `Sandbox` CRD: a stateful, singleton, pod-backed workload with a stable identity, intended for AI agent runtimes, dev environments, notebooks, and similar use cases. It is a SIG Apps subproject (`sigs.k8s.io/agent-sandbox`) and follows Kubernetes / `controller-runtime` conventions.\n\n— AGENTS.md:\n| Path | What lives there |\n| --- | --- |\n| [**.agents/skills/**](.agents/skills/) | Specialized instructions for you (AI agents). See \"Agent Skills\" section below. |\n| [api/v1beta1/](api/v1beta1/) | Core `Sandbox` types and kubebuilder markers. |\n| [extensions/api/v1beta1/](extensions/api/v1beta1/) | `SandboxClaim`, `SandboxTemplate`, `SandboxWarmPool` types. |\n| [controllers/](controllers/) | Core `Sandbox` reconciler + tests. |\n| [extensions/controllers/](extensions/controllers/) | Reconcilers for the extension CRDs. |\n| [cmd/agent-sandbox-controller/](cmd/agent-sandbox-controller/), [cmd/metrics-docs-gen/](cmd/metrics-docs-gen/) | Controller manager entrypoint (`bin/manager`) and metrics reference generator. |\n| [internal/](internal/) | Shared internals (`lifecycle`, `metrics`, `metric\n\n— AGENTS.md:\nThis repository provides specialized instructions for AI agents in [`.agents/skills/`](.agents/skills/), following the Agent Skills specification (`dev-rules`, `k8s-api-conventions`, `bump-go-version`, `fix-flakes`, `test-pyramid`, `triage-issues`). Note that [CLAUDE.md](CLAUDE.md) imports this file via `@AGENTS.md`.\n\n— AGENTS.md:\n- This is a Kubernetes SIG project: contributors must have a signed [CNCF CLA](https://git.k8s.io/community/CLA.md). PRs without one are not reviewed.\n- CI runs through Prow (configured in [kubernetes/test-infra](https://github.com/kubernetes/test-infra)). The `k8s-ci-robot` merges PRs once they have `lgtm` + `approve` and presubmits pass. Default merge mode is squash; use `/label tide/merge-method-rebase` only when distinct commits matter.\n- CodeRabbit provides automated first-pass reviews on open PRs. **Never click \"Commit suggestion\" in the GitHub UI** — that adds the AI bot as a co-author, and AI bots cannot sign the Kubernetes CLA, so the CLA check will fail and block the PR. Instead: read the suggestion, apply the change manually in your local checkout, and push it as a normal commit\n\n— .github/pull_request_template.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->\n\n— .github/PULL_REQUEST_TEMPLATE.md:\n* CLA REQUIRED: You must sign the Kubernetes CLA before your PR can be reviewed.\n* AI REVIEWS:\n  * We use CodeRabbit for initial reviews. Do NOT click \"Commit suggestion\" in the GitHub UI, as AI bots cannot sign the CLA and will block your PR. Please apply suggestions locally instead.\n  * Once automated reviews finish the first pass, please resolve their comments so maintainers can review your PR!\n* PR TAKEOVERS: To speed up delivery, maintainers may push final changes and directly merge your PR if it is close to completion.\n* STALE POLICY: PRs inactive for 15 days are marked stale and closed 15 days later.\n=======================================================================\n-->",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:54:45.653Z"
+    "last_scanned": "2026-10-29T19:36:42.557Z"
    },
    {
     "full_name": "modelcontextprotocol/go-sdk",
@@ -82,7 +82,7 @@
     "policy_status": "allowed",
     "policy_excerpts": "(no contribution doc mentions AI)",
     "block_reason": null,
-    "last_scanned": "2026-10-29T12:54:48.718Z"
+    "last_scanned": "2026-10-29T19:36:55.007Z"
    }
   ],
   "issues": [
@@ -7998,11 +7998,11 @@
     "title": "retryandreflect: invocation failure counts are never dropped when the run ends",
     "body": "**Describe the Bug:**\n\n`plugin/retryandreflect` keeps its failure counts in `scopedFailureCounters`, keyed by invocation ID under the default `Invocation` scope. An entry is removed only when the same tool later succeeds in the same invocation (`resetFailuresForTool` from `afterTool`). The plugin registers no `AfterRunCallback`, so nothing removes an invocation's entry when the run ends.\n\nEvery invocation in which a tool failed and did not succeed again before the run ended (the model gave up on the tool, the retry limit was exceeded, or the run stopped or errored) leaves an entry behind. Nothing reads it again, and the map grows with every such invocation for the life of the process.\n\nadk-python fixed the same behavior in google/adk-python#7638 (commit 42a8a879, \"drop per-invocation retry counts when an invocation ends\"). There, `ReflectAndRetryToolPlugin` drops an invocation's counts when the run ends, but keeps them when the run paused on an unanswered long-running, confirmation or credential call, because the run that answers it reuses the invocation ID. The Go runner reuses the invocation ID the same way (`resolveInvocationID` in `runner/run_node.go`).\n\n**Steps to Reproduce:**\n\n1. Add this test to `plugin/retryandreflect`:\n\n```go\nfunc TestReproCountersOutliveInvocations(t *testing.T) {\n\tr := &retryAndReflect{\n\t\tmaxRetries:            3,\n\t\tscope:                 Invocation,\n\t\tscopedFailureCounters: make(map[string]map[string]int),\n\t}\n\ttl := &mockTool{name: \"flaky\"}\n\tfor i := 0; i < 1000; i++ {\n\t\tctx := &mockContext{invocationID: fmt.Sprintf(\"inv-%d\", i)}\n\t\t// One failure per invocation, and the run ends without a later success.\n\t\t_, _ = r.onToolError(ctx, tl, nil, errors.New(\"boom\"))\n\t}\n\tt.Logf(\"scopes kept after 1000 finished invocations: %d\", len(r.scopedFailureCounters))\n}\n```\n\n2. Run `go test ./plugin/retryandreflect/ -run TestReproCountersOutliveInvocations -v`.\n\n**Expected Behavior:**\n\nUnder the `Invocation` scope, an invocation's counts are dropped when its run ends, unless the run paused on a long-running call that has not been answered yet. `Global` scope counts are unchanged.\n\n**Observed Behavior:**\n\n```text\n=== RUN   TestReproCountersOutliveInvocations\n    scopes kept after 1000 finished invocations: 1000\n--- PASS: TestReproCountersOutliveInvocations (0.00s)\n```\n\nOne entry per finished invocation is kept.\n\n**Environment Details:**\n\n - ADK Library Version: `main` at 714d35f\n - OS: macOS\n - Go Version: 1.27.3\n\n**Model Information:**\n - N/A, the plugin is exercised directly.\n\n**Proposed fix:**\n\nRegister an `AfterRunCallback` in `retryandreflect.New` that, under the `Invocation` scope, deletes the entry for `ctx.InvocationID()` unless the invocation has a long-running call (`Event.LongRunningToolIDs`) without a matching function response. The runner defers `RunAfterRunCallback` in `Run`, `RunLive` and the node runner, so the callback also runs when the run ends with an error. A PR with tests will follow.\n",
     "url": "https://github.com/google/adk-go/issues/2023",
-    "state": "awaiting_pr_approval",
+    "state": "skipped",
     "score": 0.8,
     "triage_reason": "Add an AfterRunCallback in plugin/retryandreflect/plugin.go New() that deletes scopedFailureCounters[invocationID] under Invocation scope, unless a long-running call is still unanswered. Small and testable; the only judgement is detecting the pending long-running call from the invocation's events.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "no longer needed: already has a PR: #2024 by @SergeevDmitry",
     "feedback": null,
     "summary": "Registered an AfterRunCallback in retryandreflect.New that drops the invocation's failure counts under Invocation scope when the run ends, unless a long-running call is still unanswered. Global scope is unchanged. Added table tests for the callback.",
     "base_sha": "714d35ffcef5e6652e14309d43b3e88a7ed0b956",
@@ -8014,7 +8014,7 @@
     "pr_body": "**Please ensure you have read the [contribution guide](https://github.com/google/adk-go/blob/main/CONTRIBUTING.md) before creating a pull request.**\n\n### Linked issue\n\n- Closes: #2023\n\nFixes #2023\n\n**2. Describe the change:**\n\n**Problem:**\nUnder the default `Invocation` scope, `plugin/retryandreflect` keeps failure counts in `scopedFailureCounters`, keyed by invocation ID. An entry was removed only when the same tool later succeeded in the same invocation. The plugin had no `AfterRunCallback`, so an invocation that ended after a tool failure left its entry in the map for the life of the process.\n\n**Solution:**\n`New` now registers an `AfterRunCallback`. Under the `Invocation` scope it deletes the entry for `ctx.InvocationID()` when the run ends. It keeps the entry if the invocation has a long-running call (`Event.LongRunningToolIDs`) with no matching function response, because the run that answers that call reuses the invocation ID. `Global` scope is not touched. This matches the behavior of adk-python#7638.\n\n### Behavior change\n\n**What behaves differently for someone already on the current release?**\n\nUnder the `Invocation` scope, failure counts for an invocation are now dropped when its run ends, unless a long-running call is still unanswered. Before, they stayed in memory forever. Retry counting inside a run, and `Global` scope, behave as before. A paused run that is resumed keeps its counts.\n\n### Testing Plan\n\n**Unit Tests:**\n\n- [x] All unit tests pass locally.\n\nTests added in `plugin/retryandreflect/plugin_test.go`:\n\n- `TestNew_RegistersAfterRunCallbackToDropInvocationCounts` checks that `New` registers the callback.\n- `TestAfterRunDropsInvocationCounts` is a table test covering: no long-running call (dropped), unanswered long-running call (kept), answered long-running call (dropped), and `Global` scope (kept).\n\n**With your source change reverted and your tests kept, which test fails?**\n\nWithout the change, `TestNew_RegistersAfterRunCallbackToDropInvocationCounts` fails because no callback is registered. `TestAfterRunDropsInvocationCounts` no longer compiles because `afterRun` does not exist.\n\n**Manual End-to-End (E2E) Tests:**\n\nNot run.\n\n### Checklist\n\n- [ ] I have read the [CONTRIBUTING.md](https://github.com/google/adk-go/blob/main/CONTRIBUTING.md) document.\n- [ ] I have performed a self-review of my own code.\n- [ ] I have commented my code, particularly in hard-to-understand areas.\n- [x] I have added tests that prove my fix is effective or that my feature works.\n- [x] New and existing unit tests pass locally with my changes.\n- [ ] I have manually tested my changes end-to-end.\n- [ ] Any dependent changes have been merged and published in downstream modules.\n\n### Additional context\n\nParity: adk-python#7638 (commit 42a8a879).\n",
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-29T13:04:49.418Z",
+    "updated_at": "2026-10-29T19:35:16.537Z",
     "blocked": null,
     "patch": "diff --git a/plugin/retryandreflect/plugin.go b/plugin/retryandreflect/plugin.go\nindex 31fe520..1542215 100644\n--- a/plugin/retryandreflect/plugin.go\n+++ b/plugin/retryandreflect/plugin.go\n@@ -113,6 +113,7 @@ func New(opts ...PluginOption) (*plugin.Plugin, error) {\n \t\tName:                \"RetryAndReflectPlugin\",\n \t\tAfterToolCallback:   r.afterTool,\n \t\tOnToolErrorCallback: r.onToolError,\n+\t\tAfterRunCallback:    r.afterRun,\n \t})\n }\n \n@@ -140,6 +141,49 @@ func (r *retryAndReflect) afterTool(ctx agent.Context, tool tool.Tool, args, res\n \treturn nil, nil\n }\n \n+// afterRun drops the invocation's failure counts when its run ends. Counts are\n+// kept while a long-running call is unanswered, because the run that answers it\n+// reuses the invocation ID.\n+func (r *retryAndReflect) afterRun(ctx agent.InvocationContext) {\n+\tif r.scope != Invocation || hasPendingLongRunningCall(ctx) {\n+\t\treturn\n+\t}\n+\tr.mu.Lock()\n+\tdefer r.mu.Unlock()\n+\tdelete(r.scopedFailureCounters, ctx.InvocationID())\n+}\n+\n+func hasPendingLongRunningCall(ctx agent.InvocationContext) bool {\n+\ts := ctx.Session()\n+\tif s == nil || s.Events() == nil {\n+\t\treturn false\n+\t}\n+\tpending := make(map[string]bool)\n+\tanswered := make(map[string]bool)\n+\tfor ev := range s.Events().All() {\n+\t\tif ev == nil || ev.InvocationID != ctx.InvocationID() {\n+\t\t\tcontinue\n+\t\t}\n+\t\tfor _, id := range ev.LongRunningToolIDs {\n+\t\t\tpending[id] = true\n+\t\t}\n+\t\tif ev.Content == nil {\n+\t\t\tcontinue\n+\t\t}\n+\t\tfor _, part := range ev.Content.Parts {\n+\t\t\tif part != nil && part.FunctionResponse != nil {\n+\t\t\t\tanswered[part.FunctionResponse.ID] = true\n+\t\t\t}\n+\t\t}\n+\t}\n+\tfor id := range pending {\n+\t\tif !answered[id] {\n+\t\t\treturn true\n+\t\t}\n+\t}\n+\treturn false\n+}\n+\n func (r *retryAndReflect) onToolError(ctx agent.Context, tool tool.Tool, args map[string]any, err error) (map[string]any, error) {\n \treturn r.handleToolError(ctx, tool, args, err)\n }\ndiff --git a/plugin/retryandreflect/plugin_test.go b/plugin/retryandreflect/plugin_test.go\nindex 05e1afd..3cbbef6 100644\n--- a/plugin/retryandreflect/plugin_test.go\n+++ b/plugin/retryandreflect/plugin_test.go\n@@ -16,10 +16,16 @@ package retryandreflect\n \n import (\n \t\"errors\"\n+\t\"iter\"\n+\t\"slices\"\n \t\"strings\"\n \t\"testing\"\n \n+\t\"google.golang.org/genai\"\n+\n \t\"google.golang.org/adk/v2/agent\"\n+\t\"google.golang.org/adk/v2/model\"\n+\t\"google.golang.org/adk/v2/session\"\n )\n \n type mockTool struct {\n@@ -237,3 +243,66 @@ func TestRetryAndReflect_Scopes(t *testing.T) {\n \t\tt.Errorf(\"expected 2 failures in global scope\")\n \t}\n }\n+\n+func TestNew_RegistersAfterRunCallbackToDropInvocationCounts(t *testing.T) {\n+\tp, err := New()\n+\tif err != nil {\n+\t\tt.Fatalf(\"New() failed: %v\", err)\n+\t}\n+\tif p.AfterRunCallback() == nil {\n+\t\tt.Fatal(\"AfterRunCallback is not registered, so per-invocation failure counts are never dropped when a run ends\")\n+\t}\n+}\n+\n+type afterRunContext struct {\n+\tagent.InvocationContext\n+\tid string\n+\ts  session.Session\n+}\n+\n+func (c *afterRunContext) InvocationID() string { return c.id }\n+\n+func (c *afterRunContext) Session() session.Session { return c.s }\n+\n+type eventsSession struct {\n+\tsession.Session\n+\tevents []*session.Event\n+}\n+\n+func (s *eventsSession) Events() session.Events { return eventList(s.events) }\n+\n+type eventList []*session.Event\n+\n+func (l eventList) All() iter.Seq[*session.Event] { return slices.Values(l) }\n+func (l eventList) Len() int                      { return len(l) }\n+func (l eventList) At(i int) *session.Event       { return l[i] }\n+\n+func TestAfterRunDropsInvocationCounts(t *testing.T) {\n+\tcall := &session.Event{InvocationID: \"inv\", LongRunningToolIDs: []string{\"c1\"}}\n+\tresp := &session.Event{InvocationID: \"inv\", LLMResponse: model.LLMResponse{Content: &genai.Content{\n+\t\tParts: []*genai.Part{{FunctionResponse: &genai.FunctionResponse{ID: \"c1\"}}},\n+\t}}}\n+\ttests := []struct {\n+\t\tname     string\n+\t\tscope    TrackingScope\n+\t\tevents   []*session.Event\n+\t\twantKept bool\n+\t}{\n+\t\t{name: \"no long running call\", scope: Invocation},\n+\t\t{name: \"unanswered long running call\", scope: Invocation, events: []*session.Event{call}, wantKept: true},\n+\t\t{name: \"answered long running call\", scope: Invocation, events: []*session.Event{call, resp}},\n+\t\t{name: \"global scope untouched\", scope: Global, wantKept: true},\n+\t}\n+\tfor _, tc := range tests {\n+\t\tt.Run(tc.name, func(t *testing.T) {\n+\t\t\tr := &retryAndReflect{maxRetries: 3, scope: tc.scope, scopedFailureCounters: map[string]map[string]int{}}\n+\t\t\tif _, err := r.onToolError(&mockContext{invocationID: \"inv\"}, &mockTool{name: \"t\"}, nil, errors.New(\"boom\")); err != nil {\n+\t\t\t\tt.Fatal(err)\n+\t\t\t}\n+\t\t\tr.afterRun(&afterRunContext{id: \"inv\", s: &eventsSession{events: tc.events}})\n+\t\t\tif got := len(r.scopedFailureCounters) > 0; got != tc.wantKept {\n+\t\t\t\tt.Errorf(\"counters kept = %v, want %v\", got, tc.wantKept)\n+\t\t\t}\n+\t\t})\n+\t}\n+}\n",
     "repro_patch": "diff --git a/plugin/retryandreflect/plugin_test.go b/plugin/retryandreflect/plugin_test.go\nindex 05e1afd..bcca5bc 100644\n--- a/plugin/retryandreflect/plugin_test.go\n+++ b/plugin/retryandreflect/plugin_test.go\n@@ -237,3 +237,13 @@ func TestRetryAndReflect_Scopes(t *testing.T) {\n \t\tt.Errorf(\"expected 2 failures in global scope\")\n \t}\n }\n+\n+func TestNew_RegistersAfterRunCallbackToDropInvocationCounts(t *testing.T) {\n+\tp, err := New()\n+\tif err != nil {\n+\t\tt.Fatalf(\"New() failed: %v\", err)\n+\t}\n+\tif p.AfterRunCallback() == nil {\n+\t\tt.Fatal(\"AfterRunCallback is not registered, so per-invocation failure counts are never dropped when a run ends\")\n+\t}\n+}\n",
@@ -8029,11 +8029,11 @@
     "title": "Streamable HTTP: a message with an `id` but no `method`, `result` or `error` is answered 202 with no body",
     "body": "### What happened?\n\nA JSON-RPC message that has an `id` but none of `method`, `result` or `error` is answered with HTTP 202 and an empty body by `StreamableHTTPHandler`. The sender gets no sign that the message was invalid, and nothing is processed.\n\nThe same malformed message **without** an `id` is already refused: HTTP 400, `malformed payload: invalid request`. So the SDK treats the missing `method` as invalid in one case and accepts it silently in the other.\n\nCause, as far as I can tell: `DecodeMessage` (`internal/jsonrpc2/messages.go`) treats any message without a `method` key as a response (\"no method key, should be a response\") and only rejects it when the `id` is invalid. It never checks that `result` or `error` is present. The message is then routed as a response to a request that does not exist, the transport takes the branch for \"no calls in this POST\", and writes `http.StatusAccepted`.\n\nExpected: the message is neither a request, a notification nor a response, so it should be refused like the no-`id` case, with HTTP 400 and a JSON-RPC `-32600` Invalid Request error that carries the `id`.\n\nThe MCP Streamable HTTP page (2026-07-28) says the POST body must be a single JSON-RPC request or notification, that an accepted notification gets `202 Accepted` with no body, and that when the server cannot accept the input it returns an HTTP error status such as `400`. A `202` for a message that is not a valid notification or response does not fit that.\n\n### How to reproduce\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"io\"\n\t\"net/http\"\n\t\"net/http/httptest\"\n\t\"strings\"\n\n\t\"github.com/modelcontextprotocol/go-sdk/mcp\"\n)\n\nfunc main() {\n\tsrv := mcp.NewServer(&mcp.Implementation{Name: \"repro\", Version: \"0\"}, nil)\n\th := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return srv },\n\t\t&mcp.StreamableHTTPOptions{Stateless: true})\n\tts := httptest.NewServer(h)\n\tdefer ts.Close()\n\n\tpost := func(label, body string) {\n\t\treq, _ := http.NewRequest(http.MethodPost, ts.URL, strings.NewReader(body))\n\t\treq.Header.Set(\"Content-Type\", \"application/json\")\n\t\treq.Header.Set(\"Accept\", \"application/json, text/event-stream\")\n\t\tresp, err := http.DefaultClient.Do(req)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tb, _ := io.ReadAll(resp.Body)\n\t\tresp.Body.Close()\n\t\tfmt.Printf(\"%-24s -> HTTP %d, body %q\\n\", label, resp.StatusCode, string(b))\n\t}\n\n\tpost(\"id, no method\", `{\"jsonrpc\":\"2.0\",\"id\":5,\"params\":{\"name\":\"x\",\"arguments\":{}}}`)\n\tpost(\"no id, no method\", `{\"jsonrpc\":\"2.0\",\"params\":{}}`)\n}\n```\n\nOutput on v1.7.0 and v1.8.0 (the code in `main` is the same):\n\n```\nid, no method            -> HTTP 202, body \"\"\nno id, no method         -> HTTP 400, body \"malformed payload: invalid request\\n\"\n```\n\nA possible fix: in `DecodeMessage`, when there is no `method` key, also require that a `result` or an `error` key is present (check the key, not the value, since `\"result\": null` is a valid response); otherwise return `ErrInvalidRequest`.\n\n### Where did you hit this?\n\nAn MCP server using `StreamableHTTPHandler` in stateless mode. QA found it by deleting `\"method\": \"tools/call\"` from a request by hand and getting a 202 with no body.\n\n### Go MCP SDK version\n\nv1.7.0 and v1.8.0 (and `main`, by reading the code)\n\n### Go version\n\ngo1.27.1 darwin/arm64\n\n### Logs\n\nNone; the response is the log.\n",
     "url": "https://github.com/modelcontextprotocol/go-sdk/issues/1476",
-    "state": "awaiting_claim",
+    "state": "skipped",
     "score": 0.8,
     "triage_reason": "Small fix in DecodeMessage (internal/jsonrpc2/messages.go): return ErrInvalidRequest when there is no method key and neither result nor error is present. Needs care that nil-result responses still encode with a result and that existing tests still pass.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "no longer needed: issue closed",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -8045,7 +8045,7 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-29T12:55:23.525Z",
+    "updated_at": "2026-10-29T19:35:11.947Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -8060,11 +8060,11 @@
     "title": "mcp: document explicit subscriptions/listen calls through CallCustomMethod",
     "body": "### Checklist\n\n- [x] I searched the existing issues, and this has not been reported before.\n- [x] This is a real problem that I ran into myself, using the latest release of the SDK.\n- [x] I ran into it in a production system, not in a toy example, a benchmark, or an automated or AI-driven scan of the code.\n- [x] I (a human) examined the relevant SDK code, and wrote or reviewed every line of this report. It is not unreviewed AI output.\n- [x] This report is brief and concise, and sticks to the facts needed to understand the problem.\n\n### What problem are you trying to solve?\n\nI need application-controlled lifetime and acknowledgement handling for a standard subscriptions/listen request while retaining the SDK’s transport, metadata, and middleware behavior.\n\nThe operation already works, but the public documentation directs callers elsewhere: CallCustomMethod describes exclusively non-standard methods requiring registration, while AddSendingCustomMethod rejects standard method names.\n\nChecked against SDK commit 5395600:\n- [NewClient copies the standard method registry](https://github.com/modelcontextprotocol/go-sdk/blob/5395600ff4f0cf6e7ae38f5d7e886ae544b762cd/mcp/client.go#L69-L78), so subscriptions/listen requires no additional registration.\n- [CallCustomMethod injects protocol metadata and uses handleSend](https://github.com/modelcontextprotocol/go-sdk/blob/5395600ff4f0cf6e7ae38f5d7e886ae544b762cd/mcp/client.go#L1823-L1843), matching the existing private listen helper’s sending path.\n- The result type is determined by the registry and [asserted to R](https://github.com/modelcontextprotocol/go-sdk/blob/5395600ff4f0cf6e7ae38f5d7e886ae544b762cd/mcp/shared.go#L173-L205). Callers must use *SubscriptionsListenResult; an arbitrary result type can panic.\n\n### Where did you hit this?\n\nWhile developing Tasks and Events extensions locally against the SDK; this is not a production incident report.\n\n### What would help?\n\nConfirm and document this existing usage on a session using protocol 2026-07-28:\n\n``` go\n_, err := mcp.CallCustomMethod[\n    *mcp.SubscriptionsListenParams,\n    *mcp.SubscriptionsListenResult,\n](ctx, session, \"subscriptions/listen\", &mcp.SubscriptionsListenParams{\n    Notifications: &mcp.NotificationSubscriptions{\n        ToolsListChanged: true,\n    },\n})\n```\n\nDocument its constraints:\n- The call waits for completion, error, or context cancellation. Acknowledgement is a notification; an empty accepted subset can complete immediately.\n- Receiving middleware installed before connecting can inspect *SubscriptionsAcknowledgedParams and subsequent notifications.\n- Configured list-change handlers already open an automatic listen; callers should avoid overlapping listens for those filters.\n- Dedicated session methods remain preferable where available because they may manage validation, caching, or subscription state.\nThis requires no new exported API or runtime changes. Existing protocol selection, legacy behavior, and automatic subscriptions remain unchanged.\n\nRelated proposals address different gaps: [#745](https://github.com/modelcontextprotocol/go-sdk/issues/745) covers custom notifications, [#1263](https://github.com/modelcontextprotocol/go-sdk/issues/1263) server-initiated cancellation, [#1284](https://github.com/modelcontextprotocol/go-sdk/issues/1284) termination callbacks for SDK-managed resource subscriptions, and [#1264](https://github.com/modelcontextprotocol/go-sdk/issues/1264) receiving request IDs. None documents this client invocation path.\n\nAI assistance was used for code analysis and drafting.",
     "url": "https://github.com/modelcontextprotocol/go-sdk/issues/1474",
-    "state": "triaged",
+    "state": "skipped",
     "score": 0.72,
     "triage_reason": "Doc-only edit to the CallCustomMethod comment in mcp/client.go (and possibly AddSendingCustomMethod) to describe explicit subscriptions/listen usage and its constraints. It needs no API change, but a maintainer may question whether to bless this usage officially.",
     "attempts": 0,
-    "skip_reason": null,
+    "skip_reason": "issue closed",
     "feedback": null,
     "summary": null,
     "base_sha": null,
@@ -8076,7 +8076,69 @@
     "pr_body": null,
     "dry": 0,
     "claimed_at": null,
-    "updated_at": "2026-10-29T12:55:23.525Z",
+    "updated_at": "2026-10-29T19:36:54.354Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
+   },
+   {
+    "id": 259,
+    "repo": "kgateway-dev/kgateway",
+    "number": 14956,
+    "title": "cr.kgateway.dev now 302-redirects to ghcr.io, breaking all `helm pull` of kgateway charts",
+    "body": "### kgateway version\n\nv2.4.7 (not version-specific — v2.4.6 and every other version fail identically)\n\n### Kubernetes Version\n\nv1.35.8 (GKE) — not Kubernetes-specific, this is a registry-side issue\n\n### Describe the bug\n\nAs of roughly **2026-10-29 18:59 UTC**, `cr.kgateway.dev` responds with **HTTP 302 redirects to `ghcr.io`** for every registry API path (`/manifests/`, `/blobs/`, `/tags/list`) instead of proxying them. Only `/v2/` is still proxied.\n\nHelm's OCI client (ORAS) does not re-perform the bearer-token handshake after a cross-host redirect, so it follows the 302 to `ghcr.io`, receives the anonymous 401 challenge, and surfaces it as a hard failure:\n\n```\nError: failed to perform \"FetchReference\" on source: GET \"https://ghcr.io/v2/kgateway-dev/charts/kgateway-crds/manifests/v2.4.7\": response status code 401: unauthorized: authentication required\n```\n\nThis affects **every chart and every version** pulled through `cr.kgateway.dev`.\n\n**This is a behavior change, not a long-standing limitation.** In #12807 (Nov 2025), the exact same URL returned a *proxied* `401` with a pass-through `www-authenticate` header, and `skopeo list-tags docker://cr.kgateway.dev/...` worked. Today the same URL returns a `302`:\n\n```console\n# November 2025, per #12807\n$ curl https://cr.kgateway.dev/v2/kgateway-dev/charts/kgateway/tags/list\n401 {\"errors\":[{\"code\":\"UNAUTHORIZED\",\"message\":\"authentication required\"}]}\nwww-authenticate: Bearer realm=\"https://ghcr.io/token\",service=\"ghcr.io\",scope=\"repository:kgateway-dev/charts/kgateway:pull\"\n\n# Today\n$ curl -sD - -o /dev/null https://cr.kgateway.dev/v2/kgateway-dev/charts/kgateway/tags/list\nHTTP/2 302\nlocation: https://ghcr.io/v2/kgateway-dev/charts/kgateway/tags/list\nserver: openresty/1.31.1.1\n```\n\nContainer **image** pulls are unaffected — Docker/containerd do re-authenticate after the redirect. Only Helm chart pulls are broken.\n\n### Expected Behavior\n\n`helm pull oci://cr.kgateway.dev/kgateway-dev/charts/kgateway-crds --version v2.4.7` succeeds, as instructed in the [Helm install docs](https://kgateway.dev/docs/envoy/latest/install/helm/), which still document `cr.kgateway.dev` as the chart source.\n\n### Steps to reproduce the bug\n\n1. Pull any chart through the vanity domain — fails:\n\n```console\n$ helm pull oci://cr.kgateway.dev/kgateway-dev/charts/kgateway-crds --version v2.4.7\nError: failed to perform \"FetchReference\" on source: GET \"https://ghcr.io/v2/kgateway-dev/charts/kgateway-crds/manifests/v2.4.7\": response status code 401: unauthorized: authentication required\n\n$ helm pull oci://cr.kgateway.dev/kgateway-dev/charts/kgateway-crds --version v2.4.6   # same\n$ helm pull oci://cr.kgateway.dev/kgateway-dev/charts/kgateway --version v2.4.7        # same\n```\n\n2. The same chart pulls fine straight from the backing registry:\n\n```console\n$ helm pull oci://ghcr.io/kgateway-dev/charts/kgateway-crds --version v2.4.7\nPulled: ghcr.io/kgateway-dev/charts/kgateway-crds:v2.4.7\nDigest: sha256:6a45e2d24712cdbfcf945e6793adb8647a527169b714b664941ee5e4ec1e5a65\n```\n\n3. Confirm every path redirects rather than proxies:\n\n```console\n$ curl -sD - -o /dev/null https://cr.kgateway.dev/v2/kgateway-dev/charts/kgateway-crds/manifests/v2.4.7\nHTTP/2 302\nlocation: https://ghcr.io/v2/kgateway-dev/charts/kgateway-crds/manifests/v2.4.7\n```\n\nSame for `/blobs/sha256:...` and `/tags/list`. Passing a valid GHCR bearer token makes no difference — it still redirects.\n\n4. Confirm image pulls are unaffected:\n\n```console\n$ docker manifest inspect cr.kgateway.dev/kgateway-dev/kgateway:v2.4.7   # exit 0\n```\n\n### Helm Values\n\n_No response_\n\n### Kgateway pod logs\n\n_No response_\n\n### Proxy pod logs\n\n_No response_\n\n### Additional Environment Detail\n\n- Helm v4.1.0, and the Helm bundled in Argo CD v3.5.2 — both reproduce identically\n- Argo CD v3.5.2, charts rendered via `kustomize build --enable-helm`\n- Reproduced from two unrelated networks, with clean/empty Helm registry config (no credentials involved — these are public charts)\n\n### Additional Context\n\n**Impact on Argo CD / GitOps users:** any Application that renders kgateway charts through `cr.kgateway.dev` can no longer generate manifests. Argo CD reports `ComparisonError` and the sync status goes to `Unknown`, which silently disables auto-sync and self-heal. Running workloads are unaffected, but drift detection and deployments stop working across every cluster at once.\n\n**Workaround:** point charts at `oci://ghcr.io/kgateway-dev/charts` instead of `oci://cr.kgateway.dev/kgateway-dev/charts`. Same digests, anonymous pull works. This does bypass Scarf download tracking.\n\n**Likely cause:** `cr.kgateway.dev` is a Scarf Gateway (`CNAME gateway.scarf.sh`). It appears to have been reconfigured from proxy mode to redirect mode. Restoring the proxy behavior for the registry API paths — or at least for `/manifests/` — would fix Helm without requiring any change on the consumer side.\n\nRelated: #12807",
+    "url": "https://github.com/kgateway-dev/kgateway/issues/14956",
+    "state": "skipped",
+    "score": 0.03,
+    "triage_reason": "The failure is in the external Scarf Gateway configuration for cr.kgateway.dev (proxy changed to redirect), which no code in this repo controls. The only in-repo change would be switching chart references to ghcr.io, which needs a maintainer decision and touches protected paths such as install/helm/ and docs/.",
+    "attempts": 0,
+    "skip_reason": "triage: not feasible: The failure is in the external Scarf Gateway configuration for cr.kgateway.dev (proxy changed to redirect), which no code in this repo controls. The only in-repo change would be switching chart references to ghcr.io, which needs a maintainer decision and touches protected paths such as install/helm/ and docs/.",
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-29T19:36:40.956Z",
+    "blocked": null,
+    "patch": null,
+    "repro_patch": null,
+    "repro_notes": null,
+    "why": null,
+    "pr_text": null
+   },
+   {
+    "id": 260,
+    "repo": "kubernetes-sigs/agent-sandbox",
+    "number": 2107,
+    "title": "Publish the sandboxd image",
+    "body": "Hey!\n\nWe're adding a [KubernetesSandbox](https://github.com/pydantic/pydantic-ai/pull/10612) to Pydantic AI and are waiting on a released sandboxd image. Is it planned anytime soon?",
+    "url": "https://github.com/kubernetes-sigs/agent-sandbox/issues/2107",
+    "state": "skipped",
+    "score": 0.1,
+    "triage_reason": "Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.",
+    "attempts": 0,
+    "skip_reason": "triage: not feasible: Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.",
+    "feedback": null,
+    "summary": null,
+    "base_sha": null,
+    "test_files": null,
+    "test_hashes": null,
+    "test_vars": null,
+    "branch": null,
+    "pr_title": null,
+    "pr_body": null,
+    "dry": 0,
+    "claimed_at": null,
+    "updated_at": "2026-10-29T19:36:54.049Z",
     "blocked": null,
     "patch": null,
     "repro_patch": null,
@@ -8139,12 +8201,12 @@
     "last_seen_at": "2026-10-20T06:54:34Z",
     "opened_at": "2026-10-19T14:49:17.053Z",
     "head_sha": "c7012ad5b6b568868dff38c37547b60155653de6",
-    "mergeable": "UNKNOWN",
+    "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:15.589Z",
+    "snapshot_at": "2026-10-29T19:35:18.065Z",
     "ci_seen_sha": null,
-    "merge_state": "UNKNOWN"
+    "merge_state": "BLOCKED"
    },
    {
     "issue_id": 75,
@@ -8157,7 +8219,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:18.521Z",
+    "snapshot_at": "2026-10-29T19:35:21.102Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -8169,12 +8231,12 @@
     "last_seen_at": "2026-10-19T10:01:30Z",
     "opened_at": "2026-10-19T10:01:24.590Z",
     "head_sha": "54b320f263ab47396c785452d0e896177fc5b7f6",
-    "mergeable": "MERGEABLE",
+    "mergeable": "UNKNOWN",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:21.387Z",
+    "snapshot_at": "2026-10-29T19:35:23.852Z",
     "ci_seen_sha": null,
-    "merge_state": "BEHIND"
+    "merge_state": "UNKNOWN"
    },
    {
     "issue_id": 119,
@@ -8187,7 +8249,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:24.438Z",
+    "snapshot_at": "2026-10-29T19:35:26.881Z",
     "ci_seen_sha": null,
     "merge_state": "BLOCKED"
    },
@@ -8199,12 +8261,12 @@
     "last_seen_at": "2026-10-15T07:16:17Z",
     "opened_at": "2026-10-15T04:12:17Z",
     "head_sha": "d911640dcc02a1917e0d1ff970b6c0dad4c8d51a",
-    "mergeable": "UNKNOWN",
+    "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:26.715Z",
+    "snapshot_at": "2026-10-29T19:35:29.854Z",
     "ci_seen_sha": null,
-    "merge_state": "UNKNOWN"
+    "merge_state": "BLOCKED"
    },
    {
     "issue_id": 163,
@@ -8214,12 +8276,12 @@
     "last_seen_at": "2026-10-17T00:07:47Z",
     "opened_at": "2026-10-13T04:01:36Z",
     "head_sha": "2e1bb033fb1461da5e263b8d253f8a1a22893685",
-    "mergeable": "UNKNOWN",
+    "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:28.946Z",
+    "snapshot_at": "2026-10-29T19:35:33.057Z",
     "ci_seen_sha": null,
-    "merge_state": "UNKNOWN"
+    "merge_state": "BLOCKED"
    },
    {
     "issue_id": 164,
@@ -8229,12 +8291,12 @@
     "last_seen_at": "2026-10-16T03:31:51.000Z",
     "opened_at": "2026-10-16T03:31:51Z",
     "head_sha": "65e4c531a2477578896ce14180d952a590c20b4b",
-    "mergeable": "UNKNOWN",
+    "mergeable": "MERGEABLE",
     "ci_state": "awaiting_approval",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:31.806Z",
+    "snapshot_at": "2026-10-29T19:35:35.953Z",
     "ci_seen_sha": null,
-    "merge_state": "UNKNOWN"
+    "merge_state": "BLOCKED"
    },
    {
     "issue_id": 165,
@@ -8262,7 +8324,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:34.622Z",
+    "snapshot_at": "2026-10-29T19:35:39.185Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -8277,7 +8339,7 @@
     "mergeable": "MERGEABLE",
     "ci_state": "success",
     "review_decision": "REVIEW_REQUIRED",
-    "snapshot_at": "2026-10-29T12:53:37.356Z",
+    "snapshot_at": "2026-10-29T19:35:42.523Z",
     "ci_seen_sha": null,
     "merge_state": "BEHIND"
    },
@@ -13872,6 +13934,34 @@
     "ok": 1,
     "result_json": "{\"parsed\":{\"title\":\"fix(retryandreflect): drop invocation failure counts when run ends\",\"body\":\"**Please ensure you have read the [contribution guide](https://github.com/google/adk-go/blob/main/CONTRIBUTING.md) before creating a pull request.**\\n\\n### Linked issue\\n\\n- Closes: #2023\\n\\nFixes #2023\\n\\n**2. Describe the change:**\\n\\n**Problem:**\\nUnder the default `Invocation` scope, `plugin/retryandreflect` keeps failure counts in `scopedFailureCounters`, keyed by invocation ID. An entry was removed only when the same tool later succeeded in the same invocation. The plugin had no `AfterRunCallback`, so an invocation that ended after a tool failure left its entry in the map for the life of the process.\\n\\n**Solution:**\\n`New` now registers an `AfterRunCallback`. Under the `Invocation` scope it deletes the entry for `ctx.InvocationID()` when the run ends. It keeps the entry if the invocation has a long-running call (`Event.LongRunningToolIDs`) with no matching function response, because the run that answers that call reuses the invocation ID. `Global` scope is not touched. This matches the behavior of adk-python#7638.\\n\\n### Behavior change\\n\\n**What behaves differently for someone already on the current release?**\\n\\nUnder the `Invocation` scope, failure counts for an invocation are now dropped when its run ends, unless a long-running call is still unanswered. Before, they stayed in memory forever. Retry counting inside a run, and `Global` scope, behave as before. A paused run that is resumed keeps its counts.\\n\\n### Testing Plan\\n\\n**Unit Tests:**\\n\\n- [x] All unit tests pass locally.\\n\\nTests added in `plugin/retryandreflect/plugin_test.go`:\\n\\n- `TestNew_RegistersAfterRunCallbackToDropInvocationCounts` checks that `New` registers the callback.\\n- `TestAfterRunDropsInvocationCounts` is a table test covering: no long-running call (dropped), unanswered long-running call (kept), answered long-running call (dropped), and `Global` scope (kept).\\n\\n**With your source change reverted and your tests kept, which test fails?**\\n\\nWithout the change, `TestNew_RegistersAfterRunCallbackToDropInvocationCounts` fails because no callback is registered. `TestAfterRunDropsInvocationCounts` no longer compiles because `afterRun` does not exist.\\n\\n**Manual End-to-End (E2E) Tests:**\\n\\nNot run.\\n\\n### Checklist\\n\\n- [ ] I have read the [CONTRIBUTING.md](https://github.com/google/adk-go/blob/main/CONTRIBUTING.md) document.\\n- [ ] I have performed a self-review of my own code.\\n- [ ] I have commented my code, particularly in hard-to-understand areas.\\n- [x] I have added tests that prove my fix is effective or that my feature works.\\n- [x] New and existing unit tests pass locally with my changes.\\n- [ ] I have manually tested my changes end-to-end.\\n- [ ] Any dependent changes have been merged and published in downstream modules.\\n\\n### Additional context\\n\\nParity: adk-python#7638 (commit 42a8a879).\\n\",\"why\":[{\"en\":\"The plugin never removed failure counts when a run ended, so memory grew with every failed invocation. I wanted to fix this leak in a long-running process.\",\"vi\":\"Plugin không bao giờ xóa số lần lỗi khi một lượt chạy kết thúc, nên bộ nhớ tăng theo mỗi invocation bị lỗi. Tôi muốn sửa lỗi rò rỉ này cho các tiến trình chạy lâu.\"},{\"en\":\"The fix was small and clear, and adk-python already did the same thing. I wanted to make the Go version behave the same, including keeping counts for paused runs.\",\"vi\":\"Cách sửa nhỏ và rõ ràng, và adk-python đã làm như vậy. Tôi muốn bản Go hoạt động giống vậy, kể cả việc giữ số đếm cho các lượt chạy bị tạm dừng.\"}]},\"result\":\"I wrote the PR title and description following the repo's template. I haven't run the tests myself. The ticked boxes (unit tests pass, tests added, new and existing tests pass) rest on the pipeline's results. The CLA, self-review, commenting, manual end-to-end and dependent-changes boxes are left unticked.\\n\\n```json\\n{\\\"title\\\": \\\"fix(retryandreflect): drop invocation failure counts w",
     "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 393,
+    "run_id": "920a4e84-edad-4faa-830c-4bfa0b9672a8",
+    "issue_id": 259,
+    "agent": "triage",
+    "started_at": "2026-10-29T19:36:30.832Z",
+    "duration_ms": 10123,
+    "input_tokens": 22973,
+    "output_tokens": 456,
+    "cost_usd": 0.028836499999999998,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.03,\"reason\":\"The failure is in the external Scarf Gateway configuration for cr.kgateway.dev (proxy changed to redirect), which no code in this repo controls. The only in-repo change would be switching chart references to ghcr.io, which needs a maintainer decision and touches protected paths such as install/helm/ and docs/.\"},\"result\":\"The root cause is on the Scarf Gateway side. `cr.kgateway.dev` is a CNAME to `gateway.scarf.sh`, and it now answers with a 302 redirect where it used to proxy. That setting lives outside this repository. The repo only mentions `cr.kgateway.dev` as an image or chart host, in places like `install/helm`, Helm golden files and `RELEASE.md`. Changing it to `ghcr.io` would be a maintainer decision, because it drops Scarf tracking. It would also touch paths the bot can't edit (`install/helm/`, `docs/`). I did not look through the individual matches beyond the file counts.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.03, \\\"reason\\\": \\\"The failure is in the external Scarf Gateway configuration for cr.kgateway.dev (proxy changed to redirect), which no code in this repo controls. The only in-repo change would be switching chart references to ghcr.io, which needs a maintainer decision and touches protected paths such as install/helm/ and docs/.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
+   },
+   {
+    "id": 394,
+    "run_id": "920a4e84-edad-4faa-830c-4bfa0b9672a8",
+    "issue_id": 260,
+    "agent": "triage",
+    "started_at": "2026-10-29T19:36:45.461Z",
+    "duration_ms": 8588,
+    "input_tokens": 52341,
+    "output_tokens": 339,
+    "cost_usd": 0.0649473,
+    "ok": 1,
+    "result_json": "{\"parsed\":{\"feasible\":false,\"score\":0.1,\"reason\":\"Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.\"},\"result\":\"Publishing the sandboxd image means changing release and image-push tooling. That tooling lives under dev/tools/ (push-images) and dev/ci, plus possibly the release workflows in .github/. All of those paths are off-limits for the bot. The decision to publish is also a maintainer's call, and it would be a release-process change, not a code fix.\\n\\n```json\\n{\\\"feasible\\\": false, \\\"score\\\": 0.1, \\\"reason\\\": \\\"Publishing the sandboxd image is a release-pipeline change (dev/tools/push-images, dev/ci, .github workflows). The bot may not edit those paths, and a maintainer would have to decide whether to publish.\\\"}\\n```\\n\"}",
+    "models": "claude-sonnet-5.5"
    }
   ],
   "kv": [
@@ -13885,7 +13975,7 @@
    },
    {
     "key": "notified-todo",
-    "value": "  approve 257    claim   go-sdk#1476  \"Streamable HTTP: a message with an `id` but no `me\"  score 0.8\n                         Small fix in DecodeMessage (internal/jsonrpc2/messages.go): return ErrInvalidRequest when there is no method k\n  approve 256    PR      adk-go#2023  \"fix(retryandreflect): drop invocation failure coun\"  (0m)\n  approve 255    PR      kubernetes-mcp-server#1587  \"fix(metrics): sanitize invalid UTF-8 in metric att\"  (5m)\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (35h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (37h)"
+    "value": "  approve 255    PR      kubernetes-mcp-server#1587  \"fix(metrics): sanitize invalid UTF-8 in metric att\"  (7h)\n  approve 248    PR      open-code-review#1014  \"feat(lang): add Starlark .star and .bzl review sup\"  (42h)\n  approve 238    PR      deja-vu#5647  \"docs(guide): add memory-for-codebuddy page for Cod\"  (43h)"
    },
    {
     "key": "dashboard:beiryu/maintainer-desk",
@@ -13897,7 +13987,7 @@
    },
    {
     "key": "notified-dashboard",
-    "value": "- **256 · mở PR** [google/adk-go#2023](https://github.com/google/adk-go/issues/2023) fix(retryandreflect): drop invocation failure counts when run ends\n- **255 · mở PR** [containers/kubernetes-mcp-server#1587](https://github.com/containers/kubernetes-mcp-server/issues/1587) fix(metrics): sanitize invalid UTF-8 in metric attribute values\n- **257 · claim** [modelcontextprotocol/go-sdk#1476](https://github.com/modelcontextprotocol/go-sdk/issues/1476) Streamable HTTP: a message with an `id` but no `method`, `result` or `error` is answered 202 with no body · score 0.8\n- **248 · mở PR** [alibaba/open-code-review#1014](https://github.com/alibaba/open-code-review/issues/1014) feat(lang): add Starlark .star and .bzl review support\n- **238 · mở PR** [vshulcz/deja-vu#5647](https://github.com/vshulcz/deja-vu/issues/5647) docs(guide): add memory-for-codebuddy page for CodeBuddy and WorkBuddy"
+    "value": "- **255 · mở PR** [containers/kubernetes-mcp-server#1587](https://github.com/containers/kubernetes-mcp-server/issues/1587) fix(metrics): sanitize invalid UTF-8 in metric attribute values\n- **248 · mở PR** [alibaba/open-code-review#1014](https://github.com/alibaba/open-code-review/issues/1014) feat(lang): add Starlark .star and .bzl review support\n- **238 · mở PR** [vshulcz/deja-vu#5647](https://github.com/vshulcz/deja-vu/issues/5647) docs(guide): add memory-for-codebuddy page for CodeBuddy and WorkBuddy"
    },
    {
     "key": "synced-head:54",
