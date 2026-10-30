@@ -67,12 +67,14 @@ describe('missingAddedLines', () => {
 describe('followupCommitMessage', () => {
   it('reuses the PR title prefix', async () => {
     const { followupCommitMessage } = await import('../src/orchestrator.js');
-    const at = { repo: 'no/such-repo', number: 1, pr_text: null };
-    expect(followupCommitMessage({ ...at, pr_title: 'Plain title' })).toBe('Address review feedback');
-    expect(followupCommitMessage({ ...at, pr_title: 'feat!: big change' })).toBe('feat: address review feedback');
-    // The PR as opened wins over the draft title.
-    expect(followupCommitMessage({ ...at, pr_title: 'x', pr_text: 'fix(tool): retry code_search as literal\n\nbody' }))
-      .toBe('fix(tool): address review feedback');
+    const { mkdtempSync, writeFileSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const { tmpdir } = await import('node:os');
+    const dir = mkdtempSync(join(tmpdir(), 'oss-bot-'));
+    expect(followupCommitMessage(dir, 'Plain title')).toBe('Address review feedback');
+    expect(followupCommitMessage(dir, 'feat!: big change')).toBe('feat: address review feedback');
+    writeFileSync(join(dir, 'PR_BODY.md'), 'fix(tool): retry code_search as literal\n\nbody');
+    expect(followupCommitMessage(dir, null)).toBe('fix(tool): address review feedback');
   });
 });
 

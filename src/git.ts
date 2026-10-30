@@ -45,20 +45,8 @@ export async function ensureMirror(repo: string, branch: string): Promise<string
   return git(dir, ['rev-parse', 'HEAD']);
 }
 
-/**
- * Makes `sha` reachable from a ref of the mirror, so a clone of it carries the commit. A mirror
- * made on a fresh machine (an Actions runner) holds only today's tip, not an older base.
- */
-async function ensureInMirror(repo: string, sha: string) {
-  const dir = mirrorDir(repo);
-  const reached = await git(dir, ['for-each-ref', '--count=1', '--contains', sha]).catch(() => '');
-  if (reached) return;
-  await git(dir, ['fetch', '--quiet', '--depth', '1', 'origin', `+${sha}:refs/tags/oss-bot-base-${sha.slice(0, 12)}`]);
-}
-
 /** An independent clone of the mirror at `sha` (no hardlinks or alternates back to it). */
 export async function freshClone(repo: string, sha: string, dest: string) {
-  await ensureInMirror(repo, sha);
   rmSync(dest, { recursive: true, force: true });
   mkdirSync(join(dest, '..'), { recursive: true });
   await execa('git', [...SAFE, 'clone', '--no-hardlinks', '--no-checkout', `file://${mirrorDir(repo)}`, dest]);

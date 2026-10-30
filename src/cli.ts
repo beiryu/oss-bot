@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { randomUUID } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { adoptPrs } from './adopt.js';
-import { ciAgent, ciPublish, pullState, pushState } from './ci.js';
 import { loadConfig, repoConfig } from './config.js';
 import { doctor } from './doctor.js';
 import { addRepo, listRepos, removeRepo } from './onboard.js';
@@ -12,31 +11,14 @@ import { refreshSnapshots, renderInbox } from './inbox.js';
 import { Db } from './db.js';
 import { issueDir } from './git.js';
 import { expectUser } from './github.js';
-import { approveClaim, approveFollowup, approvePr, loadPatch, runOnce, withLock, type Ctx } from './orchestrator.js';
+import { approveClaim, approveFollowup, approvePr, runOnce, withLock, type Ctx } from './orchestrator.js';
 
-const program = new Command('oss-bot')
-  .option('-c, --config <path>', 'config file', 'config.yaml')
-  .option('--state <file>', 'keep state in this JSON file instead of data/state.db (loaded at start, saved at exit)');
-
-let stateFileDb: Db | undefined;
-/** The state file's database: in memory, filled from the file if it exists, written back when the process ends. */
-function stateDb(file: string): Db {
-  if (stateFileDb) return stateFileDb;
-  const db = stateFileDb = new Db(':memory:');
-  if (existsSync(file)) db.importJson(JSON.parse(readFileSync(file, 'utf8')));
-  // 'exit' fires after process.exit() too, so a run that failed still keeps what it got done.
-  process.on('exit', () => {
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, `${JSON.stringify(db.exportJson(), null, 1)}\n`);
-  });
-  return db;
-}
+const program = new Command('oss-bot').option('-c, --config <path>', 'config file', 'config.yaml');
 
 function ctx(runId: string | null = null): Ctx {
   const cfg = loadConfig(program.opts().config);
   expectUser(cfg.github_user);
-  const state = program.opts().state as string | undefined;
-  return { cfg, db: state ? stateDb(state) : new Db(), runId };
+  return { cfg, db: new Db(), runId };
 }
 const days = (d: number) => new Date(Date.now() - d * 86_400_000).toISOString();
 
@@ -103,7 +85,8 @@ program.command('show <id>').description('an issue (triage, diff, PR draft, draf
   if (i.skip_reason) console.log(`\nskipped: ${i.skip_reason}`);
   if (i.summary) console.log(`\ncoder summary:\n${i.summary}`);
   if (i.feedback) console.log(`\nlast feedback to coder:\n${i.feedback}`);
-  if (i.patch || existsSync(join(issueDir(i.repo, i.number), 'PATCH.diff'))) console.log(`\n--- patch\n${loadPatch(i)}`);
+  const patch = join(issueDir(i.repo, i.number), 'PATCH.diff');
+  if (existsSync(patch)) console.log(`\n--- PATCH.diff\n${readFileSync(patch, 'utf8')}`);
   if (i.pr_title) console.log(`\n--- PR draft\n${i.pr_title}\n\n${i.pr_body}`);
   const pr = db.prForIssue(i.id);
   if (pr) console.log(`\n--- PR ${pr.url}  ${pr.state}  CI: ${pr.ci_state ?? '?'}  review: ${pr.review_decision ?? '?'}  mergeable: ${pr.mergeable ?? '?'}`);
@@ -118,7 +101,7 @@ program.command('show <id>').description('an issue (triage, diff, PR draft, draf
 });
 
 /** `approve <id>` works out what the issue waits for; `a<n>` is a drafted reply/fix/rebase. */
-async function approveAny(c: Ctx, id: string): Promise<string> {
+async function approveAny(c: Ctx, id: string) {
   if (isAction(id)) return approveFollowup(c, actionId(id));
   const i = c.db.issue(Number(id));
   if (i.state === 'awaiting_claim') return approveClaim(c, i.id);
@@ -128,7 +111,7 @@ async function approveAny(c: Ctx, id: string): Promise<string> {
   throw new Error(`issue ${id} is ${i.state}${i.blocked ? ` (blocked: ${i.blocked})` : ''}; nothing waits for your approval. \`oss-bot inbox\` lists what does.`);
 }
 program.command('approve <id>').description('send what the bot prepared: the claim or PR of an issue, or a<n> for a drafted reply/fix/rebase')
-  .action(async (id) => console.log(await approveAny(ctx(), id)));
+  .action((id) => approveAny(ctx(), id));
 program.command('reject <id> [reason...]').description('drop an issue (or a<n>: discard a drafted action)').action((id, reason) => {
   const { db } = ctx();
   if (isAction(id)) return db.setActionStatus(actionId(id), 'rejected');
@@ -137,9 +120,9 @@ program.command('reject <id> [reason...]').description('drop an issue (or a<n>: 
 
 // Older spellings, kept working but out of --help.
 const approve = program.command('approve-old', { hidden: true });
-approve.command('claim <id>').action(async (id) => console.log(await approveClaim(ctx(), Number(id))));
-approve.command('pr <id>').action(async (id) => console.log(await approvePr(ctx(), Number(id))));
-approve.command('followup <actionId>').action(async (id) => console.log(await approveFollowup(ctx(), Number(id))));
+approve.command('claim <id>').action((id) => approveClaim(ctx(), Number(id)));
+approve.command('pr <id>').action((id) => approvePr(ctx(), Number(id)));
+approve.command('followup <actionId>').action((id) => approveFollowup(ctx(), Number(id)));
 program.command('show-action <id>', { hidden: true }).action((id) => showAction(ctx().db, Number(id)));
 program.command('reject-action <id>', { hidden: true }).action((id) => ctx().db.setActionStatus(Number(id), 'rejected'));
 
@@ -186,66 +169,6 @@ repo.command('doctor <name>')
 repo.command('policy <name>', { hidden: true }).action((name) => {
   console.log(ctx().db.repo(name)?.policy_excerpts ?? '(not scanned yet; run once)');
 });
-const state = program.command('state').description('move state between data/state.db and a JSON file');
-state.command('export <file>').description('write data/state.db as JSON (what --state and the Actions runs use)').action((file) => {
-  mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, `${JSON.stringify(new Db().exportJson(), null, 1)}\n`);
-  console.log(`wrote ${file}`);
-});
-state.command('import <file>').description('replace data/state.db with the JSON file').action((file) => {
-  new Db().importJson(JSON.parse(readFileSync(file, 'utf8')));
-  console.log(`data/state.db now holds ${file}`);
-});
-
-// GitHub Actions (.github/workflows/oss-bot.yml). All of these need --state <file>.
-const ci = program.command('ci').description('the steps of a run on GitHub Actions');
-const stateFile = () => {
-  const f = program.opts().state as string | undefined;
-  if (!f) throw new Error('ci commands need --state <file>');
-  return f;
-};
-ci.command('state-pull').description('write the state branch\'s state.json to --state (none yet: an empty state)')
-  .requiredOption('--repo <owner/name>', 'the repo holding the state branch')
-  .action(async (o) => {
-    const { json } = await pullState(o.repo);
-    const file = stateFile();
-    mkdirSync(dirname(file), { recursive: true });
-    if (json) writeFileSync(file, `${JSON.stringify(json, null, 1)}\n`);
-    console.log(json ? `state from ${json.exported_at}` : 'no state branch yet: starting empty');
-  });
-ci.command('state-push').description('save --state as a commit on the state branch (to seed it from `state export`)')
-  .requiredOption('--repo <owner/name>', 'the repo holding the state branch')
-  .action(async (o) => {
-    const file = stateFile();
-    expectUser(loadConfig(program.opts().config).github_user); // pushed as you, whichever gh account is active
-    const head = await pushState(o.repo, JSON.parse(readFileSync(file, 'utf8')), await pullState(o.repo));
-    console.log(head ? `state saved: ${head.slice(0, 10)}` : 'state unchanged');
-  });
-ci.command('agent').description('one pass with the read-only token: everything up to the drafts')
-  .option('--minutes <n>', 'start no new step after this long (the job timeout must leave room for one)', Number, 150)
-  .action(async (o) => { stateFile(); await ciAgent(ctx(randomUUID()), { minutes: o.minutes }); });
-ci.command('publish').description('carry out your dashboard commands, render the dashboard, notify, save the state')
-  .requiredOption('--repo <owner/name>', 'the repo holding the state branch')
-  .requiredOption('--desk <owner/name>', 'the repo with the dashboard issue')
-  .option('--run-url <url>')
-  .action(async (o) => {
-    stateFile();
-    const c = ctx(randomUUID());
-    const previous = await pullState(o.repo);
-    let failed: unknown;
-    try {
-      await ciPublish(c, { desk: o.desk, runUrl: o.runUrl, deskToken: process.env.DESK_TOKEN || undefined });
-    } catch (e) {
-      failed = e;
-      console.error(`publish failed: ${e instanceof Error ? e.message : e}`);
-    }
-    // Saved even after a failure: commands already carried out must not run twice.
-    // Agent output is kept for `show`; the Actions log has the rest, so a head is enough.
-    const head = await pushState(o.repo, c.db.exportJson({ resultChars: 4000 }), previous);
-    console.log(head ? `state saved: ${head.slice(0, 10)}` : 'state unchanged');
-    if (failed) throw failed;
-  });
-
 program.command('cost').description('spend by agent over the last 7 and 30 days').action(() => {
   const { db } = ctx();
   for (const d of [7, 30]) {

@@ -96,56 +96,8 @@ follow-up agent, which drafts a reply, a fix, or waits. A gate step that also fa
 unpatched base is an environment problem: the issue is marked blocked, no attempt is spent,
 and `repo doctor --fix` is suggested.
 
-## Run it unattended
-
-Once a few manual runs look right:
-
-```bash
-bin/install-launchd.sh               # from a shell where node, gh and docker work; --uninstall removes the jobs
-launchctl kickstart gui/$(id -u)/dev.khanh.ossbot   # one pass now; log in data/launchd.log
-```
-
-It installs the launchd job `dev.khanh.ossbot` from the template in `launchd/`: `oss-bot run`
-every 2 hours (`bin/oss-bot-run.sh`; skipped while Docker is down), with this checkout's path and
-the PATH of the shell you ran it from (launchd has no shell profile; re-run it after moving the
-checkout or switching node versions). A run notifies only when something happened or the list
-of decisions changed.
-
-## Run it on GitHub Actions
-
-`.github/workflows/oss-bot.yml` runs the same pass every 2 hours from this repo, over every
-`repos/*.yaml`, with `config.ci.yaml` (public: no secrets in it). Nothing needs your laptop, and
-you decide on one pinned issue in the private desk repo (`beiryu/maintainer-desk`):
-
-- **agent** job: the job's read-only token and the model credential. Agents and gates run in the
-  `oss-bot-sandbox` image (built from `docker/Dockerfile`, kept on ghcr.io). Posts nothing.
-- **publish** job (environment `bot`): your PAT, signing key and Telegram token, no model
-  credential. Carries out your dashboard commands, rewrites the dashboard, sends one Telegram line
-  when the list of decisions changes, and saves the state as `state.json` on the branch `oss-bot/state`.
-
-Commands, one per line in a comment on the dashboard (the bot answers each comment):
-
-```
-/approve 12            claim, or open the PR when there is one suggested reason
-/approve 12 --why 2    open the PR with suggested reason 2
-/approve 12            followed by lines of your own: they are the PR's reason
-/approve a5            send a drafted reply/fix/rebase (lines below it replace the reply)
-/reject 12 why | /reject a5 | /allow o/r | /block o/r why | /pause | /resume
-```
-
-Setup, once:
-
-1. Secrets. Repo secret `COPILOT_TOKEN` (the Copilot-only PAT). Environment `bot`, limited to the
-   `main` branch: `OSS_BOT_TOKEN` (a **classic** PAT with `public_repo`: fine-grained tokens cannot
-   comment or open PRs on repos you are not a member of), `OSS_BOT_SIGNING_KEY` (the private SSH
-   signing key), `DESK_TOKEN` (fine-grained, Issues read/write on the private desk only:
-   `public_repo` does not reach a private repo), `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
-2. State, from the laptop (it uses your gh login): `npm run -s oss-bot -- state export state/state.json`,
-   then `npm run -s oss-bot -- --state state/state.json ci state-push --repo beiryu/oss-bot`.
-3. Desk: copy `templates/desk-relay.yml` to the desk as `.github/workflows/relay.yml` and add the
-   secret `OSS_BOT_DISPATCH_TOKEN` there (fine-grained, Actions read/write on this repo only).
-4. Stop the laptop runs: `bin/install-launchd.sh --uninstall`. The two must never run at once:
-   each would act on its own copy of the state.
+Schedule with `launchd/dev.khanh.ossbot.plist` (every 2 hours, via `bin/oss-bot-run.sh`)
+once a few manual runs look right.
 
 ## Tests
 

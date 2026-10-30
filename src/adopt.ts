@@ -53,7 +53,7 @@ async function adoptOne(ctx: Ctx, rc: RepoConfig, pr: GhPr, me: string): Promise
   }
   const issue = db.issueByNumber(rc.full_name, number)!;
   db.transition(issue.id, 'pr_open', {
-    base_sha: cmp, branch: pr.headRefName, pr_title: pr.title, pr_body: pr.body, patch, pr_text: `${pr.title}\n\n${pr.body}\n`,
+    base_sha: cmp, branch: pr.headRefName, pr_title: pr.title, pr_body: pr.body,
     claimed_at: issue.claimed_at ?? pr.createdAt, skip_reason: null, blocked: null, dry: 0,
   });
   // What came before your last comment, review reply or commit was handled by hand; anything
